@@ -1,0 +1,4242 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>逃避统治的艺术</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #202326;
+      --muted: #66706f;
+      --paper: #f7f2e8;
+      --paper-strong: #fffaf0;
+      --line: #d8cbb5;
+      --seal: #9f2f24;
+      --cinnabar: #c64b35;
+      --jade: #27736f;
+      --pine: #234d45;
+      --sea: #2f6c90;
+      --gold: #b9872e;
+      --shadow: 0 18px 48px rgba(38, 32, 24, 0.16);
+      --radius: 8px;
+      --serif: "Noto Serif SC", "Songti SC", "SimSun", serif;
+      --sans: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
+      font-family: var(--sans);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(151, 59, 42, 0.08), transparent 26%, rgba(42, 106, 129, 0.08)),
+        repeating-linear-gradient(0deg, rgba(65, 44, 23, 0.035) 0 1px, transparent 1px 5px),
+        var(--paper);
+      font-family: var(--sans);
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .app {
+      width: min(1500px, 100%);
+      margin: 0 auto;
+      padding: 12px;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 1.3fr auto;
+      gap: 16px;
+      align-items: end;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 240, 0.9);
+      box-shadow: var(--shadow);
+    }
+
+    .kicker {
+      margin: 0 0 4px;
+      color: var(--seal);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 3.2vw, 42px);
+      letter-spacing: 0;
+      line-height: 1.05;
+      font-family: var(--serif);
+    }
+
+    .subtitle {
+      max-width: 780px;
+      margin: 6px 0 0;
+      color: #4f5857;
+      font-size: 14px;
+      line-height: 1.45;
+      font-family: var(--serif);
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .icon-btn,
+    .choice,
+    .primary-action {
+      min-height: 42px;
+      border: 1px solid #bda98a;
+      border-radius: var(--radius);
+      color: var(--ink);
+      background: #fff7e8;
+      cursor: pointer;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+    }
+
+    .icon-btn {
+      width: 46px;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+    }
+
+    .primary-action {
+      padding: 0 16px;
+      font-weight: 700;
+    }
+
+    .icon-btn:hover,
+    .choice:hover,
+    .primary-action:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(75, 52, 25, 0.16);
+      background: #fff0d4;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px minmax(560px, 1fr) minmax(315px, 350px);
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+      height: calc(100vh - 128px);
+      min-height: 620px;
+      align-items: stretch;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 240, 0.92);
+      box-shadow: 0 10px 28px rgba(38, 32, 24, 0.1);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      min-height: 48px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(225, 212, 188, 0.38);
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 0 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(112, 83, 40, 0.3);
+      color: #5f3f16;
+      background: rgba(255, 244, 216, 0.9);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .panel-body {
+      padding: 14px;
+    }
+
+    .brief-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .brief-item {
+      min-height: 54px;
+      padding: 8px;
+      border: 1px solid rgba(195, 178, 149, 0.75);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.38);
+    }
+
+    .brief-label {
+      margin: 0 0 6px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .brief-value {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .relic-card {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 10px;
+      align-items: center;
+      margin-top: 12px;
+      padding: 9px;
+      border: 1px solid rgba(195, 178, 149, 0.78);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(255, 248, 232, 0.88), rgba(232, 216, 183, 0.52));
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.32);
+    }
+
+    .relic-sprite {
+      width: 72px;
+      height: 56px;
+      border-radius: 6px;
+      border: 1px solid rgba(112, 83, 40, 0.24);
+      background-image: url("assets/relic-atlas.png");
+      background-repeat: no-repeat;
+      background-size: 300% 200%;
+      background-position: 0% 0%;
+      box-shadow: 0 8px 18px rgba(75, 52, 25, 0.14);
+    }
+
+    .relic-sprite.regalia { background-position: 0% 0%; }
+    .relic-sprite.temple { background-position: 50% 0%; }
+    .relic-sprite.roster { background-position: 100% 0%; }
+    .relic-sprite.clan { background-position: 0% 100%; }
+    .relic-sprite.sea { background-position: 50% 100%; }
+    .relic-sprite.foreign { background-position: 100% 100%; }
+
+    .relic-title {
+      margin: 0 0 4px;
+      font-size: 13px;
+      font-weight: 900;
+      color: #362c20;
+    }
+
+    .relic-desc {
+      margin: 0;
+      color: #5f6663;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .meters {
+      display: grid;
+      gap: 11px;
+    }
+
+    .meter-row {
+      display: grid;
+      grid-template-columns: 92px 1fr 38px;
+      gap: 9px;
+      align-items: center;
+      min-height: 26px;
+    }
+
+    .meter-name {
+      color: #3b4140;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .meter {
+      height: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #dfd3bf;
+    }
+
+    .meter > span {
+      display: block;
+      height: 100%;
+      width: 50%;
+      border-radius: inherit;
+      background: var(--jade);
+      transition: width 0.45s ease, background 0.45s ease;
+    }
+
+    .meter.danger > span {
+      background: var(--seal);
+    }
+
+    .meter.warn > span {
+      background: var(--gold);
+    }
+
+    .meter.sea > span {
+      background: var(--sea);
+    }
+
+    .meter-value {
+      color: #333;
+      font-size: 12px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      transition: color 0.28s ease, transform 0.28s ease;
+    }
+
+    .meter-value.changed {
+      color: var(--seal);
+      transform: translateY(-1px) scale(1.08);
+    }
+
+    .event-scene {
+      min-height: 0;
+      height: 100%;
+      display: grid;
+      grid-template-rows: 210px minmax(0, 1fr) auto;
+      overflow: hidden;
+    }
+
+    .scene-canvas {
+      position: relative;
+      min-height: 210px;
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(255, 241, 206, 0.95), rgba(198, 219, 211, 0.9) 45%, rgba(68, 122, 145, 0.94) 46%, rgba(33, 83, 108, 0.95));
+      transition: background 0.65s ease;
+    }
+
+    .scene-art {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-image: url("assets/scene-atlas.png");
+      background-repeat: no-repeat;
+      background-size: 200% 200%;
+      opacity: 0.64;
+      filter: saturate(0.92) contrast(1.02);
+      transition: background-position 0.55s ease, opacity 0.55s ease;
+    }
+
+    .scene-canvas.route-war .scene-art {
+      filter: saturate(0.82) contrast(1.08);
+    }
+
+    .scene-canvas.route-war::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(70, 39, 29, 0.12), transparent 34%, rgba(80, 36, 24, 0.16)),
+        repeating-linear-gradient(115deg, transparent 0 18px, rgba(255, 236, 188, 0.08) 18px 20px);
+      mix-blend-mode: multiply;
+    }
+
+    .scene-canvas.phase-yashan .scene-art { background-position: 0% 0%; }
+    .scene-canvas.phase-lingnan .scene-art { background-position: 100% 0%; }
+    .scene-canvas.phase-sea .scene-art { background-position: 0% 100%; }
+    .scene-canvas.phase-choice .scene-art { background-position: 100% 100%; }
+
+    .scene-canvas.phase-yashan {
+      background:
+        linear-gradient(180deg, rgba(231, 226, 214, 0.96), rgba(184, 200, 197, 0.9) 45%, rgba(63, 104, 128, 0.94) 46%, rgba(31, 63, 86, 0.96));
+    }
+
+    .scene-canvas.phase-lingnan {
+      background:
+        linear-gradient(180deg, rgba(245, 227, 189, 0.96), rgba(179, 210, 178, 0.9) 45%, rgba(74, 130, 117, 0.94) 46%, rgba(38, 85, 83, 0.96));
+    }
+
+    .scene-canvas.phase-sea {
+      background:
+        linear-gradient(180deg, rgba(238, 229, 199, 0.96), rgba(185, 213, 214, 0.9) 45%, rgba(63, 130, 157, 0.94) 46%, rgba(25, 75, 105, 0.96));
+    }
+
+    .scene-canvas.phase-choice {
+      background:
+        linear-gradient(180deg, rgba(247, 220, 177, 0.96), rgba(198, 200, 167, 0.9) 45%, rgba(76, 111, 130, 0.94) 46%, rgba(45, 70, 92, 0.96));
+    }
+
+    .scene-canvas::before {
+      content: "";
+      position: absolute;
+      inset: auto -20% 31px;
+      z-index: 1;
+      height: 22px;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(255, 255, 255, 0.34), transparent 35%),
+        radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.2), transparent 38%),
+        radial-gradient(ellipse at 78% 50%, rgba(255, 255, 255, 0.28), transparent 35%);
+      opacity: 0.75;
+      animation: shimmer 6s linear infinite;
+    }
+
+    .petals {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .petals span {
+      position: absolute;
+      top: -12px;
+      width: 9px;
+      height: 14px;
+      border-radius: 9px 1px 9px 1px;
+      background: rgba(195, 71, 55, 0.62);
+      animation: petal-fall 9s linear infinite;
+    }
+
+    .petals span:nth-child(1) { left: 9%; animation-delay: 0s; }
+    .petals span:nth-child(2) { left: 24%; animation-delay: 1.4s; transform: scale(0.72); }
+    .petals span:nth-child(3) { left: 48%; animation-delay: 3s; transform: scale(0.86); }
+    .petals span:nth-child(4) { left: 67%; animation-delay: 4.5s; transform: scale(0.68); }
+    .petals span:nth-child(5) { left: 84%; animation-delay: 2.2s; transform: scale(0.9); }
+
+    .sun {
+      position: absolute;
+      z-index: 1;
+      top: 24px;
+      right: 62px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: #d78e43;
+      box-shadow: 0 0 0 18px rgba(215, 142, 67, 0.14);
+    }
+
+    .mountain {
+      position: absolute;
+      z-index: 1;
+      bottom: 54px;
+      width: 260px;
+      height: 120px;
+      background: #476b58;
+      clip-path: polygon(0 100%, 38% 18%, 55% 56%, 76% 4%, 100% 100%);
+      opacity: 0.88;
+    }
+
+    .mountain.left {
+      left: -34px;
+    }
+
+    .mountain.right {
+      right: -60px;
+      transform: scaleX(-1);
+      background: #315b59;
+      opacity: 0.68;
+    }
+
+    .boat {
+      position: absolute;
+      z-index: 4;
+      left: var(--boat-left, 12%);
+      bottom: 28px;
+      width: 90px;
+      height: 34px;
+      transition: left 0.85s cubic-bezier(.2,.8,.2,1), transform 0.45s ease;
+      animation: boat-bob 3.8s ease-in-out infinite;
+    }
+
+    .boat::before {
+      content: "";
+      position: absolute;
+      left: 8px;
+      bottom: 0;
+      width: 74px;
+      height: 18px;
+      border-radius: 0 0 42px 42px;
+      background: #5a3821;
+    }
+
+    .boat::after {
+      content: "";
+      position: absolute;
+      left: 40px;
+      bottom: 14px;
+      width: 0;
+      height: 0;
+      border-left: 20px solid transparent;
+      border-right: 4px solid transparent;
+      border-bottom: 42px solid rgba(245, 231, 198, 0.95);
+    }
+
+    .route {
+      position: absolute;
+      z-index: 5;
+      left: 16px;
+      right: 16px;
+      bottom: 8px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .route-step {
+      min-height: 26px;
+      border: 1px solid rgba(255, 250, 240, 0.35);
+      border-radius: 999px;
+      color: rgba(255, 250, 240, 0.82);
+      background: rgba(26, 55, 70, 0.35);
+      font-size: 12px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+    }
+
+    .route-step.active {
+      color: #172325;
+      background: #fff4c8;
+      border-color: rgba(255, 244, 200, 0.9);
+      font-weight: 800;
+    }
+
+    .scene-label {
+      position: absolute;
+      z-index: 6;
+      left: 18px;
+      top: 18px;
+      max-width: 260px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255, 244, 216, 0.72);
+      border-radius: var(--radius);
+      color: #fff8e8;
+      background: rgba(28, 57, 54, 0.78);
+      box-shadow: 0 12px 34px rgba(25, 42, 41, 0.22);
+    }
+
+    .scene-label strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 2px;
+    }
+
+    .scene-label span {
+      display: block;
+      font-size: 11px;
+      line-height: 1.45;
+      color: rgba(255, 248, 232, 0.82);
+    }
+
+    .campaign-map {
+      position: absolute;
+      z-index: 6;
+      right: 16px;
+      top: 14px;
+      width: min(330px, 44%);
+      height: 146px;
+      border: 1px solid rgba(255, 244, 216, 0.58);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(253, 244, 221, 0.9), rgba(223, 231, 218, 0.74)),
+        radial-gradient(circle at 72% 36%, rgba(52, 125, 147, 0.18), transparent 32%);
+      box-shadow: 0 14px 36px rgba(25, 42, 41, 0.24);
+      overflow: hidden;
+    }
+
+    .campaign-map::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(116deg, transparent 0 52%, rgba(45, 111, 129, 0.16) 52% 60%, transparent 60%),
+        linear-gradient(22deg, transparent 0 54%, rgba(111, 82, 47, 0.12) 54% 57%, transparent 57%);
+      pointer-events: none;
+    }
+
+    .map-line {
+      position: absolute;
+      left: var(--x1);
+      top: var(--y1);
+      width: var(--len);
+      height: 2px;
+      background: rgba(95, 83, 61, 0.32);
+      transform-origin: left center;
+      transform: rotate(var(--angle));
+    }
+
+    .map-line.active {
+      height: 3px;
+      background: rgba(154, 62, 43, 0.68);
+    }
+
+    .map-node {
+      position: absolute;
+      left: var(--x);
+      top: var(--y);
+      transform: translate(-50%, -50%);
+      display: grid;
+      gap: 2px;
+      justify-items: center;
+      min-width: 42px;
+      color: rgba(45, 51, 44, 0.72);
+      font-size: 10px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .map-dot {
+      width: 11px;
+      height: 11px;
+      border: 2px solid rgba(95, 83, 61, 0.44);
+      border-radius: 50%;
+      background: #f7efd9;
+      box-shadow: 0 2px 8px rgba(55, 43, 24, 0.14);
+    }
+
+    .map-node.unlocked {
+      color: #263a38;
+    }
+
+    .map-node.unlocked .map-dot {
+      border-color: rgba(39, 115, 111, 0.72);
+      background: #f9f1ce;
+    }
+
+    .map-node.active {
+      color: #712d21;
+    }
+
+    .map-node.active .map-dot {
+      width: 15px;
+      height: 15px;
+      border-color: rgba(154, 62, 43, 0.9);
+      background: #fff3bf;
+      box-shadow: 0 0 0 6px rgba(154, 62, 43, 0.14);
+    }
+
+    .map-node.war .map-dot {
+      border-radius: 3px;
+      border-color: rgba(134, 44, 32, 0.78);
+    }
+
+    .event-content {
+      position: relative;
+      min-height: 0;
+      overflow: auto;
+      padding: 0;
+      background:
+        linear-gradient(135deg, rgba(255, 250, 240, 0.86), rgba(242, 231, 207, 0.5)),
+        radial-gradient(circle at 88% 12%, rgba(39, 115, 111, 0.12), transparent 28%);
+    }
+
+    .delta-strip {
+      margin: 10px 14px 0;
+      min-height: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+
+    .delta-strip.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delta-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .delta-pill {
+      padding: 5px 8px;
+      border: 1px solid rgba(195, 178, 149, 0.72);
+      border-radius: 999px;
+      background: rgba(255, 250, 240, 0.8);
+      color: #2f3938;
+      font-size: 12px;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .delta-pill.positive {
+      color: #1f6a50;
+      border-color: rgba(39, 115, 111, 0.35);
+      background: rgba(219, 242, 222, 0.82);
+    }
+
+    .delta-pill.negative {
+      color: #9a3e2b;
+      border-color: rgba(154, 62, 43, 0.32);
+      background: rgba(255, 230, 214, 0.82);
+    }
+
+    .story-stage {
+      display: grid;
+      grid-template-columns: minmax(128px, 150px) 1fr;
+      gap: 12px;
+      align-items: stretch;
+      padding: 12px 14px 0;
+    }
+
+    .portrait-card {
+      min-height: 198px;
+      border: 1px solid rgba(195, 178, 149, 0.85);
+      border-radius: var(--radius);
+      background: rgba(255, 250, 240, 0.75);
+      overflow: hidden;
+      box-shadow: 0 10px 28px rgba(38, 32, 24, 0.1);
+    }
+
+    .portrait-sprite {
+      height: 158px;
+      background-image: url("assets/portraits.png");
+      background-repeat: no-repeat;
+      background-size: 300% 200%;
+      background-position: 0% 0%;
+      transition: background-position 0.28s ease, filter 0.28s ease;
+    }
+
+    .portrait-sprite.zhao { background-position: 0% 0%; }
+    .portrait-sprite.monk { background-position: 50% 0%; }
+    .portrait-sprite.attendant { background-position: 100% 0%; }
+    .portrait-sprite.clan { background-position: 0% 100%; }
+    .portrait-sprite.shipmaster { background-position: 50% 100%; }
+    .portrait-sprite.clerk { background-position: 100% 100%; }
+
+    .portrait-caption {
+      padding: 9px 10px;
+      border-top: 1px solid rgba(195, 178, 149, 0.75);
+      background: rgba(255, 244, 216, 0.72);
+    }
+
+    .portrait-name {
+      margin: 0;
+      font-weight: 900;
+      font-size: 14px;
+    }
+
+    .portrait-role {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .event-card {
+      min-width: 0;
+    }
+
+    .narrative-link {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .link-chip {
+      min-height: 58px;
+      padding: 8px 10px;
+      border: 1px solid rgba(195, 178, 149, 0.72);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.46);
+    }
+
+    .link-chip small {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .link-chip span {
+      color: #2f3938;
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 800;
+    }
+
+    .result-toast {
+      position: absolute;
+      top: 10px;
+      right: 16px;
+      z-index: 4;
+      max-width: min(420px, calc(100% - 32px));
+      padding: 9px 12px;
+      border: 1px solid rgba(112, 83, 40, 0.28);
+      border-radius: var(--radius);
+      color: #3d2815;
+      background: rgba(255, 244, 216, 0.96);
+      box-shadow: 0 12px 30px rgba(75, 52, 25, 0.18);
+      font-size: 13px;
+      font-weight: 800;
+      opacity: 0;
+      transform: translateY(-6px);
+      pointer-events: none;
+      transition: opacity 0.24s ease, transform 0.24s ease;
+    }
+
+    .result-toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .milestone-badge {
+      position: absolute;
+      left: 18px;
+      top: 82px;
+      z-index: 3;
+      max-width: 300px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255, 244, 216, 0.76);
+      border-radius: var(--radius);
+      color: #fff8e8;
+      background: rgba(35, 77, 69, 0.82);
+      box-shadow: 0 12px 34px rgba(25, 42, 41, 0.24);
+      font-size: 13px;
+      font-weight: 800;
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.28s ease, transform 0.28s ease;
+    }
+
+    .milestone-badge.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .event-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .event-title {
+      margin: 0 0 12px;
+      font-family: var(--serif);
+      font-size: 26px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .event-text {
+      margin: 0;
+      color: #3d4645;
+      font-size: 15px;
+      line-height: 1.75;
+      font-family: var(--serif);
+    }
+
+    .choices {
+      display: grid;
+      gap: 10px;
+      max-height: 230px;
+      overflow: auto;
+      padding: 0 14px 14px;
+    }
+
+    .choice-preview {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 10px;
+      align-items: center;
+      margin: 0 14px 10px;
+      padding: 10px 12px;
+      border: 1px solid rgba(112, 83, 40, 0.24);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(90deg, rgba(35, 77, 69, 0.1), rgba(255, 244, 216, 0.72));
+      box-shadow: inset 4px 0 0 rgba(39, 115, 111, 0.72);
+    }
+
+    .preview-label {
+      color: var(--pine);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .preview-text {
+      margin: 0;
+      color: #3d4645;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .choice {
+      width: 100%;
+      min-height: 70px;
+      padding: 11px 13px;
+      text-align: left;
+      background: #fff8eb;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .choice::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 4px;
+      background: transparent;
+      transition: background 0.18s ease;
+    }
+
+    .choice:hover::before,
+    .choice:focus-visible::before {
+      background: var(--jade);
+    }
+
+    .choice.selected {
+      border-color: var(--seal);
+      background: #ffe8d2;
+      box-shadow: inset 4px 0 0 var(--seal), 0 12px 30px rgba(126, 50, 35, 0.18);
+    }
+
+    .choice strong {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+      font-size: 15px;
+    }
+
+    .keycap {
+      min-width: 28px;
+      min-height: 24px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 6px;
+      border: 1px solid rgba(112, 83, 40, 0.28);
+      color: #5a3d1f;
+      background: rgba(255, 244, 216, 0.92);
+      font-size: 12px;
+      font-weight: 900;
+      font-family: var(--sans);
+    }
+
+    .choice span {
+      display: block;
+      color: #59615f;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .choice-causality {
+      margin-top: 5px;
+      color: #40514f;
+      font-size: 12px;
+      line-height: 1.45;
+      font-family: var(--serif);
+    }
+
+    .choice-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 7px;
+    }
+
+    .choice-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      padding: 0 7px;
+      border-radius: 999px;
+      color: #5f3f16;
+      background: rgba(255, 244, 216, 0.82);
+      border: 1px solid rgba(112, 83, 40, 0.22);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .context-strip {
+      margin: 12px 0 0;
+      padding: 10px 12px;
+      border-left: 4px solid var(--jade);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      color: #3e4c4b;
+      background: rgba(39, 115, 111, 0.08);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .status-panel {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+      min-height: 0;
+      overflow: auto;
+    }
+
+    .status-panel .panel-head {
+      min-height: 0;
+      padding: 9px 12px;
+    }
+
+    .status-panel .panel-body {
+      padding: 10px 12px;
+    }
+
+    .status-panel .brief-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .event-scene {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+
+    .side-tabs {
+      grid-column: 3;
+      grid-row: 1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .tab-btn {
+      min-height: 38px;
+      border: 1px solid rgba(112, 83, 40, 0.28);
+      border-radius: var(--radius);
+      background: rgba(255, 250, 240, 0.88);
+      color: #5f3f16;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .tab-btn.active {
+      color: #fff8e8;
+      background: var(--pine);
+      border-color: var(--pine);
+    }
+
+    .side-panel {
+      grid-column: 3;
+      grid-row: 2;
+      display: none;
+      min-height: 0;
+      max-height: none;
+      overflow: auto;
+    }
+
+    .side-panel.active {
+      display: block;
+    }
+
+    .choice:disabled {
+      cursor: not-allowed;
+      opacity: 0.64;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .npc-list,
+    .destiny-list,
+    .log-list,
+    .ending-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .warning-note {
+      margin: 10px 0 0;
+      padding: 9px 10px;
+      border-left: 4px solid var(--seal);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      color: #6d241d;
+      background: rgba(159, 47, 36, 0.08);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .thesis-card,
+    .evidence-item,
+    .historian-review {
+      padding: 11px;
+      border: 1px solid rgba(195, 178, 149, 0.78);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.42);
+    }
+
+    .thesis-card {
+      margin-bottom: 12px;
+      background:
+        linear-gradient(135deg, rgba(255, 248, 232, 0.9), rgba(230, 214, 181, 0.44));
+    }
+
+    .thesis-title,
+    .evidence-title {
+      margin: 0 0 5px;
+      color: #322b21;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .thesis-desc,
+    .evidence-desc,
+    .historian-review p {
+      margin: 0;
+      color: #56605f;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .evidence-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .evidence-item {
+      border-left: 4px solid var(--jade);
+    }
+
+    .evidence-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .relation-map {
+      position: relative;
+      min-height: 170px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(195, 178, 149, 0.75);
+      border-radius: var(--radius);
+      background:
+        radial-gradient(circle at center, rgba(159, 47, 36, 0.08), transparent 30%),
+        rgba(255, 255, 255, 0.32);
+      overflow: hidden;
+    }
+
+    .relation-center,
+    .relation-node {
+      position: absolute;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.2;
+      z-index: 2;
+      font-family: var(--sans);
+    }
+
+    .relation-center {
+      left: 50%;
+      top: 50%;
+      width: 58px;
+      height: 58px;
+      transform: translate(-50%, -50%);
+      color: #fffaf0;
+      background: var(--seal);
+      box-shadow: 0 8px 20px rgba(93, 35, 27, 0.25);
+    }
+
+    .relation-node {
+      width: 64px;
+      min-height: 36px;
+      padding: 4px;
+      color: var(--ink);
+      background: #fff3dc;
+      border: 1px solid rgba(112, 83, 40, 0.24);
+    }
+
+    .relation-line {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      height: var(--line-width, 2px);
+      width: var(--line-length, 80px);
+      background: var(--line-color, rgba(102, 112, 111, 0.45));
+      transform-origin: left center;
+      transform: rotate(var(--line-angle, 0deg));
+      z-index: 1;
+      border-radius: 999px;
+    }
+
+    .npc {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid rgba(195, 178, 149, 0.75);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.42);
+    }
+
+    .npc-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid rgba(112, 83, 40, 0.26);
+      background-image: url("assets/portraits.png");
+      background-repeat: no-repeat;
+      background-size: 300% 200%;
+      background-position: 0% 0%;
+      box-shadow: inset 0 0 0 2px rgba(255, 250, 240, 0.42);
+    }
+
+    .npc-avatar.zhao { background-position: 0% 0%; }
+    .npc-avatar.monk { background-position: 50% 0%; }
+    .npc-avatar.attendant { background-position: 100% 0%; }
+    .npc-avatar.clan { background-position: 0% 100%; }
+    .npc-avatar.shipmaster { background-position: 50% 100%; }
+    .npc-avatar.clerk { background-position: 100% 100%; }
+
+    .npc-name {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin: 0 0 6px;
+      font-weight: 800;
+    }
+
+    .npc-desc,
+    .log-item,
+    .ending-list li {
+      margin: 0;
+      color: #56605f;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .log-list {
+      max-height: 290px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .log-item {
+      padding-bottom: 9px;
+      border-bottom: 1px dashed rgba(146, 126, 91, 0.45);
+      cursor: pointer;
+      animation: fade-in-up 0.32s ease both;
+    }
+
+    .log-item:hover {
+      color: var(--seal);
+    }
+
+    .log-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      background: rgba(20, 24, 25, 0.56);
+    }
+
+    .modal.open {
+      display: grid;
+    }
+
+    .modal-content {
+      width: min(820px, 100%);
+      border: 1px solid #d8cbb5;
+      border-radius: var(--radius);
+      background: var(--paper-strong);
+      box-shadow: 0 26px 80px rgba(0, 0, 0, 0.32);
+      overflow: hidden;
+    }
+
+    .ending-list {
+      margin: 14px 0 0;
+      padding-left: 20px;
+    }
+
+    .final-score {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .guide-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      background: rgba(20, 24, 25, 0.58);
+    }
+
+    .guide-overlay.open {
+      display: grid;
+    }
+
+    .guide-card {
+      width: min(760px, 100%);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper-strong);
+      box-shadow: 0 26px 80px rgba(0, 0, 0, 0.32);
+      padding: 22px;
+    }
+
+    .modal .icon-btn,
+    .guide-card .primary-action {
+      min-width: 52px;
+      min-height: 48px;
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .guide-item {
+      padding: 12px;
+      border: 1px solid rgba(195, 178, 149, 0.75);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.45);
+    }
+
+    .guide-item strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .memoir-list {
+      grid-column: 1 / -1;
+      max-height: 56vh;
+      overflow: auto;
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .memoir-entry {
+      padding: 11px;
+      border: 1px solid rgba(195, 178, 149, 0.75);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .memoir-entry strong {
+      display: block;
+      margin-bottom: 4px;
+      font-family: var(--serif);
+    }
+
+    @keyframes fade-in-up {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes petal-fall {
+      from { transform: translate3d(0, -20px, 0) rotate(0deg); opacity: 0; }
+      8% { opacity: 1; }
+      to { transform: translate3d(34px, 188px, 0) rotate(230deg); opacity: 0; }
+    }
+
+    @keyframes shimmer {
+      from { transform: translateX(0); }
+      to { transform: translateX(18%); }
+    }
+
+    @keyframes boat-bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 1120px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .status-panel,
+      .event-scene {
+        grid-column: 1 / -1;
+      }
+
+      .side-tabs,
+      .side-panel {
+        grid-column: 1 / -1;
+      }
+
+      .side-tabs {
+        grid-row: auto;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+
+      .side-panel {
+        grid-row: auto;
+        max-height: none;
+      }
+
+      .brief-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .campaign-map {
+        width: min(300px, 40%);
+      }
+    }
+
+    @media (max-width: 760px) {
+      .app {
+        padding: 10px;
+      }
+
+      .topbar,
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .top-actions {
+        justify-content: stretch;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .primary-action,
+      .icon-btn {
+        flex: 1;
+        width: 100%;
+      }
+
+      .brief-grid,
+      .final-score {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .side-tabs {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .meter-row {
+        grid-template-columns: 78px 1fr 34px;
+      }
+
+      .event-scene {
+        grid-template-rows: 180px minmax(0, 1fr) auto;
+      }
+
+      .scene-canvas {
+        min-height: 180px;
+      }
+
+      .scene-label {
+        left: 12px;
+        top: 12px;
+        max-width: 190px;
+      }
+
+      .campaign-map {
+        right: 10px;
+        top: 10px;
+        width: 172px;
+        height: 108px;
+      }
+
+      .map-node {
+        min-width: 34px;
+        font-size: 9px;
+      }
+
+      .milestone-badge {
+        left: 12px;
+        top: 76px;
+        max-width: 190px;
+      }
+
+      .route {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .choice {
+        min-height: 82px;
+      }
+
+      .story-stage {
+        grid-template-columns: 1fr;
+      }
+
+      .narrative-link,
+      .choice-preview {
+        grid-template-columns: 1fr;
+      }
+
+      .portrait-card {
+        display: grid;
+        grid-template-columns: 96px 1fr;
+        min-height: 96px;
+      }
+
+      .portrait-sprite {
+        height: 96px;
+      }
+
+      .portrait-caption {
+        border-top: 0;
+        border-left: 1px solid rgba(195, 178, 149, 0.75);
+        display: grid;
+        align-content: center;
+      }
+
+      .result-toast {
+        left: 12px;
+        right: 12px;
+        top: 8px;
+        max-width: none;
+      }
+
+      .delta-strip {
+        margin: 8px 12px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="topbar" aria-labelledby="game-title">
+      <div>
+        <p class="kicker">南宋末期至元初 · 1279 年后</p>
+        <h1 id="game-title">逃避统治的艺术</h1>
+        <p class="subtitle">赵昺坠海后于木棉花林中幸存。大宋已亡，皇帝身份既是号召，也是被追捕的证据。</p>
+      </div>
+      <div class="top-actions" aria-label="游戏操作">
+        <button class="primary-action" id="guideBtn">新手引导</button>
+        <button class="primary-action" id="memoirBtn">回忆录</button>
+        <button class="primary-action" id="saveSlotBtn">存档</button>
+        <button class="primary-action" id="loadSlotBtn">读档</button>
+        <button class="icon-btn" id="helpBtn" title="查看结局条件" aria-label="查看结局条件">?</button>
+        <button class="primary-action" id="restartBtn">重新开局</button>
+      </div>
+    </section>
+
+    <section class="layout">
+      <aside class="panel status-panel" aria-labelledby="status-title">
+        <div class="panel-head">
+          <h2 class="panel-title" id="status-title">流亡状态</h2>
+          <span class="tag" id="phaseTag">崖山余波</span>
+        </div>
+        <div class="panel-body">
+          <div class="brief-grid" aria-live="polite">
+            <div class="brief-item">
+              <p class="brief-label">时间</p>
+              <p class="brief-value" id="timeText">1279 年 3 月</p>
+            </div>
+            <div class="brief-item">
+              <p class="brief-label">地点</p>
+              <p class="brief-value" id="placeText">木棉花林</p>
+            </div>
+            <div class="brief-item">
+              <p class="brief-label">公开身份</p>
+              <p class="brief-value" id="coverText">落难童仆</p>
+            </div>
+            <div class="brief-item">
+              <p class="brief-label">路线倾向</p>
+              <p class="brief-value" id="routeText">求生</p>
+            </div>
+            <div class="brief-item">
+              <p class="brief-label">成长阶段</p>
+              <p class="brief-value" id="growthText">幼年托庇</p>
+            </div>
+            <div class="brief-item">
+              <p class="brief-label">存档</p>
+              <p class="brief-value" id="saveText">自动保存</p>
+            </div>
+            <div class="brief-item">
+              <p class="brief-label">下一阶段</p>
+              <p class="brief-value" id="unlockText">等待线索</p>
+            </div>
+            <div class="brief-item">
+              <p class="brief-label">历史命题</p>
+              <p class="brief-value" id="thesisText">尚未选择</p>
+            </div>
+          </div>
+          <div class="relic-card" aria-label="当前线索遗物">
+            <div class="relic-sprite regalia" id="relicSprite"></div>
+            <div>
+              <p class="relic-title" id="relicTitle">木棉遗物</p>
+              <p class="relic-desc" id="relicDesc">旧玉、小印与一段不该外露的身份。</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <section class="panel event-scene" aria-labelledby="eventTitle">
+        <div class="scene-canvas" aria-hidden="true">
+          <div class="scene-art"></div>
+          <div class="scene-label" id="sceneLabel">
+            <strong>崖山余波</strong>
+            <span>木棉花林 · 求生</span>
+          </div>
+          <div class="campaign-map" id="campaignMap"></div>
+          <div class="milestone-badge" id="milestoneBadge"></div>
+          <div class="sun"></div>
+          <div class="mountain left"></div>
+          <div class="mountain right"></div>
+          <div class="boat" id="boat"></div>
+          <div class="petals"><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="route" id="routeMap"></div>
+        </div>
+        <div class="event-content">
+          <div class="result-toast" id="resultToast"></div>
+          <div class="delta-strip" id="deltaStrip" aria-live="polite"></div>
+          <div class="story-stage">
+            <div class="portrait-card">
+              <div class="portrait-sprite zhao" id="portraitSprite"></div>
+              <div class="portrait-caption">
+                <p class="portrait-name" id="portraitName">赵昺</p>
+                <p class="portrait-role" id="portraitRole">亡国幼帝</p>
+              </div>
+            </div>
+            <div class="event-card">
+              <div class="event-meta">
+                <span class="tag" id="monthTag">第 1 月</span>
+                <span class="tag" id="eventTypeTag">生存事件</span>
+                <span class="tag" id="rumorTag">传闻微弱</span>
+              </div>
+              <h2 class="event-title" id="eventTitle">木棉花下</h2>
+              <p class="event-text" id="eventText"></p>
+              <p class="context-strip" id="contextText"></p>
+              <div class="narrative-link" aria-label="当前事件牵动">
+                <div class="link-chip"><small>人物牵引</small><span id="bondText">尚未建立</span></div>
+                <div class="link-chip"><small>前情回响</small><span id="echoText">开局事件</span></div>
+                <div class="link-chip"><small>局势压力</small><span id="stakesText">搜捕初起</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="choice-preview" aria-live="polite">
+          <span class="preview-label">选项预判</span>
+          <p class="preview-text" id="choicePreview">移动到一个选项上，查看它会牵动的人物、路线和主要后果。</p>
+        </div>
+        <div class="choices" id="choices" aria-label="行动选择"></div>
+      </section>
+
+      <nav class="side-tabs" aria-label="信息面板">
+        <button class="tab-btn active" data-tab="structure">结构</button>
+        <button class="tab-btn" data-tab="destiny">倾向</button>
+        <button class="tab-btn" data-tab="thesis">命题</button>
+        <button class="tab-btn" data-tab="evidence">证据</button>
+        <button class="tab-btn" data-tab="ability">能力</button>
+        <button class="tab-btn" data-tab="people">人物</button>
+        <button class="tab-btn" data-tab="memory">月记</button>
+      </nav>
+
+      <aside class="panel side-panel active" data-panel="structure" aria-labelledby="world-title">
+        <div class="panel-head">
+          <h2 class="panel-title" id="world-title">历史结构</h2>
+          <span class="tag" id="pressureTag">搜捕初起</span>
+        </div>
+        <div class="panel-body">
+          <div class="meters" id="structureMeters"></div>
+        </div>
+      </aside>
+
+      <aside class="panel side-panel" data-panel="destiny" aria-labelledby="destiny-title">
+        <div class="panel-head">
+          <h2 class="panel-title" id="destiny-title">结局倾向</h2>
+          <span class="tag" id="destinyTag">尚未定形</span>
+        </div>
+        <div class="panel-body">
+          <div class="destiny-list" id="destinyMeters" aria-live="polite"></div>
+          <p class="warning-note" id="dangerNote" hidden></p>
+        </div>
+      </aside>
+
+      <aside class="panel side-panel" data-panel="thesis" aria-labelledby="thesis-title">
+        <div class="panel-head">
+          <h2 class="panel-title" id="thesis-title">历史命题</h2>
+          <span class="tag" id="thesisTag">待验证</span>
+        </div>
+        <div class="panel-body">
+          <div class="thesis-card">
+            <p class="thesis-title" id="thesisName">尚未选择命题</p>
+            <p class="thesis-desc" id="thesisDesc">开局选择一个历史解释，后续经历会成为支持或反驳它的证据。</p>
+          </div>
+          <div class="meters" id="thesisMeters"></div>
+        </div>
+      </aside>
+
+      <aside class="panel side-panel" data-panel="evidence" aria-labelledby="evidence-title">
+        <div class="panel-head">
+          <h2 class="panel-title" id="evidence-title">证据链</h2>
+          <span class="tag" id="evidenceCount">0 条</span>
+        </div>
+        <div class="panel-body">
+          <div class="evidence-list" id="evidenceList" aria-live="polite"></div>
+        </div>
+      </aside>
+
+      <aside class="panel side-panel" data-panel="ability" aria-labelledby="ability-title">
+        <div class="panel-head">
+          <h2 class="panel-title" id="ability-title">个人能力</h2>
+          <span class="tag" id="ageTag">6 岁</span>
+        </div>
+        <div class="panel-body">
+          <div class="meters" id="abilityMeters"></div>
+        </div>
+      </aside>
+
+      <aside class="panel side-panel" data-panel="people" aria-labelledby="npc-title">
+        <div class="panel-head">
+          <h2 class="panel-title" id="npc-title">相遇之人</h2>
+          <span class="tag" id="npcCount">0 人</span>
+        </div>
+        <div class="panel-body">
+          <div class="relation-map" id="relationMap" aria-hidden="true"></div>
+          <div class="npc-list" id="npcList" aria-live="polite"></div>
+        </div>
+      </aside>
+
+      <aside class="panel side-panel" data-panel="memory" aria-labelledby="log-title">
+        <div class="panel-head">
+          <h2 class="panel-title" id="log-title">月记</h2>
+          <div class="log-actions">
+            <span class="tag" id="memoryTag">宋室记忆</span>
+            <button class="icon-btn" id="memoirSmallBtn" title="查看完整回忆录" aria-label="查看完整回忆录">册</button>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="log-list" id="logList" aria-live="polite"></div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <section class="modal" id="endingModal" role="dialog" aria-modal="true" aria-labelledby="endingTitle" aria-describedby="endingText">
+    <div class="modal-content">
+      <div class="panel-head">
+        <h2 class="panel-title" id="endingTitle">结局</h2>
+        <button class="icon-btn" id="closeModalBtn" title="关闭" aria-label="关闭">×</button>
+      </div>
+      <div class="panel-body">
+        <p class="event-text" id="endingText"></p>
+        <div class="final-score" id="finalScore"></div>
+        <ul class="ending-list" id="endingNotes"></ul>
+        <button class="primary-action" id="modalRestartBtn" style="margin-top: 18px;">再试一局</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="guide-overlay" id="guideOverlay" role="dialog" aria-modal="true" aria-labelledby="guideTitle" aria-describedby="guideDesc">
+    <div class="guide-card">
+      <h2 class="event-title" id="guideTitle">先读这一页</h2>
+      <p class="event-text" id="guideDesc">你扮演的是 6 岁的赵昺。前期多数选择不是“亲自谋划天下”，而是在亲信、僧人、宗族和船主的保护下学习如何活下去；随着年龄增长，能主动承担的政治选择会逐步变多。</p>
+      <div class="guide-grid">
+        <div class="guide-item"><strong>左侧状态</strong><span>查看时间、地点、公开身份、成长阶段和路线倾向。</span></div>
+        <div class="guide-item"><strong>中间事件</strong><span>每月处理一个关键事件，数字键可以快速选择。</span></div>
+        <div class="guide-item"><strong>历史结构</strong><span>身份暴露、搜捕和结构惯性代表历史大势。</span></div>
+        <div class="guide-item"><strong>人物网络</strong><span>NPC 关系会开启或关闭后续故事线，不只是数值奖励。</span></div>
+      </div>
+      <button class="primary-action" id="closeGuideBtn">开始</button>
+    </div>
+  </section>
+
+  <script>
+    const SAVE_KEY = "hist-games-art-of-escaping-rule-v7";
+    const SLOT_KEY_PREFIX = "hist-games-art-of-escaping-rule-v7-slot-";
+    const GUIDE_KEY = "hist-games-guide-seen-v1";
+    const clamp = (value, min = 0, max = 100) => Math.max(min, Math.min(max, value));
+    const pick = (list) => list[Math.floor(Math.random() * list.length)];
+
+    const abilityLabels = {
+      survival: "生存",
+      learning: "学识",
+      courage: "胆识",
+      martial: "武力",
+      social: "社交",
+      finance: "理财",
+      craft: "手艺",
+      explore: "探险"
+    };
+
+    const structureLabels = {
+      exposure: "身份暴露",
+      legitimacy: "宋室合法",
+      loyalists: "忠臣网络",
+      shelter: "地方庇护",
+      yuan: "元廷搜捕",
+      unrest: "反元情绪",
+      sea: "海上通路",
+      troops: "兵马",
+      inertia: "结构惯性"
+    };
+
+    const routeSteps = [
+      { id: "崖山余波", place: "木棉花林" },
+      { id: "岭南藏身", place: "岭南乡里" },
+      { id: "福建与海路", place: "港口商路" },
+      { id: "身份选择", place: "海上据点" }
+    ];
+
+    const npcPool = [
+      { name: "杨氏旧侍", faction: "旧宫人", trait: "谨慎", desc: "认得宫中旧礼，却害怕任何复国言论。" },
+      { name: "陈姓船主", faction: "海商", trait: "谨慎", desc: "熟悉广州与泉州航线，最怕一人秘密拖累全船家口。" },
+      { name: "静照僧", faction: "寺院", trait: "沉默", desc: "能安排度牒与藏身处，也会劝你放下帝王执念。" },
+      { name: "云游医僧", faction: "寺院", trait: "疏离", desc: "不知你的真名，只能提供简陋度牒和有限的寺院引荐。" },
+      { name: "林氏族长", faction: "宗族", trait: "权衡", desc: "掌握粮食和族丁，但绝不愿让全族陪葬。" },
+      { name: "许都巡", faction: "元朝官府", trait: "冷静", desc: "奉命查访宋室遗脉，对地方传闻格外敏感。" },
+      { name: "周书吏", faction: "旧臣", trait: "执拗", desc: "保存半册旧臣名录，相信赵宋仍可一呼百应。" },
+      { name: "阿蒲商人", faction: "外来商人", trait: "灵活", desc: "在港口替多方传递消息，知道沉默何时最值钱。" },
+      { name: "黎山寨首", faction: "民间武装", trait: "躁烈", desc: "愿打宋旗聚众，却缺粮、缺船，也缺耐心。" }
+    ];
+
+    const portraitMap = {
+      "赵昺": { cls: "zhao", role: "亡国幼帝" },
+      "静照僧": { cls: "monk", role: "山寺僧人" },
+      "云游医僧": { cls: "monk", role: "替代引路人" },
+      "杨氏旧侍": { cls: "attendant", role: "旧宫人" },
+      "林氏族长": { cls: "clan", role: "地方宗族" },
+      "陈姓船主": { cls: "shipmaster", role: "海上船主" },
+      "阿蒲商人": { cls: "shipmaster", role: "海外商人" },
+      "周书吏": { cls: "clerk", role: "南宋旧吏" },
+      "黎山寨首": { cls: "shipmaster", role: "地方武装" },
+      "许都巡": { cls: "clerk", role: "元廷巡检" }
+    };
+
+    const thesisDefinitions = {
+      structure: {
+        title: "天命已尽",
+        short: "结构压倒个人",
+        desc: "南宋灭亡后，个人选择至多改变局部命运，无法逆转土地、军政、户籍和地方秩序的重组。"
+      },
+      agency: {
+        title: "人事可为",
+        short: "关系创造缝隙",
+        desc: "即使大势已定，具体人物、承诺和策略仍能在结构缝隙中改变一些人的命运。"
+      },
+      memory: {
+        title: "记忆胜于复国",
+        short: "保存叙事",
+        desc: "政权消亡后，保存名字、证据和见证，比立刻恢复国家更可能延续历史意义。"
+      },
+      sea: {
+        title: "海洋打开可能性",
+        short: "海路重写身份",
+        desc: "陆上帝国的治理压力之下，海路、港口和海外网络能提供另一种生存和叙事空间。"
+      }
+    };
+
+    const evidenceCatalog = {
+      imperial_identity_danger: { title: "皇帝身份首先是危险", text: "旧物和衣纹能证明赵昺仍在，也会把追捕直接引到身边。", supports: ["structure", "memory"], challenges: ["agency"] },
+      survival_before_politics: { title: "生存先于大义", text: "粮食、伤病、住所和伪装，比复国口号更早决定一个孩子能否继续选择。", supports: ["structure"], challenges: ["agency"] },
+      temple_limited_refuge: { title: "寺院能藏人，不能藏朝廷", text: "静照和山寺可以提供度牒、书房和沉默，却无法安全承载复国组织。", supports: ["structure", "memory"], challenges: ["agency"] },
+      clan_absorbs_exile: { title: "宗族吸收亡国者", text: "族谱、粮仓和作保能保护赵昺，也会把帝王身份改造成地方身份。", supports: ["structure", "agency"], challenges: ["memory"] },
+      maritime_pragmatism: { title: "海商讲信用，不讲正统", text: "陈船主愿意交易、藏人和担保，但他的船籍、伙计与家口都被港口秩序牵住。", supports: ["sea", "structure"], challenges: ["agency"] },
+      loyalist_memory_pressure: { title: "旧臣忠义会制造行动压力", text: "周书吏保存名录，也催促赵昺承担公开身份带来的风险。", supports: ["memory", "agency"], challenges: ["structure"] },
+      overseas_identity: { title: "海外提供新生，也稀释故国", text: "阿蒲商人的契约能保命，却会把宋室身份包进商队账目。", supports: ["sea", "structure"], challenges: ["memory"] },
+      registry_governance: { title: "新朝统治进入日常文书", text: "许都巡不必知道全部真相，也能通过户籍、口音和船票缩小空间。", supports: ["structure"], challenges: ["agency"] },
+      rebellion_supply_limit: { title: "起事最先缺粮，不是缺义愤", text: "黎山寨首能打出宋旗，但粮草、船路和纪律决定反抗能走多远。", supports: ["structure"], challenges: ["agency"] },
+      military_agency: { title: "武装能扩大能动性，也放大代价", text: "招募乡勇、整训水手和购买弓甲能让赵昺主动博弈，但兵马越多，粮草、军纪和搜捕压力越会反噬。", supports: ["agency"], challenges: ["structure"] },
+      memory_archive_evidence: { title: "记忆可以替代复国成为成果", text: "密档、口述和寺院暗格不能恢复疆土，却能改变亡国如何被理解。", supports: ["memory", "agency"], challenges: ["structure"] },
+      relational_agency: { title: "关系能改变局部命运", text: "人物之间的信任、承诺和互助，能在大势之下救出具体的人。", supports: ["agency"], challenges: ["structure"] },
+      sea_escape_evidence: { title: "海路让统治边界变得松动", text: "港口、船籍、番坊和海外网络让赵昺有机会离开陆上户籍秩序。", supports: ["sea", "agency"], challenges: ["structure"] }
+    };
+
+    const flagEvidenceMap = {
+      plain_clothes: "imperial_identity_danger",
+      kept_regalia: "imperial_identity_danger",
+      village_knows_secret: "imperial_identity_danger",
+      shore_hut: "survival_before_politics",
+      temple_refuge: "temple_limited_refuge",
+      temple_student: "temple_limited_refuge",
+      temple_line_cooled: "temple_limited_refuge",
+      temple_risk_continues: "temple_limited_refuge",
+      sutra_names_hidden: "temple_limited_refuge",
+      clan_adopted: "clan_absorbs_exile",
+      clan_front_seat: "clan_absorbs_exile",
+      clan_ledger_role: "clan_absorbs_exile",
+      clan_tax_roll_done: "clan_absorbs_exile",
+      merchant_apprentice: "maritime_pragmatism",
+      no_forced_ships: "maritime_pragmatism",
+      grain_for_loyalists: "maritime_pragmatism",
+      ship_registry_done: "maritime_pragmatism",
+      crew_families_spared: "maritime_pragmatism",
+      kept_roster: "loyalist_memory_pressure",
+      declared_to_clerk: "loyalist_memory_pressure",
+      clerk_ordered_cells: "loyalist_memory_pressure",
+      clerk_compromise_done: "loyalist_memory_pressure",
+      signed_foreign_contract: "overseas_identity",
+      merchant_life_chosen: "overseas_identity",
+      relics_hidden_oversea: "overseas_identity",
+      apu_quanzhou_done: "overseas_identity",
+      registry_suspicion: "registry_governance",
+      patrol_closer: "registry_governance",
+      registry_repaired: "registry_governance",
+      patrol_private_note_done: "registry_governance",
+      open_rebellion: "rebellion_supply_limit",
+      rebels_forced_battle: "rebellion_supply_limit",
+      sea_supplied_rebels: "rebellion_supply_limit",
+      recruited_village_youth: "military_agency",
+      bought_arms: "military_agency",
+      disciplined_troops: "military_agency",
+      won_patrol_ambush: "military_agency",
+      formed_war_band: "military_agency",
+      memory_archive: "memory_archive_evidence",
+      monastic_memory: "memory_archive_evidence",
+      oral_history: "memory_archive_evidence",
+      attendant_names_done: "memory_archive_evidence",
+      attendant_safe_house: "relational_agency",
+      tea_shed_cell: "relational_agency",
+      clan_wedding_done: "relational_agency",
+      sea_base: "sea_escape_evidence",
+      oversea_exile: "sea_escape_evidence",
+      planned_route: "sea_escape_evidence"
+    };
+
+    const events = [
+      {
+        id: "thesis_choice",
+        phase: "崖山余波",
+        type: "历史命题",
+        title: "你要验证什么历史？",
+        text: "这个游戏并不只问赵昺能否活下去。它更想问：在一个王朝已经失败以后，个人选择、人物关系和历史结构之间究竟是什么关系？请先选择这局要验证的历史命题。",
+        choices: [
+          { title: "天命已尽", hint: "验证结构是否最终压过个人努力。", thesis: "structure", noAdvance: true, next: "kapok", log: "你决定把这段逃亡看作一场结构压力的实验：个人选择能改变什么，又不能改变什么？" },
+          { title: "人事可为", hint: "验证人物关系和策略能否改变局部命运。", thesis: "agency", noAdvance: true, next: "kapok", log: "你决定观察那些微小的人事安排：一顿饭、一封信、一条船路，是否能改变人的结局。" },
+          { title: "记忆胜于复国", hint: "验证保存证据和叙事是否比复国更现实。", thesis: "memory", noAdvance: true, next: "kapok", log: "你决定把复国之外的保存也视为结果：名字、见证和叙述能不能成为另一种延续？" },
+          { title: "海洋打开可能性", hint: "验证海路和海外网络是否能重写身份。", thesis: "sea", noAdvance: true, next: "kapok", log: "你决定把目光投向海路：当陆上统治变得严密，港口和远洋是否仍能打开新的余地？" }
+        ]
+      },
+      {
+        id: "kapok",
+        phase: "崖山余波",
+        type: "生存事件",
+        title: "木棉花下",
+        text: "潮声还在耳边，木棉花落在湿衣上。远处有搜船的火光，身旁只剩一枚旧玉、一点碎银和几声压低的哭喊。世人将相信赵昺已死；你必须决定自己要先保存什么。",
+        choices: [
+          { title: "割去衣上纹饰", hint: "抹去宫中痕迹，换来更可信的逃亡身份。", effects: { exposure: -12, survival: 5, legitimacy: -5 }, flags: ["plain_clothes"], cover: "落难童仆", next: "village_gate", log: "你剪下衣角上的旧纹，把玉藏进泥里。皇帝先学会了不被认出。" },
+          { title: "保存玉佩和小印", hint: "留下身份凭证，也留下被辨认的证据。", effects: { legitimacy: 12, exposure: 8, courage: 4 }, flags: ["kept_regalia"], next: "reed_voices", log: "你把旧玉攥得很紧。它不能换来军队，却能让某些人相信你仍是你。" },
+          { title: "沿哭声寻找幸存者", hint: "主动找人会带来关系，也会留下脚印。", effects: { loyalists: 4, exposure: 5, social: 3 }, flags: ["searched_reeds"], next: "reed_voices", log: "你沿芦苇深处寻找活人。找人，本身就是一种暴露。" }
+        ]
+      },
+      {
+        id: "reed_voices",
+        phase: "崖山余波",
+        type: "人物事件",
+        title: "芦苇里的两个人",
+        text: "芦苇深处藏着两个人：一个受伤的年轻僧人静照，怀里揣着附近山寺的通行木牌；另一个是旧宫人杨氏旧侍，她认得你腕上的旧痕。你没有能力同时照顾所有人。",
+        choices: [
+          { title: "救静照僧", hint: "开启寺院线，获得隐蔽身份和后续山寺事件。", effects: { shelter: 5, exposure: -3, learning: 2 }, npcName: "静照僧", relation: { "静照僧": 18 }, flags: ["saved_monk", "temple_token"], next: "broken_boat", log: "静照把木牌塞进你手里，说山寺不问俗名，但问因果。" },
+          { title: "救杨氏旧侍", hint: "开启旧宫人线，获得宫中记忆和身份保护。", effects: { loyalists: 6, legitimacy: 5, exposure: 4, social: 2 }, npcName: "杨氏旧侍", relation: { "杨氏旧侍": 22 }, flags: ["saved_attendant", "palace_memory"], next: "village_gate", log: "杨氏旧侍跪下后立刻止住自己，她知道这一跪可能害死你。" },
+          { title: "只留下食物和暗记", hint: "不暴露自己，日后也许有人循暗记找来。", effects: { exposure: -4, survival: -3, loyalists: 2 }, flags: ["left_reed_mark"], next: "village_gate", route: "记忆", log: "你在石下压了一点食物和半句旧宫暗语。联系不是见面，有时只是留下一条线。" }
+        ]
+      },
+      {
+        id: "village_gate",
+        phase: "崖山余波",
+        type: "地方事件",
+        title: "渔村夜门",
+        text: "一个渔村在山脚亮着灯。村人不问大义，只问你是否会把巡检带来。你身上的证物、同伴和说辞，会决定他们如何看你。",
+        choices: [
+          { title: "以童仆身份求宿", hint: "需要粗衣伪装或留下暗记；村人会把你交给林氏宗族。", requires: { anyFlags: ["plain_clothes", "left_reed_mark"] }, effects: { shelter: 9, exposure: -5, survival: 3 }, flags: ["village_shelter"], cover: "渔村童仆", next: "lin_clan_first", log: "你学会低头说话，换来一碗粥，也换来村长写给林氏族长的一句担保。" },
+          { title: "请静照出示木牌", hint: "只有救下静照后可用；直接通往山寺。", requires: { npcs: ["静照僧"] }, effects: { shelter: 10, exposure: -8, learning: 3 }, flags: ["temple_refuge"], cover: "寺院童仆", next: "temple_first", log: "静照没有说你的来历，只说你是海难遗孤。村人信了木牌，不信你。" },
+          { title: "亮出旧物求忠义", hint: "只有保存玉佩或有旧宫人作证时可用；会引出旧臣线。", requires: { anyFlags: ["kept_regalia", "saved_attendant"] }, effects: { legitimacy: 9, loyalists: 7, exposure: 12, yuan: 6 }, flags: ["village_knows_secret"], route: "复国", next: "old_clerk_letter", log: "老人看见旧物后没有欢呼，只关门、熄灯、让你从后窗进去。" },
+          { title: "用碎银换夜船", hint: "绕开村社，进入海商线，但庇护不足。", effects: { sea: 9, finance: -4, shelter: -3, explore: 2 }, flags: ["hired_night_boat"], route: "流亡", next: "boat_bargain", log: "船主陈姓，先看银钱，再看潮路，最后才看你是不是孩子。" }
+        ]
+      },
+      {
+        id: "broken_boat",
+        phase: "崖山余波",
+        type: "海上事件",
+        title: "破船与潮汐",
+        text: "岸边搁浅着一条被浪打裂的小船。静照伤口发热，远处搜船的火把还在移动。你可以修船、造假象，或向村里求援。",
+        choices: [
+          { title: "修补船板送静照离岸", hint: "手艺检定；若成功，静照会在山寺替你铺路。", check: "craft", success: { sea: 8, craft: 4, exposure: -3 }, fail: { survival: -6, sea: -4, exposure: 5 }, flags: ["monk_owes_debt"], relation: { "静照僧": 10 }, next: "temple_first", route: "记忆", log: "船没有变好，只是暂时还没沉。静照说，欠命的人会还路。", failLog: "船板没能撑住，静照的伤也更重了。你们仍向山寺去，只是把风险一起带上了岸。" },
+          { title: "点火制造假死痕迹", hint: "误导追兵，但附近所有人都会看见烟。", effects: { yuan: -5, exposure: 6, courage: 5 }, flags: ["fake_death_fire"], next: "village_gate", log: "火光把破船照成一场假死。追兵追向烟，村人也看见了烟。" },
+          { title: "拆船取木搭临时棚", hint: "放弃立刻远走，增加短期生存。", effects: { shelter: 6, craft: 3, sea: -5 }, flags: ["shore_hut"], route: "隐居", next: "village_gate", log: "船变成了棚。远方暂时让位给今夜的风雨。" }
+        ]
+      },
+      {
+        id: "lin_clan_first",
+        phase: "岭南藏身",
+        type: "宗族事件",
+        title: "林氏祠堂",
+        text: "林氏族长愿意收留你，但他要先知道风险归谁承担。渔村担保让你能进门，不能让你被信任。",
+        choices: [
+          { title: "改名入族", hint: "获得稳定身份，赵宋合法性会慢慢变暗。", effects: { shelter: 13, exposure: -9, legitimacy: -8, social: 4 }, flags: ["clan_adopted"], npcName: "林氏族长", relation: { "林氏族长": 10 }, cover: "林氏养子", route: "隐居", next: "clan_price", log: "族谱多了一个普通名字。它救了你的命，也遮住了你的来处。" },
+          { title: "只向族长说明真相", hint: "保留身份秘密，换来有限庇护。", requires: { anyFlags: ["kept_regalia", "saved_attendant", "village_knows_secret"] }, effects: { shelter: 8, loyalists: 5, exposure: 5, learning: 2 }, flags: ["clan_knows_secret"], relation: { "林氏族长": 14 }, npcName: "林氏族长", route: "记忆", next: "clan_price", log: "族长没有写下真名，只说祠堂会闭嘴，但闭嘴也要粮。" },
+          { title: "请求族中船路", hint: "不入族，借宗族关系转向港口。", effects: { sea: 7, shelter: 2, finance: -3, exposure: 3 }, flags: ["clan_boat_intro"], npcName: "林氏族长", relation: { "林氏族长": 4 }, route: "流亡", next: "boat_bargain", log: "林氏没有收你，只给了一封写给船户的短笺。" }
+        ]
+      },
+      {
+        id: "temple_first",
+        phase: "岭南藏身",
+        type: "寺院事件",
+        title: "山寺递牒",
+        text: "静照把你带入山寺。寺中能给你度牒、书房和藏身处，但住持不愿寺院成为复国密室。",
+        requires: { anyFlags: ["temple_token", "temple_refuge", "monk_owes_debt", "met_wandering_monk"] },
+        choices: [
+          { title: "随静照读史书", hint: "学识成长，身份隐蔽，政治记忆降温。", effects: { learning: 9, exposure: -6, shelter: 7, legitimacy: -3 }, flags: ["temple_student"], cover: "寺院童仆", relation: { "静照僧": 8 }, route: "隐居", next: "temple_whisper", log: "经卷与史书摆在同一张案上。你开始分辨记忆和执念。" },
+          { title: "让香客传递暗语", hint: "把寺院变成交通线，会伤害静照的安全。", effects: { loyalists: 8, exposure: 8, social: 4, yuan: 5 }, flags: ["temple_network"], relation: { "静照僧": -6 }, route: "记忆", next: "old_clerk_letter", log: "香客带走一句暗语，也带回一段旧朝消息。静照第一次对你皱眉。" },
+          { title: "学习医药与杂役", hint: "强化自立能力，不立刻推进政治线。", effects: { survival: 6, craft: 7, shelter: 4 }, flags: ["temple_craft"], cover: "寺院童仆", next: "temple_whisper", log: "你会磨药、煮粥、补衣。活下去先于一切大义。" }
+        ]
+      },
+      {
+        id: "old_clerk_letter",
+        phase: "岭南藏身",
+        type: "旧臣事件",
+        title: "半册名录",
+        text: "周书吏托人送来半册旧臣名录。他不敢来见你，却要求你给一个字：承认、沉默，或销毁。",
+        requires: { anyFlags: ["village_knows_secret", "temple_network", "left_reed_mark", "saved_attendant"] },
+        choices: [
+          { title: "写下“在”字", hint: "承认自己仍在，旧臣网络开始组织。", effects: { loyalists: 12, legitimacy: 10, exposure: 12, yuan: 7 }, flags: ["declared_to_clerk"], npcName: "周书吏", relation: { "周书吏": 22 }, route: "复国", next: "clerk_demands", log: "你只写了一个字。它比诏书短，却足够让许多人睡不着。" },
+          { title: "收名录但不回应", hint: "保存记忆，不发起号召。", effects: { loyalists: 5, legitimacy: 4, exposure: 3, learning: 4 }, flags: ["kept_roster"], relation: { "周书吏": 6 }, route: "记忆", next: "memory_box", log: "你没有许诺复国，只把那些名字一笔一画记下。" },
+          { title: "退回名录并断线", hint: "降低追踪风险，旧臣线将受损。", effects: { exposure: -9, loyalists: -9, shelter: 3, legitimacy: -4 }, flags: ["rejected_clerk"], route: "隐居", next: "clan_price", log: "书吏没有再来信。你知道自己断掉的不只是麻烦。" }
+        ]
+      },
+      {
+        id: "clan_price",
+        phase: "岭南藏身",
+        type: "连锁事件",
+        title: "庇护的价钱",
+        text: "林氏族中开始有人问：为什么要替一个外来孩子承担风险？族长可以护你一时，但需要你证明你不是只会带来灾祸。",
+        requires: { anyFlags: ["clan_adopted", "clan_knows_secret", "village_shelter"] },
+        choices: [
+          { title: "替族中整理账册", hint: "用理财换取信任。", check: "finance", success: { shelter: 9, finance: 4, exposure: -3 }, fail: { shelter: -4, exposure: 5 }, relation: { "林氏族长": 8 }, failRelation: { "林氏族长": -6 }, log: "你第一次用账册而不是姓氏证明自己有用。", failLog: "账册越理越乱，族中有人开始说，外来孩子只会带来麻烦。" },
+          { title: "教族童读书", hint: "建立日常关系，缓慢保留士人身份。", effects: { learning: 5, social: 5, shelter: 5, legitimacy: 2 }, flags: ["clan_teacher"], relation: { "林氏族长": 5 }, route: "记忆", log: "孩子们不知道你是谁，只知道你讲临安和海潮时会停顿。" },
+          { title: "请求族丁保护旧臣", hint: "把宗族拖入政治，后果会回来。", requires: { anyFlags: ["declared_to_clerk", "kept_roster"] }, effects: { loyalists: 8, shelter: -6, exposure: 9, yuan: 7 }, flags: ["clan_political_risk"], route: "复国", next: "clerk_demands", log: "族长同意借人，却把杯子放得很重。你欠下的是整族人的安危。" }
+        ]
+      },
+      {
+        id: "temple_whisper",
+        phase: "岭南藏身",
+        type: "人物事件",
+        title: "静照的劝告",
+        text: "静照说，寺院能藏一个孩子，藏不了一个朝廷。他问你：你想逃避统治，还是换一种方式继续被皇帝身份统治？",
+        requires: { npcs: ["静照僧"] },
+        choices: [
+          { title: "接受剃度掩护", hint: "强隐蔽路线，几乎切断公开复国。", effects: { exposure: -12, shelter: 10, legitimacy: -10, learning: 3 }, flags: ["tonsure_cover"], cover: "小沙弥", relation: { "静照僧": 14 }, route: "隐居", log: "剃刀落下时，你没有变轻，只是少了一种被认出的方式。" },
+          { title: "请他保管密档", hint: "寺院保存记忆，但静照承担风险。", requires: { anyFlags: ["kept_roster", "kept_regalia", "palace_memory"] }, effects: { legitimacy: 6, loyalists: 4, exposure: 4 }, flags: ["temple_archive"], relation: { "静照僧": 6 }, route: "记忆", next: "memory_box", log: "静照接过密档，说寺院不复国，但可以记住谁曾来过。" },
+          { title: "离寺入港", hint: "不让寺院继续担风险，转入海商线。", effects: { sea: 8, shelter: -5, explore: 4, exposure: -2 }, flags: ["left_temple_for_port"], route: "流亡", next: "boat_bargain", log: "你向静照行礼。山门合上，海风重新接住你。" }
+        ]
+      },
+      {
+        id: "boat_bargain",
+        phase: "福建与海路",
+        type: "海商事件",
+        title: "陈船主的担保",
+        text: "陈姓船主在泉州外港接你上船。这里仍有宋时市舶旧规的影子，也有新朝查验船户、保人的压力。他愿意帮一个孩子过海，却必须先知道这份风险算在谁头上。",
+        requires: { anyFlags: ["hired_night_boat", "clan_boat_intro", "left_temple_for_port"] },
+        choices: [
+          { title: "以银钱买一段沉默", hint: "普通交易，少牵连，但关系较浅。", effects: { sea: 10, finance: -6, exposure: -4, shelter: -2 }, flags: ["paid_passage"], npcName: "陈姓船主", relation: { "陈姓船主": 6 }, route: "流亡", next: "port_rumor", log: "陈船主收钱后只叫你小郎。他把你安排在舱底靠淡水桶的位置，那里不好受，却最少被人看见。" },
+          { title: "让他知道旧物来历", hint: "以身份换更深庇护，也把船主拖进秘密。", requires: { anyFlags: ["kept_regalia", "declared_to_clerk", "village_knows_secret"] }, effects: { sea: 11, finance: 2, legitimacy: 6, exposure: 9, yuan: 5 }, flags: ["merchant_knows_secret"], npcName: "陈姓船主", relation: { "陈姓船主": 16 }, route: "记忆", next: "port_rumor", log: "陈船主没有跪。他只把舱门关紧，说：我认的是活人，不是空名；但空名会害死活人。" },
+          { title: "替他抄船户文书", hint: "学会港口规则，成功则形成长期雇佣身份。", check: "finance", success: { sea: 7, finance: 5, exposure: -4, learning: 2 }, fail: { finance: -3, exposure: 5, yuan: 2 }, flags: ["merchant_apprentice"], failFlags: ["botched_ship_accounts"], cover: "商船抄手", npcName: "陈姓船主", addNpcOnFail: true, relation: { "陈姓船主": 10 }, failRelation: { "陈姓船主": -8 }, route: "流亡", next: "port_rumor", log: "你照着船户册抄名字、籍贯和押记。第一次明白，海上的自由也要先过纸上的关。", failLog: "你抄错了一个伙计的乡贯。陈船主没赶你下船，却把那页纸撕下烧掉：错字有时比刀还快。" }
+        ]
+      },
+      {
+        id: "port_rumor",
+        phase: "福建与海路",
+        type: "港口事件",
+        title: "泉州港的传闻",
+        text: "泉州港里挤着船户、番商、僧人、旧吏和新朝书手。关于你的说法越传越杂：海难遗孤、南来的贵童、会给保人惹祸的陌生孩子。传闻不再只是话，它开始决定谁敢与你同桌。",
+        choices: [
+          { title: "请陈船主改换保人说法", hint: "需要船主关系；让传闻变成可核验的生活细节。", requires: { npcs: ["陈姓船主"] }, effects: { finance: -4, exposure: -10, yuan: -3, sea: 3 }, relation: { "陈姓船主": -2 }, log: "陈船主替你编出一个死在海难里的舅父，又让两个伙计记住同一个版本。港口暂时相信了生活，而不是传说。" },
+          { title: "顺势联络周书吏旧线", hint: "需要旧臣名录或公开暗号。", requires: { anyFlags: ["declared_to_clerk", "kept_roster", "temple_network"] }, effects: { loyalists: 10, legitimacy: 8, exposure: 12, yuan: 9 }, flags: ["port_loyalist_cells"], route: "复国", next: "clerk_demands", log: "传闻像潮水，退去之后留下几封没有署名的信。" },
+          { title: "接受阿蒲商人的海外邀约", hint: "进入外来商人线，可能远离故土。", effects: { sea: 12, finance: 3, legitimacy: -4, explore: 5 }, flags: ["foreign_merchant_offer"], npcName: "阿蒲商人", relation: { "阿蒲商人": 16 }, route: "流亡", next: "foreign_contract", log: "阿蒲商人说，在番坊里，出身会被换成担保、契约和你能否守信。" }
+        ]
+      },
+      {
+        id: "clerk_demands",
+        phase: "身份选择",
+        type: "旧臣事件",
+        title: "周书吏的第二封信",
+        text: "周书吏不再满足于保存名字。他要求建立三处秘密联络点：山寺、宗族、港口。每一处都能扩张网络，也会把更多人拖入追捕。",
+        requires: { minMonth: 37, anyFlags: ["declared_to_clerk", "port_loyalist_cells", "clan_political_risk"] },
+        choices: [
+          { title: "建立三点联络", hint: "形成复国骨架，搜捕急剧上升。", effects: { loyalists: 16, legitimacy: 12, unrest: 10, exposure: 15, yuan: 14, inertia: 4 }, flags: ["three_cells"], relation: { "周书吏": 16 }, route: "复国", next: "rebels", log: "山寺传书、宗族藏人、港口运钱。网络终于像网络，也终于像靶子。" },
+          { title: "只保留港口一线", hint: "收缩为流亡情报网。", effects: { sea: 8, loyalists: 5, exposure: 4, yuan: 3 }, flags: ["port_only_cell"], route: "记忆", next: "memory_box", log: "你拒绝让所有人同时冒险。周书吏不满，但照办。" },
+          { title: "命他停止行动", hint: "减少连锁牵连，旧臣关系破裂。", effects: { exposure: -8, yuan: -5, loyalists: -12, legitimacy: -6 }, flags: ["broke_with_clerk"], relation: { "周书吏": -20 }, route: "隐居", log: "周书吏回信只有四字：臣不能从。" }
+        ]
+      },
+      {
+        id: "foreign_contract",
+        phase: "福建与海路",
+        type: "海外事件",
+        title: "外商契约",
+        text: "阿蒲商人愿意安排你去占城或更远的海路，但要你先成为商队里一个可被信任的少年抄手。这个身份安全、实用，也会让赵宋正统被压进契约和港税之间。",
+        requires: { minMonth: 37, npcs: ["阿蒲商人"] },
+        choices: [
+          { title: "签下商队契约", hint: "稳定进入海外线。", effects: { sea: 15, finance: 6, exposure: -8, legitimacy: -7, explore: 6 }, flags: ["signed_foreign_contract"], cover: "商队抄手", relation: { "阿蒲商人": 10 }, route: "流亡", next: "oversea_choice", log: "契约上没有赵昺，只有一个能抄清货名、听懂几种口音的孩子。" },
+          { title: "利用外商传递密信", hint: "让海外线服务记忆政治。", effects: { sea: 8, loyalists: 6, exposure: 6, finance: -3 }, flags: ["oversea_letters"], relation: { "阿蒲商人": 4 }, route: "记忆", next: "memory_box", log: "信被缝进货包，跟香料和瓷器一起离港。" },
+          { title: "拒绝远航，留在泉州", hint: "保留故土联系，港口风险上升。", effects: { shelter: 3, legitimacy: 3, yuan: 5, sea: -4 }, flags: ["stayed_in_quanzhou"], route: "记忆", next: "patrol_check", log: "你留了下来。陆地没有比海安全，只是更像故国。" }
+        ]
+      },
+      {
+        id: "patrol_check",
+        phase: "福建与海路",
+        type: "追捕事件",
+        title: "巡检查验",
+        text: "元廷巡检开始查验船户、寺牒和流民籍册。一名书手盯着你的年纪、口音和随身文书，看得太久了。",
+        choices: [
+          { title: "背熟伪造籍贯", hint: "学识检定；寺院或宗族身份会降低风险。", check: "learning", success: { exposure: -8, learning: 3 }, fail: { exposure: 10, yuan: 8, shelter: -4 }, flags: ["passed_registry"], failFlags: ["registry_suspicion"], log: "你把伪造的乡贯背了三遍。纸上的身份开始保护真实的身体。", failLog: "你在籍贯上迟疑了一息。书手没有抓你，却在册页旁做了一个小记号。" },
+          { title: "请关系人作保", hint: "需要静照、林氏族长或陈船主之一。", requires: { anyNpcs: ["静照僧", "林氏族长", "陈姓船主"] }, effects: { exposure: -6, yuan: -3, shelter: 2 }, log: "作保的人没有问你值不值得，只问自己还能否承受下一次。" },
+          { title: "趁乱逃走", hint: "探险检定，高风险但可能脱离港口。", check: "explore", success: { exposure: -6, sea: 5, courage: 4 }, fail: { exposure: 12, survival: -8, yuan: 8 }, flags: ["fled_registry"], failFlags: ["botched_escape"], log: "你从货箱后钻进雨里。逃走的人总会留下一点痕迹。", failLog: "你撞翻货箱，雨声没能盖住动静。追捕从此有了更清楚的方向。" }
+        ]
+      },
+      {
+        id: "memory_box",
+        phase: "身份选择",
+        type: "记忆事件",
+        title: "藏起的名字",
+        text: "你手中积累了旧臣名录、族谱暗记、寺院保管的密档或海上来信。它们无法自动复国，却能决定宋室记忆是被保存、散播，还是烧掉。",
+        choices: [
+          { title: "建立密档箱", hint: "保存记忆，降低短期行动。", effects: { learning: 5, loyalists: 5, legitimacy: 7, exposure: 3 }, flags: ["memory_archive"], route: "记忆", log: "你把名字重新排好。一个王朝有时先以名单的形式存活。" },
+          { title: "把记忆交给寺院", hint: "需要静照或寺院线；保存更稳，政治性更弱。", requires: { anyFlags: ["temple_archive", "temple_student", "tonsure_cover"] }, effects: { exposure: -5, legitimacy: 4, shelter: 5, loyalists: 2 }, flags: ["monastic_memory"], route: "隐居", log: "静照说，寺院不替你称帝，但会替你留下来过的证据。" },
+          { title: "派人散播未死传说", hint: "提高号召，也加深追捕。", effects: { legitimacy: 10, unrest: 8, exposure: 10, yuan: 8 }, flags: ["living_emperor_legend"], route: "复国", next: "rebels", log: "宋帝未死的故事穿过茶肆、渡口和寺门。" },
+          { title: "销毁证据", hint: "安全，但许多路线会永久关闭。", effects: { exposure: -14, yuan: -6, loyalists: -8, legitimacy: -10 }, flags: ["burned_archive"], route: "隐居", log: "火光很小，烧掉的却是许多人最后的盼望。" }
+        ]
+      },
+      {
+        id: "rebels",
+        phase: "身份选择",
+        type: "政治事件",
+        title: "宋旗重现",
+        text: "黎山寨首打出宋旗，请你公开露面。周书吏说这是机会，林氏族长说这是灾祸，陈船主问谁来供粮。",
+        requires: { minMonth: 67, anyFlags: ["three_cells", "living_emperor_legend", "port_loyalist_cells"] },
+        choices: [
+          { title: "公开支持起事", hint: "复国声望暴涨，几乎必然引来围剿。", effects: { legitimacy: 18, loyalists: 12, unrest: 16, exposure: 18, yuan: 17, inertia: 5 }, flags: ["open_rebellion"], npcName: "黎山寨首", relation: { "黎山寨首": 20 }, route: "复国", log: "宋旗重新出现。它让人哭，也让追兵加快脚步。" },
+          { title: "只给粮盐与名义", hint: "保持距离，形成地方抵抗而非公开复国。", effects: { loyalists: 8, unrest: 7, finance: -6, exposure: 6, yuan: 5 }, flags: ["sponsored_rebels"], route: "记忆", log: "你没有露面，只让一批粮盐在夜里换了主人。" },
+          { title: "撤销宋旗", hint: "阻止牵连，反元势力会怨恨你。", effects: { exposure: -7, yuan: -5, unrest: -12, legitimacy: -7 }, flags: ["forbade_rebellion"], relation: { "周书吏": -8, "黎山寨首": -14 }, route: "隐居", log: "来使怒而离去。几日后，山外传来败讯。" }
+        ]
+      },
+      {
+        id: "oversea_choice",
+        phase: "身份选择",
+        type: "海上事件",
+        title: "远航之议",
+        text: "船队已能离开中国沿海。海外可以保存性命，也意味着赵宋政治中心从故土移开。你不是在选择地图，而是在选择谁还有资格定义你。",
+        requires: { minMonth: 49, anyFlags: ["signed_foreign_contract", "paid_passage", "merchant_apprentice", "foreign_merchant_offer"] },
+        choices: [
+          { title: "远走海外", hint: "高安全，高流亡倾向。", effects: { sea: 16, exposure: -9, yuan: -7, legitimacy: -7, explore: 6 }, flags: ["oversea_exile"], route: "流亡", cover: "海外账房", log: "陆地越来越远。你第一次明白，逃离统治也可能是逃离故国。" },
+          { title: "建立海上据点", hint: "昂贵但保留政治可能。", effects: { sea: 10, loyalists: 7, finance: -7, exposure: 6, shelter: 5 }, flags: ["sea_base"], route: "记忆", log: "一处小港成了信件、粮袋和传闻的交汇处。" },
+          { title: "返回内陆联络宗族", hint: "复国准备，风险上升。", requires: { anyFlags: ["clan_knows_secret", "declared_to_clerk", "port_loyalist_cells"] }, effects: { shelter: 6, loyalists: 8, exposure: 9, yuan: 8, sea: -5 }, flags: ["returned_inland"], route: "复国", next: "clerk_demands", log: "你离开船舱，再次走向祠堂、族谱和密谈。" }
+        ]
+      },
+      {
+        id: "attendant_memory",
+        phase: "岭南藏身",
+        type: "旧宫人支线",
+        title: "杨氏旧侍的旧礼",
+        text: "杨氏旧侍把一只破木匣放在你面前，里面不是财物，而是她从宫中记下的称谓、忌讳和逃亡时被改掉的名字。她说，若你要活成普通人，这些东西会害你；若你要记住自己，它们又不能全丢。",
+        requires: { minMonth: 4, npcs: ["杨氏旧侍"], noFlags: ["attendant_memory_done"] },
+        choices: [
+          { title: "请她教你宫中旧礼", hint: "保留身份记忆，旧宫人关系加深，暴露略升。", effects: { legitimacy: 6, learning: 4, exposure: 3 }, flags: ["attendant_memory_done", "palace_lesson"], relation: { "杨氏旧侍": 10 }, route: "记忆", log: "杨氏旧侍教你的不是排场，而是哪些人听见一个旧称会立刻变脸。" },
+          { title: "只留下可用于辨认的细节", hint: "保存关键证据，不让日常被旧礼吞没。", effects: { legitimacy: 3, social: 3, exposure: -1 }, flags: ["attendant_memory_done", "trimmed_palace_memory"], relation: { "杨氏旧侍": 5 }, route: "记忆", log: "你们删去称呼和仪节，只留下能证明身份、却不至于天天害人的几处细节。" },
+          { title: "劝她暂时忘记宫中身份", hint: "隐蔽更强，但她会觉得自己被连同旧朝一起放下。", effects: { exposure: -6, shelter: 2, legitimacy: -4 }, flags: ["attendant_memory_done", "attendant_silenced"], relation: { "杨氏旧侍": -8 }, route: "隐居", log: "杨氏旧侍点头，却把木匣抱得很紧。你知道自己救了安全，也伤了她留下来的理由。" }
+        ]
+      },
+      {
+        id: "attendant_departure",
+        phase: "福建与海路",
+        type: "旧宫人支线",
+        title: "杨氏旧侍的去留",
+        text: "几年过去，杨氏旧侍的旧伤在潮湿天气里越来越重。她不能再轻易随行，却仍握着你最早的秘密。她问你：是让她留下守口，还是带她继续上路？",
+        requires: { minMonth: 30, npcs: ["杨氏旧侍"], anyFlags: ["palace_lesson", "trimmed_palace_memory", "attendant_silenced"], noFlags: ["attendant_departure_done"] },
+        choices: [
+          { title: "安排她留在安全人家", hint: "降低行路负担，保留旧宫人证词。", effects: { shelter: 5, exposure: -3, legitimacy: 2 }, flags: ["attendant_departure_done", "attendant_safe_house"], relation: { "杨氏旧侍": 8 }, route: "记忆", log: "杨氏旧侍留在一户愿意闭嘴的人家。她不能再同行，却成了你过去仍有人见证的证据。" },
+          { title: "带她继续随船", hint: "保留人物陪伴，但海路风险增加。", effects: { legitimacy: 5, social: 2, sea: -2, exposure: 4 }, flags: ["attendant_departure_done", "attendant_on_ship"], relation: { "杨氏旧侍": 12 }, route: "记忆", log: "她上船时没有回头。陈船主说多一张嘴就多一分风险，你没有反驳。" },
+          { title: "让她改名独自离开", hint: "最安全，也最接近切断旧宫线。", effects: { exposure: -7, yuan: -2, legitimacy: -5 }, flags: ["attendant_departure_done", "attendant_vanished"], relation: { "杨氏旧侍": -12 }, route: "隐居", log: "杨氏旧侍走进人群，从此不再回头。你第一次明白，有些人活下来，就是以消失为代价。" }
+        ]
+      },
+      {
+        id: "attendant_names",
+        phase: "身份选择",
+        type: "旧宫人支线",
+        title: "杨氏旧侍记下的女名",
+        text: "杨氏旧侍病中念起许多名字：乳母、宫女、船上失散的妇人、抱着孩子跳海的人。她说史书总记君臣，却很少记这些女人怎样把一个王朝的最后几个月撑过去。",
+        requires: { minMonth: 54, npcs: ["杨氏旧侍"], anyFlags: ["attendant_safe_house", "attendant_on_ship", "palace_lesson", "trimmed_palace_memory"], noFlags: ["attendant_names_done", "attendant_vanished"] },
+        choices: [
+          { title: "请她口述所有姓名", hint: "强化记忆线，把个人史扩展到宫人群像。", effects: { learning: 5, legitimacy: 5, exposure: 2 }, flags: ["attendant_names_done", "oral_history"], relation: { "杨氏旧侍": 12 }, route: "记忆", log: "你把那些名字写成小册。它们不替你复国，却让亡国不再只剩帝王一人。" },
+          { title: "删去会害人的籍贯", hint: "保存人物，又降低连坐风险。", effects: { exposure: -4, yuan: -2, legitimacy: 3, learning: 2 }, flags: ["attendant_names_done", "protected_women_names"], relation: { "杨氏旧侍": 8 }, route: "记忆", log: "你保留姓名，删去籍贯。杨氏旧侍说，这样也好：有人被记住，也有人还能活下去。" },
+          { title: "劝她只留下你的证词", hint: "聚焦皇室合法性，但人物关系受伤。", effects: { legitimacy: 6, loyalists: 3, exposure: 4 }, flags: ["attendant_names_done", "imperial_testimony_only"], relation: { "杨氏旧侍": -6 }, route: "复国", log: "她照你说的做了，却很久没有再看你。你保住了帝王证词，也删窄了她的历史。" }
+        ]
+      },
+      {
+        id: "monk_burden",
+        phase: "岭南藏身",
+        type: "静照支线",
+        title: "静照的戒尺",
+        text: "静照发现有香客开始打听你的来历。他没有告发你，只把戒尺放在案上：寺院可以藏一个孩子，但若变成旧臣往来的门，它会把全寺都拖进火里。",
+        requires: { minMonth: 8, npcs: ["静照僧"], anyFlags: ["temple_student", "temple_network", "temple_craft", "temple_refuge"], noFlags: ["monk_burden_done"] },
+        choices: [
+          { title: "停止借寺院传讯", hint: "保护静照与寺院，复国线降温。", effects: { exposure: -8, yuan: -3, shelter: 5, loyalists: -4 }, flags: ["monk_burden_done", "temple_line_cooled"], relation: { "静照僧": 12 }, route: "隐居", log: "你把暗语从香客身上撤回。静照没有夸你，只把戒尺收回抽屉。" },
+          { title: "把联络改到寺外茶棚", hint: "保留记忆线，风险从寺院转移到外部。", effects: { loyalists: 4, social: 3, exposure: 3, shelter: -1 }, flags: ["monk_burden_done", "tea_shed_cell"], relation: { "静照僧": 4, "周书吏": 3 }, route: "记忆", log: "暗语离开山门，落到茶棚和柴担之间。寺院轻了一些，你的路没有。" },
+          { title: "请求静照继续冒险", hint: "旧臣线推进，但静照关系受损。", effects: { loyalists: 8, legitimacy: 5, exposure: 9, yuan: 5 }, flags: ["monk_burden_done", "temple_risk_continues"], relation: { "静照僧": -10 }, route: "复国", next: "old_clerk_letter", log: "静照沉默许久，只说：若你把寺院当朝廷，寺院会先死。" }
+        ]
+      },
+      {
+        id: "monk_sutra_cabinet",
+        phase: "身份选择",
+        type: "静照支线",
+        title: "静照经柜里的名单",
+        text: "寺中经柜底层藏着几页旧名。静照说，佛门可以替亡者立往生牌，也可以替活人守沉默；可名单若被搜出，寺院里扫地的小沙弥也会被牵连。",
+        requires: { minMonth: 36, npcs: ["静照僧"], anyFlags: ["monk_burden_done", "temple_archive", "monastic_memory", "tea_shed_cell"], noFlags: ["monk_sutra_cabinet_done"] },
+        choices: [
+          { title: "改成无名往生牌", hint: "降低政治痕迹，保留悼念。", effects: { exposure: -7, yuan: -3, legitimacy: -2, shelter: 5 }, flags: ["monk_sutra_cabinet_done", "sutra_names_hidden"], relation: { "静照僧": 10 }, route: "隐居", log: "名字从纸上退成牌位后的无名灯火。静照说，能活下来的记忆，有时必须先学会不发声。" },
+          { title: "把名单转交周书吏", hint: "寺院脱险，旧臣线升温。", requires: { anyFlags: ["kept_roster", "declared_to_clerk", "tea_shed_cell"] }, effects: { loyalists: 6, legitimacy: 5, exposure: 5, shelter: -2 }, flags: ["monk_sutra_cabinet_done", "roster_left_temple"], relation: { "静照僧": 3, "周书吏": 7 }, route: "记忆", next: "clerk_doubt", log: "名单离开经柜，去了更危险也更合适的手里。静照合掌，没有问它会救人还是害人。" },
+          { title: "继续藏在经柜深处", hint: "保存最完整，寺院风险继续存在。", effects: { legitimacy: 6, learning: 3, exposure: 6, yuan: 3 }, flags: ["monk_sutra_cabinet_done", "temple_archive_deepened"], relation: { "静照僧": -4 }, route: "记忆", log: "你选择完整保存。静照没有反对，只把经柜钥匙挂回腰间，像挂上一块更重的石头。" }
+        ]
+      },
+      {
+        id: "clan_wedding",
+        phase: "岭南藏身",
+        type: "林氏支线",
+        title: "林氏婚宴的座次",
+        text: "族中婚宴需要你露面。坐在前席，说明族长把你当自己人；坐在后席，说明你只是暂住的外客。林氏族长把选择留给你，其实是在问你愿不愿被地方秩序重新命名。",
+        requires: { minMonth: 10, npcs: ["林氏族长"], anyFlags: ["clan_adopted", "clan_knows_secret", "village_shelter"], noFlags: ["clan_wedding_done"] },
+        choices: [
+          { title: "以前席族童身份出席", hint: "强化宗族融入，宋室身份淡化。", effects: { shelter: 8, social: 5, exposure: -3, legitimacy: -4 }, flags: ["clan_wedding_done", "clan_front_seat"], relation: { "林氏族长": 9 }, route: "隐居", log: "你坐在前席，听他们叫你林家孩子。那一刻安全感和陌生感同时落下。" },
+          { title: "后席帮忙记礼账", hint: "保持距离，用能力换信任。", effects: { finance: 4, shelter: 5, learning: 2 }, flags: ["clan_wedding_done", "clan_ledger_role"], relation: { "林氏族长": 6 }, route: "记忆", log: "你坐在后席记礼账。没人问你姓什么，却都知道你有用。" },
+          { title: "避开婚宴去见旧线人", hint: "宗族关系受损，旧臣线推进。", requires: { anyFlags: ["kept_roster", "declared_to_clerk", "village_knows_secret"] }, effects: { loyalists: 5, legitimacy: 4, exposure: 6, shelter: -4 }, flags: ["clan_wedding_done", "missed_clan_ritual"], relation: { "林氏族长": -8, "周书吏": 4 }, route: "复国", log: "婚宴上有人问你去了哪里。你在另一盏灯下听旧臣说，还有人愿等一个名字。" }
+        ]
+      },
+      {
+        id: "clan_tax_roll",
+        phase: "福建与海路",
+        type: "林氏支线",
+        title: "林氏粮册",
+        text: "新税粮催到村里，林氏族长把粮册摊开给你看。你曾被族谱保护，如今族谱上的每一户都可能替你多交一斗米、少睡一夜觉。",
+        requires: { minMonth: 32, npcs: ["林氏族长"], anyFlags: ["clan_wedding_done", "clan_adopted", "clan_knows_secret", "clan_ledger_role"], noFlags: ["clan_tax_roll_done"] },
+        choices: [
+          { title: "替族中重排粮册", hint: "理财检定；成功保护宗族，失败留下文书破绽。", check: "finance", success: { finance: 5, shelter: 7, exposure: -4 }, fail: { exposure: 7, yuan: 5, shelter: -4 }, flags: ["clan_tax_roll_done", "clan_tax_adjusted"], failFlags: ["clan_tax_suspicion"], relation: { "林氏族长": 10 }, failRelation: { "林氏族长": -7 }, route: "隐居", log: "粮册被改得像一场寻常歉收。族长看了很久，说你已经懂得地方社会怎样活命。", failLog: "粮册越改越显眼。族长没有责备你，只把灯吹灭：有些聪明会害人。" },
+          { title: "用旧臣钱粮补缺", hint: "把宗族和旧臣网络相连，风险上升。", requires: { anyFlags: ["kept_roster", "declared_to_clerk", "port_loyalist_cells", "minor_loyalist_cell"] }, effects: { shelter: 5, loyalists: 5, legitimacy: 3, exposure: 6, yuan: 3 }, flags: ["clan_tax_roll_done", "clan_loyalist_grain"], relation: { "林氏族长": 4, "周书吏": 5 }, route: "记忆", log: "旧臣的钱粮补进林氏粮册。族长收下，却说：从今以后，祠堂不只是藏你，也被你藏进了政治。" },
+          { title: "离开宗族避免牵连", hint: "保护林氏，自己庇护下降。", effects: { exposure: -5, yuan: -2, shelter: -8, explore: 5 }, flags: ["clan_tax_roll_done", "left_clan_to_spare"], relation: { "林氏族长": 8 }, route: "流亡", next: "boat_bargain", log: "你在催粮前离开。林氏族长送你到村口，没有挽留，只说：这一次，是你替我们作保。" }
+        ]
+      },
+      {
+        id: "shipmaster_storm",
+        phase: "福建与海路",
+        type: "陈船主支线",
+        title: "陈船主的船籍",
+        text: "新朝书手来查船籍，问每个伙计的乡贯、保人和上岸去处。陈船主把你藏在舱板后，自己却要替全船担责。他终于说出一句真话：船能离岸，船上的人却不都能脱身。",
+        requires: { minMonth: 28, npcs: ["陈姓船主"], anyFlags: ["paid_passage", "merchant_apprentice", "merchant_knows_secret", "clan_boat_intro"], noFlags: ["shipmaster_storm_done"] },
+        choices: [
+          { title: "替全船背熟同一套说辞", hint: "用学识和社交保护船队，关系明显加深。", effects: { learning: 4, social: 3, exposure: -5, yuan: -2 }, flags: ["shipmaster_storm_done", "ship_registry_done"], relation: { "陈姓船主": 12 }, route: "流亡", log: "你把每个伙计的假乡贯连成一张能互相印证的网。陈船主看你的眼神不再像看货，而像看一个会替人担事的人。" },
+          { title: "请他替旧臣带一批粮盐", hint: "把海路接入政治，风险上升。", effects: { loyalists: 7, sea: 4, finance: -4, exposure: 7, yuan: 4 }, flags: ["shipmaster_storm_done", "grain_for_loyalists"], relation: { "陈姓船主": 1, "周书吏": 5 }, route: "记忆", log: "粮盐被拆进数个小包，混在寻常货物里。陈船主没有拒绝，只问你：若有人被抓，名字写谁的？" },
+          { title: "承诺不以帝号征调船户", hint: "稳定海商关系，复国动员受限。", effects: { sea: 8, finance: 4, exposure: -3, legitimacy: -3 }, flags: ["shipmaster_storm_done", "no_forced_ships"], relation: { "陈姓船主": 10 }, route: "流亡", log: "你承诺不把船户当旧朝军籍。陈船主第一次认真点头：海路可以救人，但不能被你变成另一座朝廷。" }
+        ]
+      },
+      {
+        id: "shipmaster_family",
+        phase: "福建与海路",
+        type: "陈船主支线",
+        title: "陈船主家口",
+        text: "船队靠岸补水时，陈船主带你去见岸上的妻儿。孩子认得你的藏身暗号，妻子却只问一句：若这船出事，官府先查谁家？陈船主第一次不是以船主身份站在你面前，而是以一家人的保人身份。",
+        requires: { minMonth: 42, npcs: ["陈姓船主"], anyFlags: ["ship_registry_done", "no_forced_ships", "grain_for_loyalists", "merchant_knows_secret"], noFlags: ["shipmaster_family_done"] },
+        choices: [
+          { title: "把密信撤出他家", hint: "保护陈家，降低海路政治用途。", effects: { exposure: -8, yuan: -3, loyalists: -3, sea: 2 }, flags: ["shipmaster_family_done", "crew_families_spared"], relation: { "陈姓船主": 14 }, route: "隐居", log: "你让密信离开陈家灶下。陈船主没有谢你，只让小儿给你递了一碗热汤。" },
+          { title: "请陈妻代藏一件旧物", hint: "将海路与记忆线绑定，关系更深但风险更重。", requires: { anyFlags: ["kept_regalia", "palace_lesson", "temple_archive", "memory_archive"] }, effects: { legitimacy: 7, sea: 3, exposure: 6, shelter: 2 }, flags: ["shipmaster_family_done", "relic_in_ship_house"], relation: { "陈姓船主": 7, "杨氏旧侍": 2 }, route: "记忆", next: "memory_box", log: "旧物被缝进一件孩子冬衣的夹层。它离你远了，却离另一户人家的危险更近。" },
+          { title: "继续借他家接应旧线", hint: "复国网络推进，陈家关系承压。", effects: { loyalists: 8, legitimacy: 5, exposure: 10, yuan: 6 }, flags: ["shipmaster_family_done", "ship_house_cell"], relation: { "陈姓船主": -8, "周书吏": 6 }, route: "复国", next: "clerk_demands", log: "陈妻没有阻拦，只把门闩拨得很轻。你听见那一点响声，像听见一户人家被推向历史。" }
+        ]
+      },
+      {
+        id: "shipmaster_last_harbor",
+        phase: "身份选择",
+        type: "陈船主支线",
+        title: "陈船主的最后泊位",
+        text: "数年往来之后，陈船主的船不再只是逃亡工具。它载过你、旧信、粮盐、假名和沉默。如今港口盘查更紧，他给你最后一次选择：继续把这条线留在岸边，还是把它推向远海？",
+        requires: { minMonth: 66, npcs: ["陈姓船主"], anyFlags: ["shipmaster_family_done", "ship_registry_done", "grain_for_loyalists", "no_forced_ships"], noFlags: ["shipmaster_last_harbor_done"] },
+        choices: [
+          { title: "让陈船主从此只做生意", hint: "保护人物结局，复国资源减少。", effects: { exposure: -9, yuan: -4, loyalists: -5, finance: 4 }, flags: ["shipmaster_last_harbor_done", "chen_released_from_plot"], relation: { "陈姓船主": 16 }, route: "隐居", log: "你把陈船主从旧朝故事里放出去。他说这不是背叛，是终于有人记得船上也有人命。" },
+          { title: "请他送你建立海上据点", hint: "强化海上路线，代价高。", effects: { sea: 12, shelter: 5, finance: -8, exposure: 5 }, flags: ["shipmaster_last_harbor_done", "sea_base"], relation: { "陈姓船主": 6, "阿蒲商人": 3 }, route: "记忆", log: "最后泊位变成第一处据点。它很小，只够藏几封信、几袋米和一个仍未定型的未来。" },
+          { title: "借他的船支援宋旗", hint: "激进复国，几乎必然牵连海路。", requires: { anyFlags: ["open_rebellion", "three_cells", "living_emperor_legend"] }, effects: { loyalists: 12, unrest: 9, sea: 4, exposure: 14, yuan: 11 }, flags: ["shipmaster_last_harbor_done", "sea_supplied_rebels"], relation: { "陈姓船主": -12, "黎山寨首": 8 }, route: "复国", next: "rebel_supply", log: "船离岸时没有挂旗。可每个知情的人都明白，它已经被你推上了战场。" }
+        ]
+      },
+      {
+        id: "clerk_doubt",
+        phase: "身份选择",
+        type: "周书吏支线",
+        title: "周书吏的怀疑",
+        text: "周书吏终于亲自来见你。他带来的不是欢呼，而是一连串问题：谁能证明你？谁愿为你死？若不能复国，保存这个名字到底是忠诚还是自欺？",
+        requires: { minMonth: 42, npcs: ["周书吏"], anyFlags: ["declared_to_clerk", "kept_roster", "port_loyalist_cells", "tea_shed_cell"], noFlags: ["clerk_doubt_done"] },
+        choices: [
+          { title: "拿出旧物与口述互证", hint: "需要身份记忆线；巩固合法性。", requires: { anyFlags: ["kept_regalia", "palace_lesson", "trimmed_palace_memory", "temple_archive"] }, effects: { legitimacy: 10, loyalists: 6, exposure: 4 }, flags: ["clerk_doubt_done", "identity_verified_by_clerk"], relation: { "周书吏": 12 }, route: "记忆", log: "旧物、旧礼和你自己的记忆互相咬合。周书吏没有跪，只说：那就更难了。" },
+          { title: "承认只能保存名字", hint: "降低复国冲动，转向记忆政治。", effects: { learning: 5, legitimacy: 4, loyalists: 2, unrest: -4, exposure: -2 }, flags: ["clerk_doubt_done", "memory_over_restoration"], relation: { "周书吏": 2 }, route: "记忆", log: "你说，名字也许不能复国，但可以让后来的人知道亡国不是自然消失。周书吏听懂了，却不甘心。" },
+          { title: "命他继续组织义士", hint: "复国线强化，风险显著上升。", effects: { loyalists: 10, legitimacy: 8, unrest: 7, exposure: 10, yuan: 7 }, flags: ["clerk_doubt_done", "clerk_ordered_cells"], relation: { "周书吏": 10 }, route: "复国", next: "clerk_demands", log: "周书吏眼中重新有光。那光不全是希望，也有即将烧到别人的火。" }
+        ]
+      },
+      {
+        id: "clerk_compromise",
+        phase: "身份选择",
+        type: "周书吏支线",
+        title: "周书吏改写名录",
+        text: "周书吏把半册名录重新送来，墨色比从前淡。他承认许多人已经投新朝、改姓名、入乡里；若照旧臣名义逼他们归队，忠义会变成另一种追捕。",
+        requires: { minMonth: 58, npcs: ["周书吏"], anyFlags: ["clerk_doubt_done", "kept_roster", "memory_over_restoration", "identity_verified_by_clerk"], noFlags: ["clerk_compromise_done"] },
+        choices: [
+          { title: "把名录改成见证录", hint: "从复国动员转向历史保存。", effects: { learning: 6, legitimacy: 4, loyalists: -2, exposure: -3 }, flags: ["clerk_compromise_done", "witness_register"], relation: { "周书吏": 8 }, route: "记忆", log: "名录旁添上去向、证词和避讳。周书吏写得很慢，像在一点点承认活人比名节复杂。" },
+          { title: "删去已经安家的旧臣", hint: "保护他人，降低网络规模。", effects: { exposure: -6, yuan: -3, loyalists: -4, legitimacy: 2 }, flags: ["clerk_compromise_done", "retired_loyalists_spared"], relation: { "周书吏": 2 }, route: "隐居", log: "你删去那些已经有田契、儿女和新名的人。周书吏脸色发白，却没有抢回笔。" },
+          { title: "坚持按旧名召集", hint: "复国线强推，极易牵连。", effects: { loyalists: 10, legitimacy: 8, unrest: 6, exposure: 12, yuan: 9 }, flags: ["clerk_compromise_done", "old_names_recalled"], relation: { "周书吏": 10 }, route: "复国", next: "rebels", log: "旧名再次被唤起。有人会因此热泪盈眶，也有人会因此失去刚刚长出的新生活。" }
+        ]
+      },
+      {
+        id: "foreign_family",
+        phase: "福建与海路",
+        type: "阿蒲商人支线",
+        title: "阿蒲商人的家书",
+        text: "阿蒲商人给你看一封来自海外的家书。信里没有正统、忠义和故国，只有货损、病人、港税和孩子的名字。他问你：若你去海外，是做一个活人，还是做一件被保存的旧物？",
+        requires: { minMonth: 45, npcs: ["阿蒲商人"], anyFlags: ["foreign_merchant_offer", "signed_foreign_contract", "oversea_letters"], noFlags: ["foreign_family_done"] },
+        choices: [
+          { title: "学习以商队身份生活", hint: "强化海外生存，淡化皇室身份。", effects: { finance: 6, sea: 5, exposure: -5, legitimacy: -4 }, flags: ["foreign_family_done", "merchant_life_chosen"], relation: { "阿蒲商人": 10 }, route: "流亡", log: "你第一次把未来想成账房、港税和病中仍要算清的货损。它不伟大，却很像活着。" },
+          { title: "托他保存宋室信物", hint: "海外线与记忆线结合。", effects: { legitimacy: 6, loyalists: 4, sea: 3, exposure: 3 }, flags: ["foreign_family_done", "relics_hidden_oversea"], relation: { "阿蒲商人": 6 }, route: "记忆", next: "memory_box", log: "阿蒲商人收下信物，说海上的箱子不问皇帝，但会记得谁付过保管的代价。" },
+          { title: "拒绝把自己变成货物", hint: "保留故土政治可能，失去部分海外帮助。", effects: { legitimacy: 5, shelter: 2, sea: -4, yuan: 3 }, flags: ["foreign_family_done", "refused_merchant_identity"], relation: { "阿蒲商人": -6 }, route: "记忆", log: "你拒绝远港的安稳。阿蒲商人没有生气，只说：那你就还在岸上的网里。" }
+        ]
+      },
+      {
+        id: "apu_quanzhou_fire",
+        phase: "身份选择",
+        type: "阿蒲商人支线",
+        title: "阿蒲商人与番坊夜火",
+        text: "泉州番坊夜里起了火，谁放的无人敢问。阿蒲商人护着几户外来商人逃出巷子，也护着你的旧信。他说，改朝换代时，最先被怀疑的常常是口音不一样的人。",
+        requires: { minMonth: 60, npcs: ["阿蒲商人"], anyFlags: ["foreign_family_done", "signed_foreign_contract", "oversea_letters", "foreign_hidden_letters"], noFlags: ["apu_quanzhou_done"] },
+        choices: [
+          { title: "帮他转移番坊家眷", hint: "强化海外人物情义，牺牲短期安全。", effects: { social: 5, sea: 5, exposure: 5, shelter: -2 }, flags: ["apu_quanzhou_done", "foreign_families_moved"], relation: { "阿蒲商人": 14 }, route: "流亡", log: "你带着孩子和账匣穿过后巷。阿蒲商人第一次没有谈价，只在天亮后对你点了点头。" },
+          { title: "趁乱送出旧信", hint: "记忆线推进，但会利用他的灾难。", effects: { loyalists: 6, legitimacy: 5, sea: 3, exposure: 7 }, flags: ["apu_quanzhou_done", "letters_sent_during_fire"], relation: { "阿蒲商人": -3, "周书吏": 4 }, route: "记忆", next: "memory_box", log: "旧信随逃散的人群出了城。阿蒲商人看见了，却没有拦你；这份沉默从此有了裂缝。" },
+          { title: "烧掉会牵连他的货记", hint: "保护阿蒲，削弱海外证据链。", effects: { exposure: -6, yuan: -3, legitimacy: -3, sea: 2 }, flags: ["apu_quanzhou_done", "foreign_records_burned"], relation: { "阿蒲商人": 9 }, route: "隐居", log: "你把几页货记投入火里。阿蒲商人说，海上的信用有时不是留下证据，而是知道何时让证据消失。" }
+        ]
+      },
+      {
+        id: "patrol_shadow",
+        phase: "福建与海路",
+        type: "许都巡支线",
+        title: "许都巡的空白格",
+        text: "巡检册上多了一个空白格：年纪相合，口音不定，时而在寺牒里，时而在船户册里。许都巡还不知道你的名字，但他已经开始追踪一种不合常理的沉默。",
+        requires: { minMonth: 38, anyFlags: ["registry_suspicion", "false_rumor_backfired", "planted_false_rumor", "merchant_knows_secret"], noFlags: ["patrol_shadow_done"] },
+        choices: [
+          { title: "让关系人为你补齐籍贯", hint: "需要关系网络；降低追捕但消耗庇护。", requires: { anyNpcs: ["静照僧", "林氏族长", "陈姓船主"] }, effects: { exposure: -8, yuan: -5, shelter: -3, social: 2 }, flags: ["patrol_shadow_done", "registry_repaired"], npcName: "许都巡", relation: { "许都巡": -4 }, route: "隐居", log: "纸上的籍贯终于变得完整。许都巡没有抓到你，却在空白格旁画了一道更细的线。" },
+          { title: "故意留下错误方向", hint: "检定型误导，成败都会加深官府人物线。", check: "social", success: { yuan: -7, exposure: -4, explore: 3 }, fail: { yuan: 8, exposure: 9, shelter: -4 }, flags: ["patrol_shadow_done", "misled_patrol"], failFlags: ["patrol_closer"], npcName: "许都巡", addNpcOnFail: true, relation: { "许都巡": -6 }, failRelation: { "许都巡": -14 }, log: "许都巡追向错误渡口。你第一次感觉官府也会被叙事牵着走。", failLog: "错误方向太刻意，许都巡反而确认：有人在保护一个重要孩子。" },
+          { title: "暂时停止所有联络", hint: "压低风险，人物网络降温。", effects: { exposure: -10, yuan: -4, loyalists: -5, sea: -2 }, flags: ["patrol_shadow_done", "network_silenced"], route: "隐居", log: "信停了，船慢了，寺门也少开了几次。你活得更安静，也更孤立。" }
+        ]
+      },
+      {
+        id: "patrol_private_note",
+        phase: "身份选择",
+        type: "许都巡支线",
+        title: "许都巡的私记",
+        text: "你偶然得到许都巡的一页私记。上面没有咒骂，也没有热血，只有路线、保人、年纪和一行小字：若真是宋室遗孤，活捉比杀死更有用。官府不是神话里的恶人，它是一套会学习的办法。",
+        requires: { minMonth: 56, anyFlags: ["patrol_shadow_done", "patrol_closer", "registry_suspicion", "misled_patrol"], noFlags: ["patrol_private_note_done"] },
+        choices: [
+          { title: "按私记反向断开线索", hint: "用官府视角降低追捕。", effects: { exposure: -9, yuan: -6, learning: 3, loyalists: -2 }, flags: ["patrol_private_note_done", "learned_patrol_method"], npcName: "许都巡", relation: { "许都巡": -3 }, route: "隐居", log: "你照着许都巡的逻辑删除痕迹。第一次，你不是逃避官府，而是在学习官府怎样看世界。" },
+          { title: "伪造一页更诱人的线索", hint: "高风险误导，失败会使许都巡更近。", check: "learning", success: { yuan: -8, exposure: -4, explore: 4 }, fail: { yuan: 9, exposure: 10, shelter: -4 }, flags: ["patrol_private_note_done", "forged_patrol_note"], failFlags: ["patrol_closer"], npcName: "许都巡", relation: { "许都巡": -8 }, failRelation: { "许都巡": -14 }, route: "记忆", log: "假私记把追捕引向另一条江路。你知道这只是一时胜利，因为许都巡也会从错误里学。", failLog: "伪造的墨色太新。许都巡没有立刻抓人，却把你的保护网看得更清楚。" },
+          { title: "把私记交给周书吏", hint: "让旧臣认识官府结构，复国线更理性但仍危险。", requires: { anyFlags: ["kept_roster", "declared_to_clerk", "clerk_doubt_done"] }, effects: { loyalists: 5, learning: 4, exposure: 4, yuan: 2 }, flags: ["patrol_private_note_done", "loyalists_study_patrol"], relation: { "周书吏": 6, "许都巡": -4 }, route: "记忆", log: "周书吏读完沉默很久。他终于明白，对手不是一队追兵，而是一张不断修补的网。" }
+        ]
+      },
+      {
+        id: "rebel_supply",
+        phase: "身份选择",
+        type: "黎山寨首支线",
+        title: "黎山寨首缺粮",
+        text: "宋旗挂起来以后，最先缺的不是勇气，而是粮。黎山寨首派人来催，你若给粮，港口和宗族都会被牵动；若不给，宋旗可能先被饥饿折断。",
+        requires: { minMonth: 72, npcs: ["黎山寨首"], anyFlags: ["open_rebellion", "sponsored_rebels"], noFlags: ["rebel_supply_done"] },
+        choices: [
+          { title: "让陈船主暗运粮盐", hint: "需要海路；起事延续，海商风险上升。", requires: { anyNpcs: ["陈姓船主", "阿蒲商人"] }, effects: { loyalists: 8, unrest: 6, sea: 3, finance: -7, exposure: 7, yuan: 5 }, flags: ["rebel_supply_done", "sea_supplied_rebels"], relation: { "黎山寨首": 8, "陈姓船主": -4 }, route: "复国", log: "粮盐从船底转入山路。黎山寨首欢喜，陈船主却让伙计先把家眷送离港口。" },
+          { title: "只给撤退路线", hint: "把起事改为保存人，复国声望降低。", effects: { exposure: -3, yuan: -2, loyalists: 3, unrest: -5, sea: 4 }, flags: ["rebel_supply_done", "rebels_evacuated"], relation: { "黎山寨首": -5 }, route: "记忆", log: "你没有送粮，只送出一条退路。黎山寨首骂你怯懦，但有些人因此活了下来。" },
+          { title: "催他立刻决战", hint: "激进复国，极高风险。", effects: { legitimacy: 10, loyalists: 8, unrest: 10, exposure: 14, yuan: 12, inertia: 6 }, flags: ["rebel_supply_done", "rebels_forced_battle"], relation: { "黎山寨首": 12 }, route: "复国", log: "你把缺粮解释成不能再等。山中鼓声响起，许多人还没准备好就成了历史的燃料。" }
+        ]
+      },
+      {
+        id: "martial_training_yard",
+        phase: "福建与海路",
+        type: "军事养成",
+        title: "盐场后的练武场",
+        text: "你已不是只能被抱走的孩子。盐场后的空地上，船工、族中少年和失散旧卒用木棍练阵。周书吏说这是复国根基，林氏族长却说：练武的人越多，官府越容易看见。",
+        requires: { minMonth: 42, anyFlags: ["clan_political_risk", "port_loyalist_cells", "living_emperor_legend", "used_debt", "minor_loyalist_cell"], noFlags: ["martial_training_yard_done"] },
+        choices: [
+          { title: "亲自练弓刀步法", hint: "提升武力和胆识，但会暴露你不再只是孩子。", effects: { martial: 9, courage: 5, exposure: 5, yuan: 2 }, flags: ["martial_training_yard_done", "trained_body"], route: "复国", log: "木刀震得手腕发麻。你第一次觉得身体也能成为历史工具，而不只是被保护的对象。" },
+          { title: "请旧卒教小队列阵", hint: "增加兵马，形成军事线入口。", effects: { troops: 10, martial: 5, loyalists: 5, exposure: 8, yuan: 4 }, flags: ["martial_training_yard_done", "formed_war_band"], npcName: "黎山寨首", relation: { "黎山寨首": 8, "周书吏": 4 }, route: "复国", log: "十几个人学会听同一声号令。人数不多，却已经足够让官府把你从传闻改写成隐患。" },
+          { title: "只训练护送与撤离", hint: "军事能力服务生存，不公开起事。", effects: { martial: 5, explore: 4, sea: 2, exposure: -1 }, flags: ["martial_training_yard_done", "escort_drill"], route: "记忆", log: "你让他们练的不是冲阵，而是护送老人、转移密档、夜里撤出村口。武力第一次被用来保存人。" }
+        ]
+      },
+      {
+        id: "recruit_village_youth",
+        phase: "身份选择",
+        type: "招兵买马",
+        title: "招募乡勇",
+        text: "地方传闻已经够热，有年轻人主动来投。他们有人因亡宋而怒，有人因税役而苦，也有人只是想跟着一面可能带来饭吃的旗。招募不是收数字，而是接下他们的命。",
+        requires: { minMonth: 54, anyFlags: ["formed_war_band", "open_rebellion", "living_emperor_legend", "sponsored_rebels"], noFlags: ["recruit_village_youth_done"] },
+        choices: [
+          { title: "以宋室名义收编", hint: "兵马大增，暴露和搜捕明显上升。", effects: { troops: 18, loyalists: 8, legitimacy: 8, unrest: 5, exposure: 13, yuan: 8 }, flags: ["recruit_village_youth_done", "recruited_village_youth"], npcName: "黎山寨首", relation: { "黎山寨首": 10, "周书吏": 8 }, route: "复国", log: "他们在夜里对着旧旗行礼。你看见希望，也看见每一个名字都可能成为案册上的罪证。" },
+          { title: "只收能守纪律的人", hint: "兵马较少，但军纪线更稳。", effects: { troops: 10, martial: 4, social: 3, exposure: 6, unrest: -2 }, flags: ["recruit_village_youth_done", "disciplined_troops"], relation: { "林氏族长": 5, "黎山寨首": -3 }, route: "记忆", log: "你拒绝了几个只想抢粮的人。黎山寨首嫌你慢，林氏族长却第一次说：这像是在建队伍，不是在点火。" },
+          { title: "遣散他们，只留暗哨", hint: "降低风险，但放弃扩军机会。", effects: { exposure: -7, yuan: -3, troops: 3, loyalists: -3 }, flags: ["recruit_village_youth_done", "kept_scouts_only"], route: "隐居", log: "你没有让他们成军，只留下几个会看路口的暗哨。年轻人失望散去，村里也少了一场立刻到来的灾祸。" }
+        ]
+      },
+      {
+        id: "arms_and_horses",
+        phase: "身份选择",
+        type: "招兵买马",
+        title: "买马与造甲",
+        text: "有人提议买马。可岭南与福建不比北地，真正战马稀少且昂贵，买多了反而惹眼。更现实的选择是骡马、弓弩、藤牌、船上铁器和能按时吃饭的队伍。",
+        requires: { minMonth: 58, anyFlags: ["recruited_village_youth", "formed_war_band", "disciplined_troops"], noFlags: ["arms_and_horses_done"] },
+        choices: [
+          { title: "高价买马骡与弓弩", hint: "财政检定；成功提升机动力，失败引来牙人告密。", check: "finance", success: { troops: 8, martial: 7, explore: 4, finance: -8 }, fail: { finance: -8, exposure: 10, yuan: 8 }, flags: ["arms_and_horses_done", "bought_arms"], failFlags: ["horse_dealer_betrayal"], route: "复国", log: "你没有买到传说中的精骑，却买到几匹能驮粮的骡马和一批可用弓弩。现实粗糙，但能走路。", failLog: "牙人收钱后转身向巡检递话。买马的消息比马先到官府。" },
+          { title: "让船工改造兵器", hint: "用手艺换武备，较慢但隐蔽。", check: "craft", success: { troops: 5, martial: 8, exposure: 3 }, fail: { craft: -2, exposure: 6, shelter: -3 }, flags: ["arms_and_horses_done", "ship_tools_to_arms"], route: "记忆", log: "鱼叉、缆刀和船钉被改成能用的器械。它们不体面，却适合你拥有的这支队伍。", failLog: "改造过的铁器太显眼，码头上开始有人问：谁家船需要这么多尖刃？" },
+          { title: "暂不扩武，只囤粮药", hint: "降低战斗力，提升持续能力。", effects: { survival: 5, shelter: 5, martial: 2, troops: 2, exposure: -2 }, flags: ["arms_and_horses_done", "stored_grain_medicine"], route: "记忆", log: "你把买马的钱换成米、盐、药和草鞋。周书吏叹气，静照却说：能让人活过明天，也是一种兵法。" }
+        ]
+      },
+      {
+        id: "discipline_or_plunder",
+        phase: "身份选择",
+        type: "军纪事件",
+        title: "军纪与抢粮",
+        text: "兵马一多，问题立刻变粗糙：有人偷拿族中粮，有人逼渡口船户出力，有人说既然要复宋，就不能再按寻常规矩办事。你必须决定这支队伍像义军，还是像另一群灾祸。",
+        requires: { minMonth: 62, anyFlags: ["recruited_village_youth", "bought_arms", "ship_tools_to_arms"], noFlags: ["discipline_or_plunder_done"] },
+        choices: [
+          { title: "严禁扰民并立军规", hint: "兵马增长慢，但地方庇护提高。", effects: { martial: 5, troops: 4, shelter: 7, unrest: -3, exposure: -2 }, flags: ["discipline_or_plunder_done", "disciplined_troops"], relation: { "林氏族长": 8, "黎山寨首": -4 }, route: "记忆", log: "你让偷粮的人当众还米。队伍少了几分凶气，多了几分能被百姓忍受的样子。" },
+          { title: "默许就地取粮", hint: "短期兵马扩张，长期庇护崩坏。", effects: { troops: 12, unrest: 7, shelter: -10, exposure: 9, yuan: 5 }, flags: ["discipline_or_plunder_done", "troops_plundered"], relation: { "林氏族长": -14, "黎山寨首": 8 }, route: "复国", log: "粮很快来了，怨声也很快来了。你第一次感到，复国两个字也可以压弯普通人的背。" },
+          { title: "把队伍拆成小股暗哨", hint: "降低暴露，牺牲正面战斗力。", effects: { troops: -4, martial: 3, exposure: -8, yuan: -4, explore: 4 }, flags: ["discipline_or_plunder_done", "cells_over_army"], route: "隐居", log: "你拆散队伍，只留下能传信、侦路、护送的几股暗哨。它不像军队，却更难被一网打尽。" }
+        ]
+      },
+      {
+        id: "ambush_patrol",
+        phase: "身份选择",
+        type: "战斗事件",
+        title: "伏击巡检队",
+        text: "许都巡的一支小队押着疑似旧线人经过山口。你的兵马第一次足以做出战斗选择：救人、避开，或故意设局打出声势。",
+        requires: { minMonth: 68, anyFlags: ["disciplined_troops", "bought_arms", "ship_tools_to_arms", "formed_war_band"], noFlags: ["ambush_patrol_done"] },
+        choices: [
+          { title: "伏击救人后立刻撤离", hint: "武力检定；成功获得小胜，失败损失惨重。", check: "martial", success: { loyalists: 8, legitimacy: 6, troops: 5, yuan: -5, exposure: 7 }, fail: { troops: -10, survival: -6, exposure: 14, yuan: 12 }, flags: ["ambush_patrol_done", "won_patrol_ambush"], failFlags: ["ambush_failed"], relation: { "周书吏": 6, "许都巡": -10 }, route: "复国", log: "山口一战很短。你救出两名线人，也第一次让追捕者知道，你不只会逃。", failLog: "山口伏击乱成一团。你救出的人很少，损失却被每个逃回村里的人记住。" },
+          { title: "只劫文书不杀人", hint: "偏策略线，降低正面仇杀。", check: "explore", success: { learning: 4, yuan: -6, exposure: 3, martial: 3 }, fail: { exposure: 9, yuan: 8, troops: -4 }, flags: ["ambush_patrol_done", "stole_patrol_records"], relation: { "许都巡": -6 }, route: "记忆", log: "你拿走了案册，却放走了人。许都巡会更恨你，也会更认真研究你。", failLog: "文书没拿干净，反而留下脚印和口供。许都巡的网收紧了一格。" },
+          { title: "避战保存兵马", hint: "不战斗，保留力量但失去声望。", effects: { troops: 2, exposure: -4, yuan: -2, loyalists: -4, legitimacy: -3 }, flags: ["ambush_patrol_done", "avoided_battle"], route: "隐居", log: "你放过了那支巡检队。有人说你谨慎，有人说你怯懦；但兵马还在，下一次选择也还在。" }
+        ]
+      },
+      {
+        id: "quarter_action",
+        phase: "岭南藏身",
+        type: "主动行动",
+        repeatable: true,
+        title: "休整与主动安排",
+        text: "这个月没有立即逼近的危机。你仍然年幼，但已经能在保护者的缝隙里做一点安排：练习、寻找某条关系，或提前转移藏身处。",
+        choices: [
+          { title: "专心练一项本领", hint: "按当前路线强化最相关的能力。", dynamic: "train", log: "你把这个月交给重复的练习。孩子不能立刻改变天下，却能改变下一次选择时的自己。" },
+          { title: "暗中招募乡勇", hint: "少年后可用；主动积累兵马，但会提高暴露。", requires: { minMonth: 42 }, dynamic: "recruit", log: "你没有公开竖旗，只让可靠的人去问：谁愿意守夜、送信、护粮，必要时拿起木枪。" },
+          { title: "主动寻找一个引路人", hint: "尝试补上错过的人物线，但会带来传闻。", dynamic: "seek", log: "你让消息以很小的方式流出去：问路、托人、留暗语。寻找人，本身也会让人寻找你。" },
+          { title: "转移藏身地", hint: "降低暴露，消耗既有庇护。", effects: { exposure: -8, yuan: -3, shelter: -5, explore: 4 }, flags: ["relocated_hideout"], log: "你提前离开熟悉的屋檐。安全感被削薄，追踪线也被拉断了一截。" }
+        ]
+      },
+      {
+        id: "monthly_life",
+        phase: "岭南藏身",
+        type: "成长事件",
+        repeatable: true,
+        title: "一月所学",
+        text: "这个月没有大事，只有日复一日的学习、劳作与沉默。历史有时不是战场，而是孩子慢慢长大的时间。",
+        choices: [
+          { title: "读史与礼法", hint: "强化判断与记忆，但会消耗体力。", effects: { learning: 6, legitimacy: 2, survival: -2 }, flags: ["studied_history"], log: "你在旧纸上读到兴亡，却仍要先学会明天怎样吃饭。" },
+          { title: "练习奔走藏匿", hint: "强化逃亡能力，降低身份风险。", effects: { survival: 4, explore: 4, exposure: -3 }, flags: ["trained_hiding"], log: "你记住了溪水、后门、渡口和沉默的眼神。" },
+          { title: "练木刀与角力", hint: "提升武力和胆识，为后续军事线准备。", requires: { minMonth: 36 }, effects: { martial: 5, courage: 3, survival: 1, exposure: 2 }, flags: ["trained_martial_basics"], route: "复国", log: "木刀很轻，手腕却很疼。你开始明白，想让别人为你冒险，自己也必须能站在危险里。" },
+          { title: "做工换取信任", hint: "依据当前身份积累庇护。", effects: { craft: 4, social: 3, shelter: 3 }, flags: ["earned_daily_trust"], log: "没有人因你是皇帝而给饭，但有人因你确实做了事而少问一句。" }
+        ]
+      },
+      {
+        id: "bond_interlude",
+        phase: "岭南藏身",
+        type: "人物插曲",
+        repeatable: true,
+        title: "一段没有写完的话",
+        text: "这个月的关键不在大事，而在某个已经进入你命运的人。关系不是名单，它会要求回应、遮掩、交换和承担。",
+        choices: [
+          { title: "主动补上一句实话", hint: "改善当前庇护者关系，但会让秘密更重。", dynamic: "bond", log: "你没有说出全部，只补上了足够让对方继续帮你的一句实话。" },
+          { title: "替对方处理麻烦", hint: "把关系落到具体事务，换来更稳的庇护。", dynamic: "service", log: "你没有谈身份，只替对方补上一个漏洞。关系有时靠的不是忠义，是有人愿意把麻烦接过去。" },
+          { title: "故意保持距离", hint: "降低牵连，也削弱关系线的热度。", effects: { exposure: -4, yuan: -1, shelter: -2, social: -1 }, flags: ["kept_patron_distance"], route: "隐居", log: "你把话说得很少。安全了一些，也冷了一些。" }
+        ]
+      },
+      {
+        id: "pressure_interlude",
+        phase: "岭南藏身",
+        type: "风声事件",
+        repeatable: true,
+        title: "风声紧了一寸",
+        text: "没有人直接敲门，但路口的盘问多了，渡口的眼神也变慢了。新朝的统治不是每月都以刀兵出现，更多时候以文书、口音和邻人的迟疑出现。",
+        choices: [
+          { title: "提前换一套说辞", hint: "用学习和社交降低查验风险。", effects: { learning: 2, social: 2, exposure: -5, yuan: -1 }, flags: ["rehearsed_cover_story"], log: "你把籍贯、亲属、来路重新排过一遍。谎话越像生活，越能暂时挡住文书。" },
+          { title: "烧掉一小段线索", hint: "安全上升，但记忆和旧臣网络受损。", effects: { exposure: -7, yuan: -3, legitimacy: -3, loyalists: -2 }, flags: ["burned_minor_trace"], route: "隐居", log: "你没有烧掉全部过去，只烧掉最容易害人的那一小段。" },
+          { title: "反向放出假消息", hint: "高互动选择，可能缓解搜捕，也会提高局势复杂度。", check: "social", success: { yuan: -6, exposure: -3, social: 3 }, fail: { yuan: 5, exposure: 7, shelter: -3 }, flags: ["planted_false_rumor"], failFlags: ["false_rumor_backfired"], log: "假消息绕过渡口，追兵跟着它偏了一步。", failLog: "假消息走得太快，最后反而证明有人在操纵传闻。" }
+        ]
+      },
+      {
+        id: "guardian_month",
+        phase: "岭南藏身",
+        type: "幼年事件",
+        repeatable: true,
+        requires: { maxMonth: 24 },
+        title: "大人们的低语",
+        text: "你仍太小，许多决定实际由保护你的人完成。你能做的，是观察谁在撒谎，谁在害怕，谁在把你的名字当成筹码。",
+        choices: [
+          { title: "记住他们争执的词", hint: "积累政治理解，但不直接行动。", effects: { learning: 5, social: 2, legitimacy: 1 }, flags: ["learned_from_guardians"], log: "你还不能主持密议，却能记住每个人提到粮、船、族人和追兵时的表情。" },
+          { title: "听从保护者安排", hint: "安全提高，个人能动性暂缓。", effects: { shelter: 5, exposure: -3, courage: -1 }, flags: ["accepted_guardianship"], log: "你没有反驳。六七岁的孩子有时必须把意志藏在顺从里。" },
+          { title: "偷偷追问旧朝之事", hint: "保留身份记忆，也可能让身边人不安。", effects: { legitimacy: 4, loyalists: 2, exposure: 2 }, flags: ["asked_about_song"], log: "有人说大宋，有人说别问。你第一次意识到，沉默也是一种政治。" }
+        ]
+      },
+      {
+        id: "youth_debt",
+        phase: "福建与海路",
+        type: "少年事件",
+        repeatable: true,
+        requires: { minMonth: 25, maxMonth: 66 },
+        title: "人情债",
+        text: "几年过去，你不再只是被抱走的孩子。静照、林氏、陈船主、周书吏或阿蒲商人都在你的命里留下债，你也开始明白债会要求偿还。",
+        choices: [
+          { title: "偿还一条人情", hint: "改善关系，牺牲资源。", effects: { social: 4, finance: -3, shelter: 3 }, flags: ["repaid_debt"], log: "你替人补账、送信或遮掩一段旧事。关系不是建立一次就结束，它需要反复被维护。" },
+          { title: "利用关系推进路线", hint: "把人情转化为政治或海路资本。", effects: { loyalists: 4, sea: 3, exposure: 3 }, flags: ["used_debt"], route: "记忆", log: "你发现人情可以开门，也会让开门的人站到光下。" },
+          { title: "与旧身份保持距离", hint: "降低追捕，但削弱号召。", effects: { exposure: -5, yuan: -2, legitimacy: -4 }, flags: ["distanced_from_claim"], route: "隐居", log: "你开始熟练地把赵昺放在心里，而不是放在嘴边。" }
+        ]
+      },
+      {
+        id: "adolescent_choice",
+        phase: "身份选择",
+        type: "自择事件",
+        repeatable: true,
+        requires: { minMonth: 67 },
+        title: "十四岁以前",
+        text: "你已经不再只是被保护的遗孤。是否继续逃避统治、保存记忆、走上海路，或承担复国名义，开始更像你自己的选择。",
+        choices: [
+          { title: "把身份彻底日常化", hint: "强化隐居与地方生活。", effects: { shelter: 6, exposure: -5, legitimacy: -5, social: 3 }, flags: ["chose_daily_life"], route: "隐居", log: "你练习用普通人的方式生气、买米、还礼和睡觉。" },
+          { title: "整理自己的口述史", hint: "强化记忆路线。", effects: { learning: 5, legitimacy: 5, loyalists: 4, exposure: 2 }, flags: ["oral_history"], route: "记忆", log: "你把别人告诉你的崖山，和自己记得的木棉花，分成两种文字。" },
+          { title: "主动安排下一条航线", hint: "强化海商与海外路线。", effects: { sea: 7, finance: 4, explore: 4, shelter: -2 }, flags: ["planned_route"], route: "流亡", log: "这一次不是别人带你走，是你自己问风、问价、问谁会出卖你。" },
+          { title: "召集可信者密议", hint: "强化复国路线，高风险。", effects: { loyalists: 8, legitimacy: 7, unrest: 5, exposure: 8, yuan: 6 }, flags: ["youth_council"], route: "复国", log: "你没有称帝，只问如果宋仍是一个名字，它还能让多少人行动。" }
+        ]
+      }
+    ];
+
+    let state;
+
+    const elements = {
+      phaseTag: document.getElementById("phaseTag"),
+      timeText: document.getElementById("timeText"),
+      placeText: document.getElementById("placeText"),
+      coverText: document.getElementById("coverText"),
+      routeText: document.getElementById("routeText"),
+      monthTag: document.getElementById("monthTag"),
+      eventTypeTag: document.getElementById("eventTypeTag"),
+      rumorTag: document.getElementById("rumorTag"),
+      eventTitle: document.getElementById("eventTitle"),
+      eventText: document.getElementById("eventText"),
+      contextText: document.getElementById("contextText"),
+      bondText: document.getElementById("bondText"),
+      echoText: document.getElementById("echoText"),
+      stakesText: document.getElementById("stakesText"),
+      choicePreview: document.getElementById("choicePreview"),
+      portraitSprite: document.getElementById("portraitSprite"),
+      portraitName: document.getElementById("portraitName"),
+      portraitRole: document.getElementById("portraitRole"),
+      choices: document.getElementById("choices"),
+      structureMeters: document.getElementById("structureMeters"),
+      destinyMeters: document.getElementById("destinyMeters"),
+      thesisMeters: document.getElementById("thesisMeters"),
+      abilityMeters: document.getElementById("abilityMeters"),
+      ageTag: document.getElementById("ageTag"),
+      growthText: document.getElementById("growthText"),
+      saveText: document.getElementById("saveText"),
+      unlockText: document.getElementById("unlockText"),
+      thesisText: document.getElementById("thesisText"),
+      thesisTag: document.getElementById("thesisTag"),
+      thesisName: document.getElementById("thesisName"),
+      thesisDesc: document.getElementById("thesisDesc"),
+      evidenceList: document.getElementById("evidenceList"),
+      evidenceCount: document.getElementById("evidenceCount"),
+      relicSprite: document.getElementById("relicSprite"),
+      relicTitle: document.getElementById("relicTitle"),
+      relicDesc: document.getElementById("relicDesc"),
+      npcList: document.getElementById("npcList"),
+      npcCount: document.getElementById("npcCount"),
+      relationMap: document.getElementById("relationMap"),
+      logList: document.getElementById("logList"),
+      pressureTag: document.getElementById("pressureTag"),
+      memoryTag: document.getElementById("memoryTag"),
+      destinyTag: document.getElementById("destinyTag"),
+      dangerNote: document.getElementById("dangerNote"),
+      routeMap: document.getElementById("routeMap"),
+      boat: document.getElementById("boat"),
+      sceneCanvas: document.querySelector(".scene-canvas"),
+      sceneLabel: document.getElementById("sceneLabel"),
+      campaignMap: document.getElementById("campaignMap"),
+      resultToast: document.getElementById("resultToast"),
+      deltaStrip: document.getElementById("deltaStrip"),
+      milestoneBadge: document.getElementById("milestoneBadge"),
+      guideOverlay: document.getElementById("guideOverlay"),
+      endingModal: document.getElementById("endingModal"),
+      endingTitle: document.getElementById("endingTitle"),
+      endingText: document.getElementById("endingText"),
+      endingNotes: document.getElementById("endingNotes"),
+      finalScore: document.getElementById("finalScore")
+    };
+
+    function randomAbility() {
+      const values = {};
+      Object.keys(abilityLabels).forEach((key) => {
+        values[key] = 25 + Math.floor(Math.random() * 26);
+      });
+      const strong = pick(Object.keys(abilityLabels));
+      values[strong] = clamp(values[strong] + 18);
+      return values;
+    }
+
+    function eventById(id) {
+      return events.find((event) => event.id === id);
+    }
+
+    function hasFlag(flag) {
+      return Boolean(state.flags[flag]);
+    }
+
+    function hasNpc(name) {
+      return state.npcs.some((npc) => npc.name === name);
+    }
+
+    function meetsRequires(requires = {}) {
+      if (requires.minMonth && state.month < requires.minMonth) return false;
+      if (requires.maxMonth && state.month > requires.maxMonth) return false;
+      if (requires.flags && !requires.flags.every(hasFlag)) return false;
+      if (requires.anyFlags && !requires.anyFlags.some(hasFlag)) return false;
+      if (requires.noFlags && requires.noFlags.some(hasFlag)) return false;
+      if (requires.npcs && !requires.npcs.every(hasNpc)) return false;
+      if (requires.anyNpcs && !requires.anyNpcs.some(hasNpc)) return false;
+      if (requires.route && state.route !== requires.route) return false;
+      if (requires.min) {
+        for (const [key, value] of Object.entries(requires.min)) {
+          const pool = key in state.abilities ? state.abilities : state.structures;
+          if ((pool[key] || 0) < value) return false;
+        }
+      }
+      if (requires.max) {
+        for (const [key, value] of Object.entries(requires.max)) {
+          const pool = key in state.abilities ? state.abilities : state.structures;
+          if ((pool[key] || 0) > value) return false;
+        }
+      }
+      return true;
+    }
+
+    function applyFlags(flags = []) {
+      flags.forEach((flag) => {
+        state.flags[flag] = true;
+      });
+    }
+
+    function applyRelations(changes = {}) {
+      Object.entries(changes).forEach(([name, value]) => {
+        state.relations[name] = clamp((state.relations[name] || 0) + value, -100, 100);
+      });
+    }
+
+    function setThesis(id) {
+      if (!thesisDefinitions[id]) return;
+      state.thesis = id;
+      state.log.push(`历史命题：${thesisDefinitions[id].title}。`);
+    }
+
+    function addEvidence(id, source = "选择") {
+      const data = evidenceCatalog[id];
+      if (!data) return;
+      if (!state.evidenceIds) state.evidenceIds = new Set((state.evidence || []).map((item) => item.id));
+      if (state.evidenceIds.has(id)) return;
+      state.evidenceIds.add(id);
+      state.evidence.push({
+        id,
+        source,
+        month: state.month,
+        date: displayDate()
+      });
+      state.log.push(`证据入链：${data.title}。`);
+    }
+
+    function collectEvidence(flags = [], choice = {}, effects = {}) {
+      flags.forEach((flag) => {
+        if (flagEvidenceMap[flag]) addEvidence(flagEvidenceMap[flag], flagLabel(flag));
+      });
+      if (choice.route === "流亡" || (effects.sea || 0) >= 7) addEvidence("sea_escape_evidence", "海路选择");
+      if (choice.route === "记忆" || (effects.legitimacy || 0) >= 6) addEvidence("memory_archive_evidence", "记忆选择");
+      if ((effects.shelter || 0) >= 7 || (choice.relation && Object.values(choice.relation).some((value) => value >= 8))) addEvidence("relational_agency", "人物关系");
+      if ((effects.exposure || 0) >= 8 || (effects.yuan || 0) >= 7) addEvidence("registry_governance", "风险暴露");
+    }
+
+    function ageYears() {
+      return 6 + Math.floor((state.month - 1) / 12);
+    }
+
+    function growthStage() {
+      const age = ageYears();
+      if (age <= 7) return "幼年托庇";
+      if (age <= 10) return "识字学事";
+      if (age <= 13) return "随行见世";
+      return "自择其路";
+    }
+
+    function phaseClass() {
+      if (state.phase === "崖山余波") return "phase-yashan";
+      if (state.phase === "岭南藏身") return "phase-lingnan";
+      if (state.phase === "福建与海路") return "phase-sea";
+      return "phase-choice";
+    }
+
+    function displayDate() {
+      return `${state.year} 年 ${state.calendarMonth} 月`;
+    }
+
+    function serializeState() {
+      return {
+        ...state,
+        usedEvents: [...state.usedEvents],
+        evidenceIds: [...(state.evidenceIds || new Set())],
+        currentEventId: state.currentEvent.id
+      };
+    }
+
+    function saveGame() {
+      if (!state || state.ended) return;
+      localStorage.setItem(SAVE_KEY, JSON.stringify(serializeState()));
+      elements.saveText.textContent = "已保存";
+    }
+
+    function saveSlot(slot) {
+      if (!state || state.ended) return;
+      localStorage.setItem(`${SLOT_KEY_PREFIX}${slot}`, JSON.stringify(serializeState()));
+      elements.saveText.textContent = `槽 ${slot} 已存`;
+      showResultToast(`已手动保存到槽 ${slot}`);
+    }
+
+    function loadSlot(slot) {
+      const raw = localStorage.getItem(`${SLOT_KEY_PREFIX}${slot}`);
+      if (!raw) {
+        showResultToast(`槽 ${slot} 还没有存档`);
+        return false;
+      }
+      try {
+        const saved = JSON.parse(raw);
+        const currentEvent = eventById(saved.currentEventId || saved.currentEvent?.id) || eventById("thesis_choice");
+        state = {
+          ...saved,
+          currentEvent,
+          usedEvents: new Set(saved.usedEvents || []),
+          flags: saved.flags || {},
+          relations: saved.relations || {},
+          history: saved.history || [],
+          thesis: saved.thesis || null,
+          evidence: saved.evidence || [],
+          evidenceIds: new Set(saved.evidenceIds || (saved.evidence || []).map((item) => item.id)),
+          busy: false,
+          changedKeys: [],
+          lastDeltas: [],
+          lastRepeatEventId: saved.lastRepeatEventId || null
+        };
+        render();
+        saveGame();
+        showResultToast(`已读取槽 ${slot}`);
+        return true;
+      } catch (error) {
+        localStorage.removeItem(`${SLOT_KEY_PREFIX}${slot}`);
+        showResultToast(`槽 ${slot} 存档损坏，已清除`);
+        return false;
+      }
+    }
+
+    function loadGame() {
+      const raw = localStorage.getItem(SAVE_KEY);
+      if (!raw) return false;
+      try {
+        const saved = JSON.parse(raw);
+        const currentEvent = eventById(saved.currentEventId || saved.currentEvent?.id) || eventById("thesis_choice");
+        state = {
+          ...saved,
+          currentEvent,
+          usedEvents: new Set(saved.usedEvents || []),
+          flags: saved.flags || {},
+          relations: saved.relations || {},
+          history: saved.history || [],
+          thesis: saved.thesis || null,
+          evidence: saved.evidence || [],
+          evidenceIds: new Set(saved.evidenceIds || (saved.evidence || []).map((item) => item.id)),
+          busy: false,
+          changedKeys: [],
+          lastDeltas: []
+        };
+        render();
+        return true;
+      } catch (error) {
+        localStorage.removeItem(SAVE_KEY);
+        return false;
+      }
+    }
+
+    function clearSave() {
+      localStorage.removeItem(SAVE_KEY);
+    }
+
+    function newGame(clearExistingSave = false) {
+      if (clearExistingSave) clearSave();
+      state = {
+        month: 1,
+        year: 1279,
+        calendarMonth: 3,
+        phase: "崖山余波",
+        place: "木棉花林",
+        cover: "落难童仆",
+        route: "求生",
+        alive: true,
+        ended: false,
+        abilities: randomAbility(),
+        structures: {
+          exposure: 26,
+          legitimacy: 64,
+          loyalists: 18,
+          shelter: 18,
+          yuan: 22,
+          unrest: 34,
+          sea: 20,
+          troops: 0,
+          inertia: 38
+        },
+        flags: {},
+        relations: {},
+        thesis: null,
+        evidence: [],
+        evidenceIds: new Set(),
+        forcedEvent: null,
+        pendingPlace: null,
+        history: [],
+        busy: false,
+        changedKeys: [],
+        lastDeltas: [],
+        lastRepeatEventId: null,
+        npcs: [],
+        log: ["1279 年三月，崖山之后，木棉花林留下了一个不该活着的孩子。"],
+        usedEvents: new Set(),
+        currentEvent: eventById("thesis_choice")
+      };
+      elements.endingModal.classList.remove("open");
+      render();
+      saveGame();
+    }
+
+    function currentPhase() {
+      if (state.month <= 6) return "崖山余波";
+      if (state.month <= 36) return "岭南藏身";
+      if (state.month <= 66) return "福建与海路";
+      return "身份选择";
+    }
+
+    function phasePlace(phase) {
+      if (phase === "崖山余波") return pick(["木棉花林", "海边草棚", "荒湾渔村"]);
+      if (phase === "岭南藏身") return pick(["岭南乡里", "山寺后院", "宗族祠堂", "溪谷田舍"]);
+      if (phase === "福建与海路") return pick(["广州港外", "泉州客栈", "商船底舱", "海边盐场"]);
+      return pick(["海上据点", "秘密祠堂", "远航船队", "山中营寨"]);
+    }
+
+    function activePatron() {
+      if (state.cover.includes("商队") || hasFlag("signed_foreign_contract") || hasFlag("oversea_exile")) return "海外";
+      if (state.cover.includes("商船") || state.cover.includes("账房") || hasFlag("merchant_apprentice") || hasFlag("paid_passage") || hasFlag("clan_boat_intro")) return "海路";
+      if (state.cover.includes("林氏") || hasFlag("clan_adopted") || hasFlag("clan_knows_secret") || hasFlag("village_shelter")) return "宗族";
+      if (state.cover.includes("寺院") || state.cover.includes("沙弥") || hasFlag("temple_student") || hasFlag("temple_refuge") || hasFlag("tonsure_cover")) return "寺院";
+      if (hasNpc("周书吏") || hasFlag("kept_roster") || hasFlag("declared_to_clerk")) return "旧臣";
+      if (hasNpc("阿蒲商人")) return "海外";
+      if (hasNpc("陈姓船主")) return "海路";
+      if (hasNpc("林氏族长")) return "宗族";
+      if (hasNpc("静照僧") || hasNpc("云游医僧") || hasFlag("temple_token")) return "寺院";
+      return "独行";
+    }
+
+    function patronProfile(patron = activePatron()) {
+      const profiles = {
+        寺院: { name: hasNpc("静照僧") ? "静照僧" : "云游医僧", place: "山寺", bond: "度牒、经卷与沉默", pressure: "香客口耳相传" },
+        宗族: { name: "林氏族长", place: "祠堂", bond: "族谱、粮仓与作保", pressure: "族人担忧被牵连" },
+        海路: { name: "陈姓船主", place: "船舱", bond: "船籍、保人和伙计家口", pressure: "市舶旧规与新朝盘查挤在同一座港口" },
+        海外: { name: "阿蒲商人", place: "港口客栈", bond: "契约、货包与异乡口音", pressure: "海商不愿替旧朝冒险" },
+        旧臣: { name: "周书吏", place: "密信旁", bond: "半册名录与未死传说", pressure: "旧臣焦躁催促公开身份" },
+        独行: { name: "无人作保", place: "临时藏身处", bond: "假籍贯与零碎暗记", pressure: "没有人能替你解释来路" }
+      };
+      return profiles[patron] || profiles.独行;
+    }
+
+    function bondInterludeVariants(patron) {
+      const p = patronProfile(patron);
+      if (patron === "独行") {
+        return {
+          title: "暗记里的陌生人",
+          text: "你没有稳定庇护者，只能靠旧暗记、零工和偶然的善意维持生活。这个月的关系不是深交，而是判断谁可以暂时相信。",
+          choices: [
+            { title: "试探一个可靠中间人", hint: "有机会补回人物线，但会留下问路痕迹。", dynamic: "seek", log: "你没有直接报出旧名，只把半句暗语放出去。有人听懂了，也有人可能记住了你。" },
+            { title: "替陌生人做一件小事", hint: "换取短期落脚处，维持低调生活。", effects: { survival: 3, craft: 2, shelter: 2, exposure: -1 }, flags: ["helped_minor_household"], route: "隐居", log: "你替人补屋、抄契或送信，换来一晚不用解释来路的屋檐。" },
+            { title: "不再追问旧线", hint: "安全上升，但人物网络继续沉默。", effects: { exposure: -5, yuan: -2, loyalists: -2 }, flags: ["buried_minor_clues"], route: "隐居", log: "你把暗记擦掉。它可能救过你，也可能正在把人引向你。" }
+          ]
+        };
+      }
+      const scenes = [
+        [`${p.name}的迟疑`, `在${p.place}，${p.name}没有立刻回应你。你们之间真正牵连的不是好感数字，而是${p.bond}。这个月，你必须决定如何维护这条关系。`],
+        [`${p.name}留下的空位`, `${p.place}里有一个位置一直空着。那不是礼貌，而是试探：你是否只在需要时才想起${p.name}。`],
+        [`${p.name}递来的难题`, `${p.name}把一件小事推到你面前。它不大，却能看出你是把关系当庇护，还是当可以共同承担的东西。`]
+      ];
+      const [title, text] = scenes[state.month % scenes.length];
+      return {
+        title,
+        text,
+        choices: [
+          { title: `向${p.name}补上一句实话`, hint: "关系升温，同时让对方更清楚风险。", dynamic: "bond", log: `你没有把所有秘密摊开，只让${p.name}知道自己不是被当成工具。` },
+          { title: `替${p.name}处理眼前麻烦`, hint: "把关系变成具体互助，获得更稳庇护。", dynamic: "service", log: `你替${p.name}补上一个小漏洞。关系终于不只是救命之恩，而是可以继续运转的互助。` },
+          { title: "把旧名再藏深一些", hint: "减少牵连，但人物线推进放缓。", effects: { exposure: -4, yuan: -1, shelter: -2, social: -1 }, flags: ["kept_patron_distance"], route: "隐居", log: `你选择不再多说。${p.name}安全了一些，你们之间也隔了一层。` }
+        ]
+      };
+    }
+
+    function pressureInterludeVariants(patron) {
+      const p = patronProfile(patron);
+      if (patron === "独行") {
+        return {
+          title: "路口的盘问",
+          text: "没有人能替你作保。路口盘问、乡里闲话和临时籍贯，构成了这个月真正的危险。",
+          choices: [
+            { title: "重排身份说辞", hint: "降低查验风险，让公开身份更可信。", effects: { learning: 2, social: 2, exposure: -5, yuan: -1 }, flags: ["rehearsed_cover_story"], log: "你把籍贯、亲属、来路重新排过一遍。谎话越像生活，越能暂时挡住文书。" },
+            { title: "换到更偏的住处", hint: "降低暴露，但庇护和社交受损。", effects: { exposure: -6, yuan: -2, shelter: -2, social: -2, survival: 1 }, flags: ["moved_to_remote_shelter"], route: "隐居", log: "你离人群远了一点，也离消息远了一点。" },
+            { title: "自己放出假消息", hint: "检定型互动；成功可误导追捕，失败会反噬。", check: "social", success: { yuan: -5, exposure: -3, social: 2 }, fail: { yuan: 5, exposure: 7, shelter: -3 }, flags: ["planted_false_rumor"], failFlags: ["false_rumor_backfired"], log: "假消息绕过渡口，追兵跟着它偏了一步。", failLog: "假消息走得太快，最后反而证明有人在操纵传闻。" }
+          ]
+        };
+      }
+      return {
+        title: `${p.place}外的盘问`,
+        text: `${p.pressure}。这不是决定天下的大事件，却会改变每个人愿不愿继续靠近你。`,
+        choices: [
+          { title: "重排身份说辞", hint: "降低查验风险，让公开身份更可信。", effects: { learning: 2, social: 2, exposure: -5, yuan: -1 }, flags: ["rehearsed_cover_story"], log: "你把籍贯、亲属、来路重新排过一遍。谎话越像生活，越能暂时挡住文书。" },
+          { title: "清理容易害人的线索", hint: "安全上升，但记忆和旧臣网络受损。", effects: { exposure: -7, yuan: -3, legitimacy: -3, loyalists: -2 }, flags: ["burned_minor_trace"], route: "隐居", log: "你没有烧掉全部过去，只烧掉最容易害人的那一小段。" },
+          { title: `请${p.name}放出假消息`, hint: "检定型互动；成功可误导追捕，失败会反噬。", check: "social", success: { yuan: -6, exposure: -3, social: 3 }, fail: { yuan: 5, exposure: 7, shelter: -3 }, flags: ["planted_false_rumor"], failFlags: ["false_rumor_backfired"], relation: { [p.name]: 2 }, failRelation: { [p.name]: -5 }, log: `假消息从${p.name}手边绕出去，追兵跟着它偏了一步。`, failLog: `假消息走得太快，最后反而把${p.name}也推到风声里。` }
+        ]
+      };
+    }
+
+    function monthlyChoiceVariants(patron) {
+      const variants = {
+        寺院: [
+          { title: "整理施主名簿", hint: "静照以寺务训练你辨认人情和风险。", effects: { learning: 4, social: 2, shelter: 2, exposure: -1 }, flags: ["temple_routine"], relation: { "静照僧": 2, "云游医僧": 1 }, log: "你把施主名簿按乡里重排。静照指给你看：哪些名字能问，哪些名字只适合沉默。" },
+          { title: "替寺中磨药送粥", hint: "把庇护变成劳动关系，降低被当成异人看待的风险。", effects: { survival: 3, craft: 4, shelter: 3 }, flags: ["temple_service"], relation: { "静照僧": 3 }, log: "你在药臼旁磨了一下午。寺院收留你，不是因为帝号，而是因为你终于能帮上忙。" },
+          { title: "听住持议度牒", hint: "理解寺院庇护的边界，减少冒进。", effects: { learning: 3, shelter: 3, exposure: -2, loyalists: -1 }, flags: ["temple_registry_lesson"], relation: { "静照僧": 2 }, route: "隐居", log: "住持谈起度牒、香客和官府问话。你听懂了：山门不是墙，它只是一种被暂时承认的说法。" }
+        ],
+        宗族: [
+          { title: "在祠堂整理族谱", hint: "学习地方秩序，增加宗族信任和身份稳定。", effects: { learning: 3, social: 3, shelter: 4, exposure: -1 }, flags: ["clan_genealogy_work"], relation: { "林氏族长": 3 }, log: "你把林氏族谱从头抄到尾。地方社会不靠诏书运转，它靠名字、田亩和谁替谁作保。" },
+          { title: "随族童下田做事", hint: "减少特殊感，获得生存与手艺。", effects: { survival: 4, craft: 3, legitimacy: -1, shelter: 2 }, flags: ["clan_fieldwork"], log: "你跟着族童踩进泥里。没人称你陛下，这反而让你安全地长大了一点。" },
+          { title: "向族长试探旧臣消息", hint: "把宗族拉向政治，换取忠臣线索。", effects: { loyalists: 3, legitimacy: 3, exposure: 4, shelter: -1 }, flags: ["clan_loyalist_probe"], relation: { "林氏族长": -1, "周书吏": 1 }, route: "记忆", log: "林氏族长没有拒绝，只把门关得更紧。你听懂了：每条旧臣线索都要有人替你承担后果。" }
+        ],
+        海路: [
+          { title: "背熟船户口供", hint: "巩固海商身份，降低港口查验风险。", effects: { learning: 3, sea: 3, exposure: -3 }, flags: ["ship_accounts_month"], relation: { "陈姓船主": 3 }, log: "你把伙计们的乡贯、亲属和上岸理由背成一张活地图。陈船主说，真正的海路先从口供里开出来。" },
+          { title: "随伙计修缆补帆", hint: "增加手艺和生存，让你不再只是被藏的人。", effects: { craft: 4, survival: 3, sea: 3 }, flags: ["learned_tides"], route: "流亡", log: "你蹲在潮湿甲板上补帆角，手指磨出血。那天没有大事发生，却有人开始把你当船上的一员。" },
+          { title: "在市舶司外等放行", hint: "理解港口治理，海路推进但官府压力可见。", effects: { sea: 3, learning: 2, exposure: 3, yuan: 2 }, flags: ["ship_secret_letters"], relation: { "陈姓船主": 1 }, route: "记忆", log: "队伍在市舶司外慢慢挪动。你看见海商的耐心、书手的笔和新朝统治如何落在每一次放行上。" }
+        ],
+        海外: [
+          { title: "学习外商账法", hint: "增强海外生存，赵宋合法性会被商业身份稀释。", effects: { finance: 5, sea: 3, legitimacy: -2, exposure: -2 }, flags: ["foreign_accounting"], relation: { "阿蒲商人": 3 }, route: "流亡", log: "阿蒲商人教你用另一套账法记货。你越熟悉异乡规则，赵昺这个名字越像箱底旧物。" },
+          { title: "记录占城与爪哇传闻", hint: "增加见识和远航准备。", effects: { learning: 3, explore: 4, sea: 3 }, flags: ["oversea_notes"], log: "你把占城、爪哇和泉州写在同一页。故国没有消失，只是开始变成一张更大的海图。" },
+          { title: "借外商网络藏匿旧信", hint: "保存记忆，牺牲一部分海外安全。", effects: { loyalists: 3, legitimacy: 3, exposure: 3, finance: -2 }, flags: ["foreign_hidden_letters"], relation: { "阿蒲商人": 1 }, route: "记忆", log: "旧信混入货账。它不再像诏令，更像一件必须躲过盘查的货物。" }
+        ],
+        旧臣: [
+          { title: "校对半册名录", hint: "强化记忆线和旧臣网络，但身份痕迹更重。", effects: { learning: 4, loyalists: 4, legitimacy: 3, exposure: 3 }, flags: ["roster_collation"], relation: { "周书吏": 3 }, route: "记忆", log: "你把名字按籍贯重排。名单越清楚，风险也越清楚：每一笔都可能成为证词。" },
+          { title: "压下复国传言", hint: "约束旧臣冲动，降低搜捕。", effects: { exposure: -4, yuan: -2, loyalists: -2, shelter: 2 }, flags: ["suppressed_claim_rumor"], relation: { "周书吏": -2 }, route: "隐居", log: "你没有否认自己，只否认那些急着替你称帝的人。周书吏沉默很久，最后还是照办。" },
+          { title: "试设一处暗线", hint: "复国倾向提高，引发官府压力。", effects: { loyalists: 5, legitimacy: 4, exposure: 6, yuan: 4 }, flags: ["minor_loyalist_cell"], relation: { "周书吏": 4 }, route: "复国", log: "一处小暗线被搭起来：一人送信，一人藏米，一人打听巡检。它很小，但已经足够危险。" }
+        ],
+        独行: [
+          { title: "背熟新的身世说辞", hint: "没有庇护时，先降低身份破绽。", effects: { survival: 3, learning: 2, exposure: -4 }, flags: ["solo_cover_practice"], log: "你把假籍贯背到能梦见。无人替你作保时，一句迟疑就可能变成追捕线索。" },
+          { title: "替人做零工换饭", hint: "补生存和手艺，政治路线暂时停滞。", effects: { survival: 4, craft: 4, shelter: 1, legitimacy: -1 }, flags: ["solo_day_labor"], route: "隐居", log: "你用肩背、手指和沉默换来饭。历史没有看见这个月，但身体记住了。" },
+          { title: "沿旧暗记找线索", hint: "尝试重新接上人物线，风险上升。", effects: { social: 3, loyalists: 2, exposure: 5 }, flags: ["solo_trail_probe"], dynamic: "seek", route: "记忆", log: "你沿着半句暗语寻找可能的人。每问一次路，你都在把自己放进别人的记忆里。" }
+        ]
+      };
+      return variants[patron] || variants.独行;
+    }
+
+    function contextualEvent(event) {
+      const copy = { ...event, choices: event.choices.map((choice) => ({ ...choice })) };
+      const patron = activePatron();
+      if (event.id === "monthly_life") {
+        const variants = {
+          寺院: [
+            ["施主名簿", "静照让你整理寺中施主名簿。山寺庇护你，也把地方人情、香火和不能多问的名字摆到你眼前。"],
+            ["药臼旁的雨声", "雨把山门外的脚印冲淡。你在药臼旁磨草药，听静照和住持低声谈起度牒、香客和不能说出的旧名。"],
+            ["山门外的香客", "香客带来港口和官府的零碎消息。寺院不是密室，它的每一次开门都可能把外面的世界带进来。"]
+          ],
+          宗族: [
+            ["祠堂里的席位", "林氏祠堂的席位有远近。你坐在哪里，谁与你同食，都是地方社会给你的答案。"],
+            ["粮仓前的算盘", "族长让你看粮仓账。庇护不是一句忠义，它要变成米、门闩和愿意闭嘴的人。"],
+            ["族童的疑问", "族中孩子问你为什么从不提父母。你第一次发现，伪装身份最难的地方不是官府，而是日常。"]
+          ],
+          海路: [
+            ["舱底的盐湿", "舱底盐湿贴着皮肤。海路不是浪漫退路，而是一群人挤在货物、淡水和查验缝隙里求活。"],
+            ["市舶司外的队列", "陈船主带你在市舶司外等放行。旧规、新令、保人和口供一起决定一条船能否离岸。"],
+            ["番坊夜市", "夜市里有蒲姓外商、闽南船户和说不清来历的货。你学会把自己藏进声音和灯火里。"]
+          ],
+          海外: [
+            ["异乡口音", "港口的语言混在一起。你学会听懂价码、禁忌和陌生人不愿说完的话。"],
+            ["外商抄手的灯", "夜里灯很低，契约上没有赵昺，只有一个能写清货名、能听懂几种口音的孩子。"],
+            ["远港传闻", "有人谈占城，有人谈爪哇。海外不是空白退路，而是另一套规矩正在等你学会。"]
+          ],
+          旧臣: [
+            ["残纸与密语", "旧臣的名字不能常念。你在残纸和暗语之间学习，如何让记忆留下却不立刻害死人。"],
+            ["名录旁的争执", "周书吏又来一封信，字里行间急得发烫。你开始明白，忠诚也可能把人推向危险。"],
+            ["未死传说的价钱", "茶肆里有一句话传得太快：宋帝未死。它给人希望，也给巡检理由。"]
+          ],
+          独行: [
+            ["无名的一月", "这个月没有大事，只有日复一日地避人耳目。无人庇护时，最小的生活也需要判断。"],
+            ["临时屋檐", "屋檐很低，主人没有多问。你用零工、沉默和一套假籍贯换来这一晚。"],
+            ["暗记被雨洗去", "你回到旧暗记处，发现石缝里的痕迹已经被雨水洗浅。联系不是永远在那里等你。"]
+          ]
+        };
+        const patronVariants = variants[patron] || variants.独行;
+        const [title, text] = patronVariants[state.month % patronVariants.length];
+        copy.phase = currentPhase();
+        copy.title = title;
+        copy.text = text;
+        copy.choices = monthlyChoiceVariants(patron).map((choice) => ({ ...choice }));
+      }
+      if (event.id === "quarter_action") {
+        copy.phase = currentPhase();
+        copy.text = `${copy.text} 当前你主要依靠的是：${patron}。`;
+      }
+      if (event.id === "bond_interlude") {
+        const variant = bondInterludeVariants(patron);
+        copy.phase = currentPhase();
+        copy.title = variant.title;
+        copy.text = variant.text;
+        copy.choices = variant.choices.map((choice) => ({ ...choice }));
+      }
+      if (event.id === "pressure_interlude") {
+        const variant = pressureInterludeVariants(patron);
+        copy.phase = currentPhase();
+        copy.title = variant.title;
+        copy.text = variant.text;
+        copy.choices = variant.choices.map((choice) => ({ ...choice }));
+      }
+      return copy;
+    }
+
+    function renderMeters(container, labels, data, dangerKeys = []) {
+      container.innerHTML = "";
+      Object.entries(labels).forEach(([key, label]) => {
+        const row = document.createElement("div");
+        const meterClass = dangerKeys.includes(key) ? "danger" : key === "sea" ? "sea" : data[key] > 70 ? "warn" : "";
+        const changed = state.changedKeys?.includes(key) ? "changed" : "";
+        row.className = "meter-row";
+        row.innerHTML = `
+          <span class="meter-name">${label}</span>
+          <span class="meter ${meterClass}" aria-hidden="true"><span style="width:${clamp(data[key])}%"></span></span>
+          <span class="meter-value ${changed}">${Math.round(data[key])}</span>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function mapStatus(event) {
+      const f = state.flags || {};
+      const text = `${event?.title || ""}${event?.text || ""}${event?.type || ""}`;
+      const active = (() => {
+        if (/伏击|招募|军|兵|寨|黎山/.test(text) || (state.structures.troops || 0) > 0 && state.route === "复国") return "rebel";
+        if (/阿蒲|海外|远港|占城|爪哇/.test(text) || activePatron() === "海外") return "overseas";
+        if (/陈船主|船|泉州|港|市舶/.test(text) || activePatron() === "海路") return "quanzhou";
+        if (/静照|寺|经柜|度牒/.test(text) || activePatron() === "寺院") return "temple";
+        if (/林氏|宗族|祠堂|粮册/.test(text) || activePatron() === "宗族") return "clan";
+        if (state.phase === "崖山余波") return "yashan";
+        if (state.phase === "岭南藏身") return "lingnan";
+        if (state.phase === "福建与海路") return "quanzhou";
+        return "seaBase";
+      })();
+      const unlocked = {
+        yashan: true,
+        lingnan: state.month > 6 || state.phase !== "崖山余波",
+        temple: hasNpc("静照僧") || hasNpc("云游医僧") || hasFlag("temple_refuge") || hasFlag("temple_student"),
+        clan: hasNpc("林氏族长") || hasFlag("clan_adopted") || hasFlag("village_shelter"),
+        quanzhou: hasNpc("陈姓船主") || hasNpc("阿蒲商人") || state.phase === "福建与海路" || state.phase === "身份选择" || (state.structures.sea || 0) > 38,
+        seaBase: hasFlag("sea_base") || hasFlag("oversea_choice") || (state.structures.sea || 0) > 62,
+        rebel: hasNpc("黎山寨首") || hasFlag("formed_war_band") || hasFlag("recruited_village_youth") || (state.structures.troops || 0) > 0,
+        overseas: hasNpc("阿蒲商人") || hasFlag("signed_foreign_contract") || hasFlag("oversea_exile")
+      };
+      return { active, unlocked };
+    }
+
+    function renderCampaignMap(event) {
+      const nodes = {
+        yashan: { label: "崖山", x: 11, y: 72 },
+        lingnan: { label: "岭南", x: 28, y: 54 },
+        temple: { label: "山寺", x: 36, y: 24 },
+        clan: { label: "宗族", x: 47, y: 64 },
+        quanzhou: { label: "泉州", x: 65, y: 50 },
+        seaBase: { label: "海据点", x: 78, y: 72 },
+        rebel: { label: "山寨", x: 58, y: 22, war: true },
+        overseas: { label: "远港", x: 90, y: 37 }
+      };
+      const links = [
+        ["yashan", "lingnan"], ["lingnan", "temple"], ["lingnan", "clan"],
+        ["clan", "quanzhou"], ["temple", "quanzhou"], ["quanzhou", "seaBase"],
+        ["quanzhou", "overseas"], ["clan", "rebel"], ["rebel", "seaBase"]
+      ];
+      const { active, unlocked } = mapStatus(event);
+      elements.campaignMap.innerHTML = "";
+      links.forEach(([from, to]) => {
+        const a = nodes[from];
+        const b = nodes[to];
+        const dx = b.x - a.x;
+        const dy = b.y - a.y;
+        const line = document.createElement("div");
+        line.className = `map-line ${unlocked[from] && unlocked[to] ? "active" : ""}`;
+        line.style.setProperty("--x1", `${a.x}%`);
+        line.style.setProperty("--y1", `${a.y}%`);
+        line.style.setProperty("--len", `${Math.hypot(dx, dy)}%`);
+        line.style.setProperty("--angle", `${Math.atan2(dy, dx)}rad`);
+        elements.campaignMap.appendChild(line);
+      });
+      Object.entries(nodes).forEach(([id, node]) => {
+        const el = document.createElement("div");
+        el.className = `map-node ${unlocked[id] ? "unlocked" : ""} ${active === id ? "active" : ""} ${node.war ? "war" : ""}`;
+        el.style.setProperty("--x", `${node.x}%`);
+        el.style.setProperty("--y", `${node.y}%`);
+        el.innerHTML = `<span class="map-dot"></span><span>${node.label}</span>`;
+        elements.campaignMap.appendChild(el);
+      });
+    }
+
+    function renderSceneLabel(event) {
+      elements.sceneLabel.innerHTML = `<strong>${state.place}</strong><span>${state.phase} · ${state.route} · 兵马 ${state.structures.troops || 0}</span>`;
+      elements.sceneCanvas.classList.toggle("route-war", /军事|招兵|军纪|战斗|伏击|寨|兵/.test(event?.type || event?.title || "") || (state.structures.troops || 0) >= 28);
+    }
+
+    function renderDeltaStrip() {
+      const deltas = (state.lastDeltas || []).filter((item) => item.value !== 0);
+      elements.deltaStrip.innerHTML = "";
+      if (!deltas.length) {
+        elements.deltaStrip.classList.remove("show");
+        return;
+      }
+      const label = document.createElement("span");
+      label.className = "delta-label";
+      label.textContent = "本次净变化";
+      elements.deltaStrip.appendChild(label);
+      deltas.slice(0, 8).forEach((item) => {
+        const pill = document.createElement("span");
+        pill.className = `delta-pill ${item.value > 0 ? "positive" : "negative"}`;
+        pill.textContent = `${item.label} ${item.value > 0 ? "+" : ""}${item.value}`;
+        elements.deltaStrip.appendChild(pill);
+      });
+      elements.deltaStrip.classList.add("show");
+    }
+
+    function renderRouteMap(event) {
+      elements.routeMap.innerHTML = "";
+      elements.sceneCanvas.className = `scene-canvas ${phaseClass()}`;
+      routeSteps.forEach((step) => {
+        const div = document.createElement("div");
+        div.className = `route-step ${step.id === state.phase ? "active" : ""}`;
+        div.textContent = step.id;
+        elements.routeMap.appendChild(div);
+      });
+      const index = Math.max(0, routeSteps.findIndex((step) => step.id === state.phase));
+      elements.boat.style.setProperty("--boat-left", `${10 + index * 25}%`);
+      renderCampaignMap(event);
+      renderSceneLabel(event);
+    }
+
+    function activeRelic() {
+      if (hasFlag("signed_foreign_contract") || activePatron() === "海外") {
+        return { cls: "foreign", title: "远港契约", desc: "商队契约与海路信物，把故国记忆带向海外。" };
+      }
+      if (hasFlag("merchant_apprentice") || hasFlag("paid_passage") || activePatron() === "海路") {
+        return { cls: "sea", title: "船户暗记", desc: "船籍、绳结与保人说辞，暂时比姓名更可靠。" };
+      }
+      if (hasFlag("clan_adopted") || hasFlag("clan_knows_secret") || activePatron() === "宗族") {
+        return { cls: "clan", title: "族谱与筹木", desc: "地方庇护落在粮仓、族谱和愿意作保的人身上。" };
+      }
+      if (hasFlag("kept_roster") || hasFlag("declared_to_clerk") || activePatron() === "旧臣") {
+        return { cls: "roster", title: "半册名录", desc: "旧臣名字仍在纸上，也仍在风险之中。" };
+      }
+      if (hasFlag("temple_token") || hasFlag("temple_student") || activePatron() === "寺院") {
+        return { cls: "temple", title: "山寺木牌", desc: "度牒、木牌与经卷，给亡国孩子一层安静身份。" };
+      }
+      return { cls: "regalia", title: "木棉遗物", desc: "旧玉、小印与一段不该外露的身份。" };
+    }
+
+    function renderRelic() {
+      const relic = activeRelic();
+      elements.relicSprite.className = `relic-sprite ${relic.cls}`;
+      elements.relicTitle.textContent = relic.title;
+      elements.relicDesc.textContent = relic.desc;
+    }
+
+    function destinyScores() {
+      const s = state.structures;
+      const f = state.flags || {};
+      return {
+        隐居: clamp(s.shelter * 0.45 + (100 - s.exposure) * 0.25 + (f.clan_adopted ? 18 : 0) + (f.tonsure_cover ? 20 : 0) - s.legitimacy * 0.12),
+        记忆: clamp(s.legitimacy * 0.36 + s.loyalists * 0.28 + (f.memory_archive ? 18 : 0) + (f.temple_archive ? 16 : 0) + (f.kept_roster ? 10 : 0)),
+        流亡: clamp(s.sea * 0.5 + state.abilities.finance * 0.18 + (f.signed_foreign_contract ? 22 : 0) + (f.merchant_apprentice ? 14 : 0) - s.yuan * 0.12),
+        复国: clamp(s.legitimacy * 0.28 + s.loyalists * 0.24 + s.unrest * 0.18 + (s.troops || 0) * 0.24 + (state.abilities.martial || 0) * 0.12 + (f.three_cells ? 16 : 0) + (f.open_rebellion ? 16 : 0) - s.inertia * 0.18),
+        危局: clamp(s.exposure * 0.35 + s.yuan * 0.36 + s.inertia * 0.16 + (s.troops || 0) * 0.12 + (f.registry_suspicion ? 12 : 0) + (f.troops_plundered ? 12 : 0))
+      };
+    }
+
+    function renderDestiny() {
+      const scores = destinyScores();
+      const top = Object.entries(scores).sort((a, b) => b[1] - a[1])[0];
+      elements.destinyTag.textContent = `${top[0]}偏高`;
+      renderMeters(elements.destinyMeters, Object.fromEntries(Object.keys(scores).map((key) => [key, key])), scores, ["危局"]);
+      elements.dangerNote.hidden = scores.危局 < 60;
+      elements.dangerNote.textContent = scores.危局 >= 75
+        ? "危局很高：追捕、暴露、兵马规模和结构惯性正在同时挤压你的生存空间。"
+        : "危局升高：可以考虑转移藏身地、压低传闻、整肃军纪或暂缓公开身份。";
+    }
+
+    function thesisScores() {
+      const scores = Object.fromEntries(Object.keys(thesisDefinitions).map((key) => [key, 0]));
+      (state.evidence || []).forEach((item) => {
+        const evidence = evidenceCatalog[item.id];
+        if (!evidence) return;
+        evidence.supports.forEach((key) => {
+          scores[key] = clamp(scores[key] + 12);
+        });
+        evidence.challenges.forEach((key) => {
+          scores[key] = clamp(scores[key] - 6);
+        });
+      });
+      return scores;
+    }
+
+    function renderThesis() {
+      const selected = state.thesis ? thesisDefinitions[state.thesis] : null;
+      elements.thesisText.textContent = selected ? selected.short : "尚未选择";
+      elements.thesisTag.textContent = selected ? "验证中" : "待选择";
+      elements.thesisName.textContent = selected ? selected.title : "尚未选择命题";
+      elements.thesisDesc.textContent = selected ? selected.desc : "开局选择一个历史解释，后续经历会成为支持或反驳它的证据。";
+      const labels = Object.fromEntries(Object.entries(thesisDefinitions).map(([key, value]) => [key, value.title]));
+      renderMeters(elements.thesisMeters, labels, thesisScores());
+    }
+
+    function renderEvidence() {
+      elements.evidenceList.innerHTML = "";
+      const evidence = state.evidence || [];
+      elements.evidenceCount.textContent = `${evidence.length} 条`;
+      if (!evidence.length) {
+        const empty = document.createElement("p");
+        empty.className = "evidence-desc";
+        empty.textContent = "还没有证据。先选择历史命题，再让经历逐步构成你的解释。";
+        elements.evidenceList.appendChild(empty);
+        return;
+      }
+      evidence.slice(-8).reverse().forEach((item) => {
+        const data = evidenceCatalog[item.id];
+        if (!data) return;
+        const node = document.createElement("div");
+        node.className = "evidence-item";
+        const supports = data.supports.map((key) => thesisDefinitions[key].title).join("、");
+        const challenges = data.challenges.map((key) => thesisDefinitions[key].title).join("、") || "无";
+        node.innerHTML = `
+          <p class="evidence-title">${data.title}</p>
+          <p class="evidence-desc">${data.text}</p>
+          <div class="evidence-meta">
+            <span class="choice-tag">来源：${item.source}</span>
+            <span class="choice-tag">支持：${supports}</span>
+            <span class="choice-tag">反驳：${challenges}</span>
+          </div>
+        `;
+        elements.evidenceList.appendChild(node);
+      });
+    }
+
+    function nextUnlockText() {
+      const nodes = [
+        { month: 37, text: "旧臣网络全面激活" },
+        { month: 42, text: "练兵与招募开始可行" },
+        { month: 49, text: "远航抉择成熟" },
+        { month: 58, text: "武备与军纪抉择" },
+        { month: 67, text: "少年自择与起事线" },
+        { month: 96, text: "命运结算" }
+      ];
+      const next = nodes.find((node) => state.month < node.month);
+      if (!next) return "结局临近";
+      return `${next.text}：${next.month - state.month} 月`;
+    }
+
+    function renderRelationMap() {
+      elements.relationMap.innerHTML = '<div class="relation-center">赵昺</div>';
+      const npcs = state.npcs.slice(-6);
+      if (!npcs.length) {
+        const empty = document.createElement("p");
+        empty.className = "npc-desc";
+        empty.style.padding = "62px 12px 0";
+        empty.style.textAlign = "center";
+        empty.textContent = "尚未形成关系网络";
+        elements.relationMap.appendChild(empty);
+        return;
+      }
+      npcs.forEach((npc, index) => {
+        const angle = (-90 + index * (360 / npcs.length)) * Math.PI / 180;
+        const x = 50 + Math.cos(angle) * 35;
+        const y = 50 + Math.sin(angle) * 34;
+        const relation = state.relations[npc.name] || 0;
+        const line = document.createElement("div");
+        const degrees = Math.atan2(y - 50, x - 50) * 180 / Math.PI;
+        const length = Math.hypot(x - 50, y - 50) * 2.45;
+        line.className = "relation-line";
+        line.style.setProperty("--line-angle", `${degrees}deg`);
+        line.style.setProperty("--line-length", `${length}px`);
+        line.style.setProperty("--line-width", `${Math.max(2, Math.min(7, Math.abs(relation) / 12 + 2))}px`);
+        line.style.setProperty("--line-color", relation >= 0 ? "rgba(39, 115, 111, 0.58)" : "rgba(159, 47, 36, 0.55)");
+        elements.relationMap.appendChild(line);
+
+        const node = document.createElement("div");
+        node.className = "relation-node";
+        node.style.left = `calc(${x}% - 32px)`;
+        node.style.top = `calc(${y}% - 18px)`;
+        node.textContent = npc.name.slice(0, 4);
+        elements.relationMap.appendChild(node);
+      });
+    }
+
+    function renderNpcList() {
+      elements.npcList.innerHTML = "";
+      renderRelationMap();
+      if (!state.npcs.length) {
+        const empty = document.createElement("p");
+        empty.className = "npc-desc";
+        empty.textContent = "尚无人真正知道你是谁。";
+        elements.npcList.appendChild(empty);
+      }
+      state.npcs.slice(-4).forEach((npc) => {
+        const relation = state.relations[npc.name] || 0;
+        const portrait = portraitMap[npc.name] || portraitMap["赵昺"];
+        const node = document.createElement("div");
+        node.className = "npc";
+        node.innerHTML = `
+          <div class="npc-avatar ${portrait.cls}"></div>
+          <div>
+            <p class="npc-name"><span>${npc.name}</span><span class="tag">${npc.faction} · ${relation >= 0 ? "+" : ""}${relation}</span></p>
+            <p class="npc-desc">${npc.trait}：${npc.desc}</p>
+          </div>
+        `;
+        elements.npcList.appendChild(node);
+      });
+      elements.npcCount.textContent = `${state.npcs.length} 人`;
+    }
+
+    function renderLog() {
+      elements.logList.innerHTML = "";
+      state.log.slice(-8).reverse().forEach((entry, index) => {
+        const item = document.createElement("p");
+        item.className = "log-item";
+        item.textContent = entry;
+        const historyIndex = Math.max(0, state.history.length - 1 - index);
+        item.addEventListener("click", () => showHistoryEntry(historyIndex));
+        elements.logList.appendChild(item);
+      });
+    }
+
+    function renderChoices(event) {
+      elements.choices.innerHTML = "";
+      const choices = event.choices.filter((choice) => meetsRequires(choice.requires));
+      if (!choices.length) {
+        const fallback = {
+          title: "顺势等待",
+          hint: "没有足够关系或线索推动当前事件，只能保守度过这个月。",
+          effects: { survival: 2, exposure: -2, inertia: 1 },
+          log: "你没有足够的人脉或证据推进这条线，只能把这个月藏起来。"
+        };
+        choices.push(fallback);
+      }
+      choices.forEach((choice, index) => {
+        const button = document.createElement("button");
+        button.className = "choice";
+        const tags = choiceTags(choice).map((tag) => `<span class="choice-tag">${tag}</span>`).join("");
+        button.innerHTML = `<strong><span class="keycap">[${index + 1}]</span>${choice.title}</strong><span>${choice.hint}</span><p class="choice-causality">${choiceCausality(choice)}</p><div class="choice-tags">${tags}</div>`;
+        button.disabled = state.busy;
+        button.addEventListener("mouseenter", () => updateChoicePreview(choice, index));
+        button.addEventListener("focus", () => updateChoicePreview(choice, index));
+        button.addEventListener("click", () => {
+          if (state.busy) return;
+          button.classList.add("selected");
+          [...elements.choices.querySelectorAll("button")].forEach((other) => {
+            if (other !== button) other.disabled = true;
+          });
+          state.busy = true;
+          setTimeout(() => choose(choice), 260);
+        });
+        elements.choices.appendChild(button);
+      });
+      if (choices[0]) updateChoicePreview(choices[0], 0);
+    }
+
+    function render() {
+      const event = contextualEvent(state.currentEvent);
+      state.phase = event.phase || currentPhase();
+      elements.phaseTag.textContent = state.phase;
+      elements.timeText.textContent = `${state.year} 年 ${state.calendarMonth} 月`;
+      elements.placeText.textContent = state.place;
+      elements.coverText.textContent = state.cover;
+      elements.routeText.textContent = state.route;
+      elements.growthText.textContent = growthStage();
+      elements.saveText.textContent = localStorage.getItem(SAVE_KEY) ? "已保存" : "自动保存";
+      elements.unlockText.textContent = nextUnlockText();
+      elements.monthTag.textContent = `第 ${state.month} 月`;
+      elements.eventTypeTag.textContent = event.type;
+      elements.eventTitle.textContent = event.title;
+      elements.eventText.textContent = event.text;
+      elements.contextText.textContent = eventContext(event);
+      renderPortrait(event);
+      renderNarrativeLinks(event);
+      elements.ageTag.textContent = `${ageYears()} 岁`;
+      elements.rumorTag.textContent = state.structures.exposure > 70 ? "传闻沸腾" : state.structures.exposure > 42 ? "传闻渐起" : "传闻微弱";
+      elements.pressureTag.textContent = state.structures.yuan > 72 ? "围捕逼近" : state.structures.yuan > 45 ? "搜捕加紧" : "搜捕初起";
+      elements.memoryTag.textContent = state.structures.legitimacy > 70 ? "记忆未熄" : state.structures.legitimacy > 38 ? "余烬尚存" : "旧名渐淡";
+      renderMeters(elements.abilityMeters, abilityLabels, state.abilities);
+      renderMeters(elements.structureMeters, structureLabels, state.structures, ["exposure", "yuan", "inertia"]);
+      renderDestiny();
+      renderThesis();
+      renderEvidence();
+      renderRouteMap(event);
+      renderRelic();
+      renderNpcList();
+      renderLog();
+      renderChoices(event);
+      renderDeltaStrip();
+    }
+
+    function applyEffects(effects = {}) {
+      const deltas = [];
+      Object.entries(effects).forEach(([key, value]) => {
+        if (key in state.abilities) {
+          const before = state.abilities[key];
+          state.abilities[key] = clamp(state.abilities[key] + value);
+          const actual = state.abilities[key] - before;
+          if (actual !== 0) {
+            state.changedKeys.push(key);
+            deltas.push({ key, label: abilityLabels[key] || key, value: actual });
+          }
+        }
+        if (key in state.structures) {
+          const before = state.structures[key];
+          state.structures[key] = clamp(state.structures[key] + value);
+          const actual = state.structures[key] - before;
+          if (actual !== 0) {
+            state.changedKeys.push(key);
+            deltas.push({ key, label: structureLabels[key] || key, value: actual });
+          }
+        }
+      });
+      return deltas;
+    }
+
+    function dynamicChoicePayload(choice) {
+      if (choice.dynamic === "bond") {
+        const patron = activePatron();
+        const p = patronProfile(patron);
+        if (patron === "寺院") return { effects: { shelter: 4, exposure: -2, learning: 2 }, flags: ["bond_temple"], relation: { [p.name]: 6 }, route: "隐居" };
+        if (patron === "宗族") return { effects: { shelter: 5, social: 3, exposure: -1 }, flags: ["bond_clan"], relation: { [p.name]: 6 }, route: "隐居" };
+        if (patron === "海路") return { effects: { sea: 4, finance: 2, exposure: -1 }, flags: ["bond_ship"], relation: { [p.name]: 6 }, route: "流亡" };
+        if (patron === "海外") return { effects: { sea: 4, finance: 3, legitimacy: -1 }, flags: ["bond_foreign"], relation: { [p.name]: 6 }, route: "流亡" };
+        if (patron === "旧臣") return { effects: { loyalists: 4, legitimacy: 3, exposure: 2 }, flags: ["bond_clerk"], relation: { [p.name]: 6 }, route: "记忆" };
+        return { effects: { social: 2, survival: 2, exposure: -1 }, flags: ["bond_minor_stranger"] };
+      }
+      if (choice.dynamic === "service") {
+        const patron = activePatron();
+        const p = patronProfile(patron);
+        if (patron === "寺院") return { effects: { craft: 3, shelter: 4, exposure: -2 }, flags: ["served_temple"], relation: { [p.name]: 4 } };
+        if (patron === "宗族") return { effects: { social: 3, finance: 2, shelter: 4 }, flags: ["served_clan"], relation: { [p.name]: 4 } };
+        if (patron === "海路") return { effects: { finance: 3, sea: 4, craft: 1 }, flags: ["served_ship"], relation: { [p.name]: 4 } };
+        if (patron === "海外") return { effects: { finance: 4, explore: 2, sea: 2 }, flags: ["served_foreign_merchant"], relation: { [p.name]: 4 } };
+        if (patron === "旧臣") return { effects: { learning: 3, loyalists: 3, exposure: 1 }, flags: ["served_loyalist_network"], relation: { [p.name]: 4 } };
+        return { effects: { survival: 3, craft: 3, shelter: 1 }, flags: ["served_minor_household"] };
+      }
+      if (choice.dynamic === "train") {
+        if (state.route === "复国") return { effects: { learning: 3, social: 2, courage: 3, martial: 4, legitimacy: 2 }, flags: ["trained_for_claim"] };
+        if (state.route === "流亡") return { effects: { finance: 4, explore: 3, sea: 3 }, flags: ["trained_for_sea"] };
+        if (state.route === "记忆") return { effects: { learning: 5, social: 2, loyalists: 2 }, flags: ["trained_for_memory"] };
+        return { effects: { survival: 4, craft: 3, exposure: -2 }, flags: ["trained_for_hiding"] };
+      }
+      if (choice.dynamic === "recruit") {
+        if (state.route === "复国") {
+          return { effects: { troops: 7, martial: 3, loyalists: 3, exposure: 6, yuan: 3 }, flags: ["recruited_village_youth"], npcName: "黎山寨首", relation: { "黎山寨首": 3, "周书吏": 2 }, route: "复国" };
+        }
+        if (state.route === "记忆") {
+          return { effects: { troops: 4, martial: 2, social: 2, exposure: 3 }, flags: ["kept_scouts_only"], route: "记忆" };
+        }
+        if (state.route === "流亡") {
+          return { effects: { troops: 3, sea: 3, martial: 2, exposure: 3, finance: -2 }, flags: ["hired_deck_guards"], relation: { "陈姓船主": 2 }, route: "流亡" };
+        }
+        return { effects: { troops: 3, martial: 2, exposure: 4, shelter: -1 }, flags: ["formed_war_band"], npcName: "黎山寨首", relation: { "黎山寨首": 3 }, route: "复国" };
+      }
+      if (choice.dynamic === "seek") {
+        if (!hasNpc("静照僧")) return { effects: { shelter: 4, exposure: 4, learning: 2 }, flags: ["met_wandering_monk", "temple_token"], npcName: "云游医僧", relation: { "云游医僧": 12 }, route: "记忆" };
+        if (!hasNpc("林氏族长")) return { effects: { shelter: 5, exposure: 3, social: 2 }, flags: ["met_clan_intermediary", "village_shelter"], npcName: "林氏族长", relation: { "林氏族长": 6 }, route: "隐居" };
+        if (!hasNpc("陈姓船主")) return { effects: { sea: 6, finance: -2, exposure: 4 }, flags: ["met_ship_contact", "clan_boat_intro"], npcName: "陈姓船主", relation: { "陈姓船主": 6 }, route: "流亡" };
+        if (!hasNpc("周书吏")) return { effects: { loyalists: 5, legitimacy: 3, exposure: 5 }, flags: ["met_roster_copyist", "kept_roster"], npcName: "周书吏", relation: { "周书吏": 6 }, route: "记忆" };
+        return { effects: { social: 3, exposure: 3, loyalists: 2 }, flags: ["extended_minor_contacts"] };
+      }
+      return {};
+    }
+
+    function mergeChoicePayload(choice) {
+      const dynamic = dynamicChoicePayload(choice);
+      return {
+        ...choice,
+        effects: { ...(choice.effects || {}), ...(dynamic.effects || {}) },
+        flags: [...(choice.flags || []), ...(dynamic.flags || [])],
+        relation: { ...(choice.relation || {}), ...(dynamic.relation || {}) },
+        npcName: dynamic.npcName || choice.npcName,
+        route: dynamic.route || choice.route,
+        cover: dynamic.cover || choice.cover
+      };
+    }
+
+    function effectsSummary(effects = {}) {
+      const parts = [];
+      Object.entries(effects).forEach(([key, value]) => {
+        const label = abilityLabels[key] || structureLabels[key] || key;
+        if (value !== 0) parts.push(`${label} ${value > 0 ? "+" : ""}${value}`);
+      });
+      return parts.length ? parts.join("，") : "局势暂未出现明显数值变化";
+    }
+
+    function actualDeltaSummary(deltas = []) {
+      const parts = deltas
+        .filter((item) => item.value !== 0)
+        .map((item) => `${item.label} ${item.value > 0 ? "+" : ""}${item.value}`);
+      return parts.length ? parts.join("，") : "局势暂未出现明显数值变化";
+    }
+
+    function relationSummary(choice) {
+      const merged = mergeChoicePayload(choice);
+      const relation = merged.relation || merged.failRelation || {};
+      const names = Object.entries(relation)
+        .filter(([, value]) => value !== 0)
+        .map(([name, value]) => `${name}${value > 0 ? "+" : ""}${value}`);
+      if (merged.npcName) names.unshift(`遇见${merged.npcName}`);
+      return names.slice(0, 2).join("，");
+    }
+
+    function choiceCausality(choice) {
+      const merged = mergeChoicePayload(choice);
+      const parts = [];
+      const relation = relationSummary(choice);
+      if (relation) parts.push(`人物：${relation}`);
+      if (merged.thesis) parts.push(`命题：${thesisDefinitions[merged.thesis].short}`);
+      if (merged.route) parts.push(`路线：${merged.route}`);
+      if (merged.next) parts.push(`后续：${eventById(merged.next)?.title || merged.next}`);
+      if (choice.check) parts.push(`检定：${abilityLabels[choice.check]}`);
+      return parts.length ? parts.join(" · ") : `局势：${effectsSummary(merged.effects).split("，").slice(0, 2).join("，")}`;
+    }
+
+    function updateChoicePreview(choice, index = 0) {
+      const merged = mergeChoicePayload(choice);
+      if (merged.thesis) {
+        const thesis = thesisDefinitions[merged.thesis];
+        elements.choicePreview.textContent = `[${index + 1}] ${choice.title}：本局将以“${thesis.title}”为核心问题。后续证据会不断支持或反驳这个解释。`;
+        return;
+      }
+      const effectText = choice.check
+        ? `若${abilityLabels[choice.check]}检定成功：${effectsSummary(choice.success || {})}；失败：${effectsSummary(choice.fail || {})}`
+        : effectsSummary(merged.effects);
+      const relation = relationSummary(choice);
+      const next = merged.next ? `，并推动到《${eventById(merged.next)?.title || merged.next}》` : "";
+      const route = merged.route ? `路线倾向转向“${merged.route}”` : "路线保持弹性";
+      elements.choicePreview.textContent = `[${index + 1}] ${choice.title}：${effectText}${relation ? `；人物牵动：${relation}` : ""}；${route}${next}。`;
+    }
+
+    function renderNarrativeLinks(event) {
+      const speaker = eventSpeaker(event);
+      const relation = state.relations[speaker];
+      const latest = state.history[state.history.length - 1];
+      const danger = destinyScores().危局;
+      elements.bondText.textContent = speaker === "赵昺"
+        ? `${activePatron()}网络正在塑造你`
+        : `${speaker}${relation === undefined ? "尚未入册" : `关系 ${relation >= 0 ? "+" : ""}${relation}`}`;
+      elements.echoText.textContent = latest
+        ? `上月“${latest.choiceTitle}”留下回响`
+        : "崖山余波刚刚开始";
+      elements.stakesText.textContent = danger >= 70
+        ? "危局很高，公开行动会迅速反噬"
+        : danger >= 48
+          ? "风声正在变紧，需要控制暴露"
+          : "仍有空间经营关系与身份";
+    }
+
+    function eventContext(event) {
+      const latest = state.history[state.history.length - 1];
+      const patron = activePatron();
+      const links = [];
+      if (event.id === "monthly_life") {
+        links.push(`本月日常由“${patron}”庇护网络生成，选项会随你结识的人和当前身份变化。`);
+      }
+      if (event.id === "quarter_action") {
+        links.push("这是成长节点的主动行动，不是随机月度重复事件。");
+      }
+      if (event.id === "bond_interlude") {
+        links.push("这是人物关系插曲，用来回应前面结识的人，而不是单纯培养属性。");
+      }
+      if (event.id === "pressure_interlude") {
+        links.push("这是结构压力插曲，表现元廷查验与地方观望对你行动空间的挤压。");
+      }
+      if (event.requires?.anyFlags) {
+        const active = event.requires.anyFlags.filter(hasFlag);
+        if (active.length) links.push(`由此前线索触发：${active.slice(0, 2).map(flagLabel).join("、")}`);
+      }
+      if (event.requires?.npcs || event.requires?.anyNpcs) {
+        links.push(`相关人物：${[...(event.requires.npcs || []), ...(event.requires.anyNpcs || [])].join("、")}`);
+      }
+      if (latest) links.push(`前情：上月你选择了“${latest.choiceTitle}”。`);
+      links.push(`当前依托：${patron}；成长阶段：${growthStage()}。`);
+      return links.join(" ");
+    }
+
+    function eventSpeaker(event) {
+      const text = `${event.title} ${event.text}`;
+      if (text.includes("静照")) return "静照僧";
+      if (text.includes("杨氏")) return "杨氏旧侍";
+      if (text.includes("林氏") || text.includes("族长") || text.includes("祠堂")) return "林氏族长";
+      if (text.includes("陈船主") || text.includes("船主")) return "陈姓船主";
+      if (text.includes("周书吏") || text.includes("名录") || text.includes("旧臣")) return "周书吏";
+      if (text.includes("阿蒲") || text.includes("外商") || text.includes("海外")) return "阿蒲商人";
+      if (text.includes("巡检") || text.includes("元廷")) return "许都巡";
+      if (text.includes("宋旗") || text.includes("寨")) return "黎山寨首";
+      return "赵昺";
+    }
+
+    function renderPortrait(event) {
+      const name = eventSpeaker(event);
+      const portrait = portraitMap[name] || portraitMap["赵昺"];
+      elements.portraitSprite.className = `portrait-sprite ${portrait.cls}`;
+      elements.portraitName.textContent = name;
+      elements.portraitRole.textContent = portrait.role;
+    }
+
+    function flagLabel(flag) {
+      const labels = {
+        saved_monk: "救下静照",
+        temple_token: "寺院木牌",
+        saved_attendant: "旧宫人作证",
+        kept_regalia: "保存旧物",
+        village_knows_secret: "渔村知情",
+        clan_adopted: "入林氏族谱",
+        clan_knows_secret: "林氏知密",
+        hired_night_boat: "夜船离岸",
+        kept_roster: "半册名录",
+        declared_to_clerk: "回应旧臣",
+        temple_network: "寺院暗线",
+        paid_passage: "买下舱位",
+        merchant_apprentice: "商船账童",
+        foreign_merchant_offer: "外商邀约",
+        three_cells: "三点联络",
+        memory_archive: "密档箱",
+        met_wandering_monk: "云游医僧",
+        met_clan_intermediary: "宗族中介",
+        met_ship_contact: "海商中介",
+        palace_lesson: "旧宫礼法",
+        trimmed_palace_memory: "删定宫中记忆",
+        attendant_safe_house: "旧侍留守",
+        temple_line_cooled: "寺院暗线降温",
+        tea_shed_cell: "茶棚暗线",
+        temple_risk_continues: "寺院继续冒险",
+        sutra_names_hidden: "无名往生牌",
+        clan_front_seat: "林氏前席",
+        clan_ledger_role: "宗族礼账",
+        clan_tax_roll_done: "林氏粮册",
+        grain_for_loyalists: "运粮给旧线",
+        no_forced_ships: "不征海船",
+        ship_registry_done: "船籍过关",
+        crew_families_spared: "护住船户家口",
+        relic_in_ship_house: "旧物藏陈家",
+        chen_released_from_plot: "放陈船主归商路",
+        identity_verified_by_clerk: "书吏验明身份",
+        memory_over_restoration: "记忆重于复国",
+        clerk_compromise_done: "书吏改写名录",
+        recruited_village_youth: "招募乡勇",
+        formed_war_band: "练成小队",
+        bought_arms: "买马造甲",
+        disciplined_troops: "立下军规",
+        won_patrol_ambush: "伏击小胜",
+        cells_over_army: "拆军为哨",
+        troops_plundered: "纵兵取粮",
+        merchant_life_chosen: "商队生活",
+        relics_hidden_oversea: "信物藏海外",
+        apu_quanzhou_done: "番坊夜火",
+        patrol_closer: "巡检逼近",
+        registry_repaired: "籍贯补齐",
+        patrol_private_note_done: "许都巡私记",
+        attendant_names_done: "旧宫女名录",
+        sea_supplied_rebels: "海路供粮",
+        rebels_evacuated: "山寨撤退"
+      };
+      return labels[flag] || flag.replaceAll("_", " ");
+    }
+
+    function choiceTags(choice) {
+      const tags = [];
+      if (choice.requires?.anyFlags) tags.push(`承接：${choice.requires.anyFlags.slice(0, 2).map(flagLabel).join("/")}`);
+      if (choice.requires?.npcs) tags.push(`需：${choice.requires.npcs.join("/")}`);
+      if (choice.requires?.anyNpcs) tags.push(`靠关系：${choice.requires.anyNpcs.join("/")}`);
+      if (choice.route) tags.push(`趋向：${choice.route}`);
+      if (choice.thesis) tags.push(`命题：${thesisDefinitions[choice.thesis].short}`);
+      if (choice.next) tags.push(`后续：${eventById(choice.next)?.title || choice.next}`);
+      const evidenceFlags = [...(choice.flags || []), ...(choice.failFlags || [])].map((flag) => flagEvidenceMap[flag]).filter(Boolean);
+      if (evidenceFlags.length) tags.push("证据：可入链");
+      if (choice.dynamic === "seek") tags.push("补线：寻找引路人");
+      if (choice.dynamic === "train") tags.push("主动：训练");
+      if (choice.dynamic === "recruit") tags.push("主动：招募");
+      const effects = choice.effects || choice.success || {};
+      const important = Object.entries(effects)
+        .filter(([key]) => ["exposure", "yuan", "shelter", "legitimacy", "loyalists", "sea", "troops", "martial"].includes(key))
+        .slice(0, 2)
+        .map(([key, value]) => `${structureLabels[key] || abilityLabels[key]} ${value > 0 ? "+" : ""}${value}`);
+      tags.push(...important);
+      return tags.slice(0, 4);
+    }
+
+    function showResultToast(text) {
+      elements.resultToast.textContent = text;
+      elements.resultToast.classList.add("show");
+      clearTimeout(state.toastTimer);
+      state.toastTimer = setTimeout(() => elements.resultToast.classList.remove("show"), 2600);
+    }
+
+    function milestoneText(month) {
+      const map = {
+        12: "你在流亡中度过第一年。",
+        24: "两年过去，保护者的安排开始变成你的习惯。",
+        36: "童年后段结束，旧臣与地方网络即将变得更真实。",
+        48: "少年身体长成，招募乡勇和练兵开始成为可能。",
+        60: "海路、船籍、武备和人情债正在重塑你的身份。",
+        96: "八年流亡抵达结算之月。"
+      };
+      return map[month] || "";
+    }
+
+    function showMilestone(text) {
+      if (!text) return;
+      elements.milestoneBadge.textContent = text;
+      elements.milestoneBadge.classList.add("show");
+      clearTimeout(state.milestoneTimer);
+      state.milestoneTimer = setTimeout(() => elements.milestoneBadge.classList.remove("show"), 3600);
+      state.log.push(`里程碑：${text} 点击月记可回顾当时详情。`);
+    }
+
+    function scheduledInterludeId() {
+      const schedule = {
+        12: "guardian_month",
+        24: "quarter_action",
+        36: "youth_debt",
+        48: "quarter_action",
+        60: "quarter_action",
+        72: "adolescent_choice",
+        84: "quarter_action"
+      };
+      return schedule[state.month] || null;
+    }
+
+    function checkResult(choice) {
+      choice.checkSucceeded = null;
+      if (!choice.check) return choice.effects || {};
+      const skill = state.abilities[choice.check] || 0;
+      const pressure = Math.floor((state.structures.inertia + state.structures.yuan + state.structures.exposure) / 12);
+      const roll = Math.floor(Math.random() * 36) + skill - pressure;
+      const success = roll >= 28;
+      choice.checkSucceeded = success;
+      state.log.push(success ? `检定成功：${abilityLabels[choice.check]}让你避开了最坏结果。` : `检定失败：局势比个人技巧更沉重。`);
+      return success ? choice.success : choice.fail;
+    }
+
+    function recordHistory(choice, logText) {
+      state.history.push({
+        month: state.month,
+        date: displayDate(),
+        age: ageYears(),
+        phase: state.phase,
+        place: state.place,
+        eventId: state.currentEvent.id,
+        eventTitle: state.currentEvent.title,
+        eventType: state.currentEvent.type,
+        eventText: state.currentEvent.text,
+        choiceTitle: choice.title,
+        route: state.route,
+        cover: state.cover,
+        log: logText || "",
+        structures: { ...state.structures },
+        abilities: { ...state.abilities },
+        flags: { ...state.flags }
+      });
+    }
+
+    function addNpc(name = null) {
+      if (name && hasNpc(name)) return;
+      const available = name
+        ? npcPool.filter((npc) => npc.name === name)
+        : npcPool.filter((npc) => !state.npcs.some((met) => met.name === npc.name));
+      if (!available.length) return;
+      const npc = name ? available[0] : pick(available);
+      state.npcs.push(npc);
+      state.relations[npc.name] = state.relations[npc.name] || 0;
+      state.log.push(`你遇见了${npc.name}。`);
+      if (npc.faction === "元朝官府") applyEffects({ yuan: 6, exposure: 4 });
+      if (npc.faction === "旧臣") applyEffects({ loyalists: 4, legitimacy: 3 });
+      if (npc.faction === "海商" || npc.faction === "外来商人") applyEffects({ sea: 4, finance: 2 });
+      if (npc.faction === "寺院") applyEffects({ shelter: 3, exposure: -2 });
+    }
+
+    function choose(choice) {
+      if (state.ended) return;
+      choice = mergeChoicePayload(choice);
+      state.changedKeys = [];
+      const effects = checkResult(choice);
+      const deltas = applyEffects(effects);
+      state.lastDeltas = deltas;
+      showResultToast(choice.thesis ? `历史命题：${thesisDefinitions[choice.thesis].title}` : `本次净变化：${actualDeltaSummary(deltas)}`);
+      if (choice.thesis) setThesis(choice.thesis);
+      const appliedFlags = choice.check && !choice.checkSucceeded ? choice.failFlags : choice.flags;
+      applyFlags(appliedFlags);
+      applyRelations(choice.check && !choice.checkSucceeded ? choice.failRelation : choice.relation);
+      collectEvidence(appliedFlags || [], choice, effects);
+      if (choice.cover) state.cover = choice.cover;
+      if (choice.route) state.route = choice.route;
+      if (choice.place) state.pendingPlace = choice.place;
+      if (!choice.check || choice.checkSucceeded || choice.addNpcOnFail) {
+        if (choice.npcName) addNpc(choice.npcName);
+        if (choice.npc) addNpc();
+      }
+      if (choice.next) state.forcedEvent = choice.next;
+      const log = choice.check && !choice.checkSucceeded && choice.failLog ? choice.failLog : choice.log;
+      if (log) state.log.push(log);
+      recordHistory(choice, log);
+      if (choice.noAdvance) {
+        state.currentEvent = nextEvent();
+        state.busy = false;
+        render();
+        saveGame();
+        return;
+      }
+      advanceWorld();
+      const ending = getEnding();
+      if (ending) {
+        state.ended = true;
+        state.busy = false;
+        render();
+        showEnding(ending);
+        clearSave();
+        return;
+      }
+      state.currentEvent = nextEvent();
+      state.busy = false;
+      render();
+      saveGame();
+      setTimeout(() => {
+        state.changedKeys = [];
+        render();
+      }, 700);
+    }
+
+    function advanceWorld() {
+      state.month += 1;
+      state.calendarMonth += 1;
+      if (state.calendarMonth > 12) {
+        state.calendarMonth = 1;
+        state.year += 1;
+      }
+      state.phase = currentPhase();
+      state.place = state.pendingPlace || phasePlace(state.phase);
+      state.pendingPlace = null;
+      applyEffects({
+        inertia: 2,
+        yuan: state.structures.exposure > 55 ? 3 : 1,
+        legitimacy: state.route === "隐居" ? -1 : 0,
+        shelter: state.route === "流亡" ? -1 : 0
+      });
+      const troopBurden = Math.floor((state.structures.troops || 0) / 30);
+      if (troopBurden > 0) {
+        applyEffects({
+          finance: -troopBurden,
+          shelter: -troopBurden,
+          exposure: hasFlag("disciplined_troops") ? 0 : troopBurden
+        });
+      }
+      showMilestone(milestoneText(state.month));
+      if (Math.random() < 0.18) addNpc();
+    }
+
+    function nextEvent() {
+      if (state.forcedEvent) {
+        const forced = eventById(state.forcedEvent);
+        state.forcedEvent = null;
+        if (forced && meetsRequires(forced.requires)) {
+          state.usedEvents.add(forced.id);
+          return forced;
+        }
+      }
+      const scheduled = scheduledInterludeId();
+      if (scheduled && !hasFlag(`interlude_${state.month}`)) {
+        const interlude = eventById(scheduled);
+        if (interlude && meetsRequires(interlude.requires)) {
+          state.flags[`interlude_${state.month}`] = true;
+          state.lastRepeatEventId = scheduled;
+          return interlude;
+        }
+      }
+      const phase = currentPhase();
+      let candidates = events.filter((event) => {
+        if (event.id === "kapok" || event.id === "thesis_choice") return false;
+        if (!meetsRequires(event.requires)) return false;
+        if (event.phase === phase) return true;
+        return state.month > 18 && event.phase === "身份选择";
+      });
+      const softEventIds = ["monthly_life", "bond_interlude", "pressure_interlude", "guardian_month", "youth_debt", "adolescent_choice", "quarter_action"];
+      const storyCandidates = candidates.filter((event) => !softEventIds.includes(event.id));
+      if (storyCandidates.some((event) => !state.usedEvents.has(event.id) && meetsRequires(event.requires))) {
+        candidates = storyCandidates.concat(candidates.filter((event) => !["monthly_life", "bond_interlude", "pressure_interlude"].includes(event.id)));
+      }
+      const nonRepeatFresh = candidates.filter((event) => !event.repeatable && !state.usedEvents.has(event.id));
+      const recentSoftIds = state.history.slice(-3).map((entry) => entry.eventId).filter(Boolean);
+      const repeatables = candidates.filter((item) =>
+        item.repeatable &&
+        item.id !== state.lastRepeatEventId &&
+        !recentSoftIds.includes(item.id) &&
+        ["monthly_life", "bond_interlude", "pressure_interlude"].includes(item.id)
+      );
+      const event = pick(nonRepeatFresh.length ? nonRepeatFresh : repeatables);
+      if (event?.repeatable) state.lastRepeatEventId = event.id;
+      if (!event) {
+        const fallbackIds = ["monthly_life", "bond_interlude", "pressure_interlude"].filter((id) => id !== state.lastRepeatEventId && !recentSoftIds.includes(id));
+        const fallbackPool = fallbackIds.length ? fallbackIds : ["monthly_life", "bond_interlude", "pressure_interlude"].filter((id) => id !== state.lastRepeatEventId);
+        const fallback = eventById(pick(fallbackPool));
+        state.lastRepeatEventId = fallback.id;
+        return fallback;
+      }
+      state.usedEvents.add(event.id);
+      return event;
+    }
+
+    function getEnding() {
+      const s = state.structures;
+      const f = state.flags;
+      if (s.exposure >= 96 && s.yuan >= 82) {
+        return {
+          title: f.registry_suspicion ? "案册留名结局" : "被献俘结局",
+          text: f.registry_suspicion ? "巡检册页上的小记号终于变成拘捕文书。你不是在战场上失败，而是在户籍、口音、船票和证词的缝隙里被新秩序重新捕获。" : "身份传闻与官府搜捕合流，地方庇护者不再愿意承担风险。你被送往元廷，赵宋血脉成为新秩序的战利品。",
+          notes: ["皇室身份带来号召力，也带来最高等级的追捕。", "地方势力在结构压力下选择了自保。"]
+        };
+      }
+      if (s.shelter <= 4 || state.abilities.survival <= 3) {
+        return {
+          title: "流亡夭折结局",
+          text: "粮食、住所和疾病比复国更早抵达。你的逃亡没有成为政治事件，只成为海边一段无人确认的传闻。",
+          notes: ["生存不是小系统，而是所有政治可能性的前提。", "亡国后的合法性不能直接变成食物和药。"]
+        };
+      }
+      if (state.month >= 96) {
+        if (f.troops_plundered && s.shelter < 32) {
+          return {
+            title: "兵灾反噬结局",
+            text: "你确实招起了人，也确实让旧旗重新有了刀兵。但默许取粮之后，宗族和港口先把你当成灾祸，而不是君主。宋室名义没有败给怯懦，而是败给了失控的军纪。",
+            notes: ["招兵买马不是单纯增强，它会改变你与百姓的关系。", "没有军纪的武力会把复国叙事变成地方灾难。"]
+          };
+        }
+        if ((s.troops || 0) > 62 && state.abilities.martial > 58 && s.legitimacy > 62 && s.yuan < 86 && f.disciplined_troops) {
+          return {
+            title: "海陆军府结局",
+            text: "你没有恢复临安，也没有夺回天下，却在山寨、宗族和海路之间维持起一支有军纪的小军府。它能护送旧臣、伏击巡检、转移百姓，也能让元廷不得不把你当成一股真实武装。",
+            notes: ["这是军事线的成功：不是改写大一统格局，而是在缝隙中制造可持续的武装空间。", "武力提高了能动性，但粮草、军纪和地方庇护才让它没有立刻崩坏。"]
+          };
+        }
+        if ((s.troops || 0) > 70 && state.abilities.finance < 28 && s.shelter < 45) {
+          return {
+            title: "兵散粮尽结局",
+            text: "兵马一度聚拢，旗号也一度响亮。可粮草、钱银和地方庇护没有跟上，队伍在饥饿、猜疑和追捕里慢慢散去。你不是没有招到人，而是没有养住人。",
+            notes: ["南宋末后的军事可能性首先受制于后勤。", "招兵越成功，越需要财政、庇护和海路共同支撑。"]
+          };
+        }
+        if (f.open_rebellion && (s.yuan > 74 || s.inertia > 82)) {
+          return {
+            title: "失败起义结局",
+            text: "宋旗再起，却没有足够粮草、纪律和地方共识。元军不只镇压一支武装，也切断了山寺、宗族和港口之间刚刚形成的线。",
+            notes: ["你制造了政治事件，但没有制造出稳定结构。", "公开身份让所有曾经帮助你的人同时暴露。"]
+          };
+        }
+        if (f.three_cells && f.sea_base && s.legitimacy > 76 && s.loyalists > 66 && s.sea > 62 && s.exposure < 88) {
+          return {
+            title: "流亡朝廷结局",
+            text: "山寺传书、宗族藏人、港口运钱，海上据点终于维持起一个象征性行朝。它有旗帜、文书和追随者，却仍缺少足以重建国家的土地、税收与军队。",
+            notes: ["这是成功的流亡政治，不是轻易的复国。", "合法性被保存下来，但结构惯性仍压过个人愿望。"]
+          };
+        }
+        if (f.monastic_memory || f.tonsure_cover) {
+          return {
+            title: "山寺藏名结局",
+            text: "赵昺这个名字没有出现在叛乱旗帜上，而是留在经柜暗格、度牒背面和静照的沉默里。你逃过了政治追捕，却没有完全逃出历史记忆。",
+            notes: ["寺院线让个人生命和宋室记忆分离保存。", "这是逃避统治的一种成功，但不是复国。"]
+          };
+        }
+        if (f.clan_adopted && s.legitimacy < 42 && s.shelter > 58) {
+          return {
+            title: "宗族隐名结局",
+            text: "族谱上的普通名字渐渐压过了旧日帝号。你在林氏宗族中长大，婚丧祭祀、田契账册和地方纠纷成为新的秩序。",
+            notes: ["地方社会吸收了亡国者，也改造了亡国者。", "你活了下来，但复国使命被日常生活慢慢驯化。"]
+          };
+        }
+        if (f.signed_foreign_contract || f.oversea_exile) {
+          return {
+            title: "南海账房结局",
+            text: "你随商队远航，在占城与更远港口之间记账、译语、辨风。赵宋没有复兴，但你学会在另一套海上规则中生活。",
+            notes: ["逃离统治并不意味着脱离社会，只是进入另一张网络。", "海外线保全生命，也让故国政治逐渐变成记忆。"]
+          };
+        }
+        if (f.merchant_apprentice || s.sea > 72) {
+          return {
+            title: "海商结局",
+            text: "你成为海上网络中的无名人物。赵宋记忆没有完全消失，却被账簿、航线和新的身份包裹起来。",
+            notes: ["逃避统治并不等于逃离社会。", "海路给了你自由，也改变了你理解自己的方式。"]
+          };
+        }
+        if (f.memory_archive || f.temple_archive || f.kept_roster) {
+          return {
+            title: "密档传世结局",
+            text: "你没有公开复国，却整理出一套关于崖山、旧臣、逃亡路线和庇护者的密档。后人未必知道它是真是假，却会因此相信宋室曾有另一种余生。",
+            notes: ["这条路线把政治行动转化为历史记忆。", "它不能改变元初秩序，却改变了亡国如何被叙述。"]
+          };
+        }
+        if (state.route === "复国" || s.unrest > 72 || f.sponsored_rebels) {
+          return {
+            title: "地方余火结局",
+            text: "你没有真正重建国家，却让几处山寨、宗族和港口短暂地以宋为名互相照应。余火被压低，仍会在后来某些年份复燃。",
+            notes: ["这不是复国胜利，而是地方抵抗网络的形成。", "个人选择改变了局部历史，却仍受制于元朝统治结构。"]
+          };
+        }
+        if (s.legitimacy > 52 && s.loyalists > 45) {
+          return {
+            title: "宋室传说结局",
+            text: "你没有复国，也没有完全消失。文书、族谱、僧人口述和港口传闻让赵宋以记忆的形式继续存在。",
+            notes: ["政治实体消亡后，历史记忆仍能延续。", "这条路线保留了身份，却避免了最激烈的围捕。"]
+          };
+        }
+        return {
+          title: "隐士结局",
+          text: "你在地方社会中活了下来。皇帝身份逐渐退到梦里，留下的是一个普通人的姓名、房屋与日常。",
+          notes: ["这是生存意义上的胜利。", "逃离政治身份的代价，是与历史使命渐行渐远。"]
+        };
+      }
+      return null;
+    }
+
+    function showEnding(ending) {
+      elements.endingTitle.textContent = ending.title;
+      elements.endingText.textContent = ending.text;
+      elements.endingNotes.innerHTML = "";
+      const achievements = getAchievements();
+      [...ending.notes, ...historianReview(), ...achievements].forEach((note) => {
+        const li = document.createElement("li");
+        li.textContent = note;
+        elements.endingNotes.appendChild(li);
+      });
+      const thesis = state.thesis ? thesisDefinitions[state.thesis] : null;
+      elements.finalScore.innerHTML = `
+        <div class="brief-item"><p class="brief-label">存活月数</p><p class="brief-value">${state.month}</p></div>
+        <div class="brief-item"><p class="brief-label">经历事件</p><p class="brief-value">${state.history.length}</p></div>
+        <div class="brief-item"><p class="brief-label">结识人物</p><p class="brief-value">${state.npcs.length}</p></div>
+        <div class="brief-item"><p class="brief-label">历史命题</p><p class="brief-value">${thesis ? thesis.title : "未选择"}</p></div>
+        <div class="brief-item"><p class="brief-label">证据数量</p><p class="brief-value">${(state.evidence || []).length}</p></div>
+        <div class="brief-item"><p class="brief-label">兵马</p><p class="brief-value">${state.structures.troops || 0}</p></div>
+        <div class="brief-item"><p class="brief-label">武力</p><p class="brief-value">${state.abilities.martial || 0}</p></div>
+        <div class="brief-item"><p class="brief-label">身份暴露</p><p class="brief-value">${state.structures.exposure}</p></div>
+        <div class="brief-item"><p class="brief-label">结构惯性</p><p class="brief-value">${state.structures.inertia}</p></div>
+        <div class="brief-item"><p class="brief-label">主要倾向</p><p class="brief-value">${Object.entries(destinyScores()).sort((a, b) => b[1] - a[1])[0][0]}</p></div>
+      `;
+      elements.endingModal.classList.add("open");
+    }
+
+    function historianReview() {
+      const scores = thesisScores();
+      const selected = state.thesis ? thesisDefinitions[state.thesis] : null;
+      const top = Object.entries(scores).sort((a, b) => b[1] - a[1])[0];
+      const topThesis = thesisDefinitions[top[0]];
+      const evidence = state.evidence || [];
+      const selectedScore = state.thesis ? scores[state.thesis] : 0;
+      const verdict = selected
+        ? selectedScore >= 36
+          ? `史官评议：你的经历较有力地支持了“${selected.title}”。`
+          : selectedScore >= 18
+            ? `史官评议：你的经历部分支持“${selected.title}”，但证据并不充分。`
+            : `史官评议：你的经历没有充分支持“${selected.title}”，反而更接近“${topThesis.title}”。`
+        : `史官评议：你没有预设命题，经历最后更接近“${topThesis.title}”。`;
+      const changed = `你改变了什么：${state.npcs.length >= 5 ? "你编织出多方人物网络，改变了一些人的去留。" : "你主要改变的是自己和少数人的命运。"}`;
+      const limited = `你无法改变什么：${state.structures.inertia > 70 || state.structures.yuan > 70 ? "户籍、搜捕和新朝秩序持续收紧。" : "大势虽未完全压垮你，但土地、军队和制度仍不在你手中。"}`;
+      const chain = evidence.length
+        ? `证据链核心：${evidence.slice(-3).map((item) => evidenceCatalog[item.id]?.title).filter(Boolean).join("；")}。`
+        : "证据链核心：尚未形成足够材料。";
+      return [verdict, changed, limited, chain];
+    }
+
+    function getAchievements() {
+      const notes = [];
+      if (state.structures.exposure < 35) notes.push("成就：无名者。你长期把身份暴露压在很低水平。");
+      if (state.npcs.length >= 6) notes.push("成就：网中之人。你与六位以上关键人物发生交集。");
+      if (Object.values(state.relations).filter((value) => value > 0).length >= 4) notes.push("成就：多方善缘。至少四位人物与你保持正向关系。");
+      if (state.flags.memory_archive || state.flags.monastic_memory || state.flags.oral_history) notes.push("成就：留名不称帝。你让宋室记忆以非军事方式延续。");
+      if (state.flags.won_patrol_ambush) notes.push("成就：山口小胜。你用武力救出线人，证明自己不只会逃。");
+      if (state.flags.disciplined_troops && (state.structures.troops || 0) >= 40) notes.push("成就：有军有纪。你招到兵马，也暂时压住了它反噬百姓的冲动。");
+      if ((state.structures.troops || 0) >= 65 && (state.abilities.martial || 0) >= 55) notes.push("成就：军府雏形。你已经具备维持一支小规模武装的条件。");
+      if (!notes.length) notes.push("成就：未竟之路。你的选择留下了线索，但尚未形成稳定路径。");
+      return notes;
+    }
+
+    function showHistoryEntry(index) {
+      const entry = state.history[index];
+      if (!entry) return;
+      elements.endingTitle.textContent = `${entry.date} · ${entry.eventTitle}`;
+      elements.endingText.textContent = entry.eventText;
+      elements.endingNotes.innerHTML = "";
+      [
+        `选择：${entry.choiceTitle}`,
+        `月记：${entry.log}`,
+        `当时身份：${entry.cover}；路线：${entry.route}；地点：${entry.place}`,
+        `关键结构：暴露 ${entry.structures.exposure}，搜捕 ${entry.structures.yuan}，合法性 ${entry.structures.legitimacy}，海路 ${entry.structures.sea}`
+      ].forEach((note) => {
+        const li = document.createElement("li");
+        li.textContent = note;
+        elements.endingNotes.appendChild(li);
+      });
+      elements.finalScore.innerHTML = `
+        <div class="brief-item"><p class="brief-label">年龄</p><p class="brief-value">${entry.age} 岁</p></div>
+        <div class="brief-item"><p class="brief-label">章节</p><p class="brief-value">${entry.phase}</p></div>
+        <div class="brief-item"><p class="brief-label">事件类型</p><p class="brief-value">${entry.eventType}</p></div>
+      `;
+      elements.endingModal.classList.add("open");
+    }
+
+    function showMemoir() {
+      elements.endingTitle.textContent = "完整回忆录";
+      elements.endingText.textContent = "按时间正序记录你做过的选择。它不是单纯日志，而是一部由逃亡、庇护、人情和结构压力写成的个人史。";
+      elements.endingNotes.innerHTML = "";
+      elements.finalScore.innerHTML = `<div class="memoir-list">${
+        (state.history.length ? state.history : [{ date: displayDate(), eventTitle: state.currentEvent.title, choiceTitle: "尚未选择", log: "故事仍停在木棉花下。", route: state.route, cover: state.cover }])
+          .map((entry, index) => `
+            <div class="memoir-entry">
+              <strong>${index + 1}. ${entry.date} · ${entry.eventTitle}</strong>
+              <span>选择：${entry.choiceTitle}</span><br>
+              <span>${entry.log}</span><br>
+              <span>身份：${entry.cover}；路线：${entry.route}</span>
+            </div>
+          `).join("")
+      }</div>`;
+      elements.endingModal.classList.add("open");
+    }
+
+    function showHelp() {
+      const ending = {
+        title: "结局线索",
+        text: "这局游戏会在第 96 月左右结算，也可能因暴露、搜捕或生存崩溃提前结束。人物关系和早期选择会开启或关闭后续故事线：静照通向寺院，林氏通向宗族，陈船主和阿蒲商人通向海路，周书吏通向旧臣网络。",
+        notes: [
+          "身份暴露与元廷搜捕同时过高，会触发被献俘或案册留名。",
+          "寺院、宗族、海商和旧臣线各有专属结局，不再只是复国或逃亡。",
+          "合法性、忠臣网络、海上通路和具体旗标共同决定最终可能性。"
+        ]
+      };
+      showEnding(ending);
+    }
+
+    function showGuide() {
+      elements.guideOverlay.classList.add("open");
+      localStorage.setItem(GUIDE_KEY, "seen");
+    }
+
+    function closeGuide() {
+      elements.guideOverlay.classList.remove("open");
+    }
+
+    function switchSidePanel(tab) {
+      document.querySelectorAll(".tab-btn").forEach((button) => {
+        button.classList.toggle("active", button.dataset.tab === tab);
+      });
+      document.querySelectorAll(".side-panel").forEach((panel) => {
+        panel.classList.toggle("active", panel.dataset.panel === tab);
+      });
+    }
+
+    document.getElementById("restartBtn").addEventListener("click", () => {
+      if (confirm("确定要放弃当前自动存档并重新开局吗？")) newGame(true);
+    });
+    document.getElementById("modalRestartBtn").addEventListener("click", () => newGame(true));
+    document.getElementById("closeModalBtn").addEventListener("click", () => elements.endingModal.classList.remove("open"));
+    document.getElementById("helpBtn").addEventListener("click", showHelp);
+    document.getElementById("guideBtn").addEventListener("click", showGuide);
+    document.getElementById("memoirBtn").addEventListener("click", showMemoir);
+    document.getElementById("memoirSmallBtn").addEventListener("click", showMemoir);
+    document.getElementById("saveSlotBtn").addEventListener("click", () => {
+      const slot = prompt("保存到哪个槽位？输入 1 或 2。", "1");
+      if (slot === "1" || slot === "2") saveSlot(slot);
+    });
+    document.getElementById("loadSlotBtn").addEventListener("click", () => {
+      const slot = prompt("读取哪个槽位？输入 1 或 2。", "1");
+      if (slot === "1" || slot === "2") loadSlot(slot);
+    });
+    document.getElementById("closeGuideBtn").addEventListener("click", closeGuide);
+    document.querySelectorAll(".tab-btn").forEach((button) => {
+      button.addEventListener("click", () => switchSidePanel(button.dataset.tab));
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        elements.endingModal.classList.remove("open");
+        closeGuide();
+        return;
+      }
+      if (elements.endingModal.classList.contains("open") || elements.guideOverlay.classList.contains("open")) return;
+      const index = Number(event.key) - 1;
+      const buttons = [...elements.choices.querySelectorAll("button")];
+      if (index >= 0 && index < buttons.length) buttons[index].click();
+    });
+
+    if (!loadGame()) newGame(false);
+    if (!localStorage.getItem(GUIDE_KEY)) showGuide();
+  </script>
+</body>
+</html>
